@@ -1,3 +1,13 @@
+import { Outlet } from 'react-router-dom';
+
 export function Page() {
-  return <div>Page d&apos;accueil</div>;
+  return (
+    <>
+      <header>entête de pages</header>
+      <main>
+        <Outlet />
+      </main>
+      <footer>about</footer>
+    </>
+  );
 }
