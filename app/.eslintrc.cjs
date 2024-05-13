@@ -21,7 +21,8 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint', 'prettier'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    'import/extensions': ['error', 'always', { ignorePackages: true }],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**vite', '@vitejs/plugin-react'] }],
+    'import/extensions': ['error', 'ignorePackages'],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/prefer-default-export': 'off',
   },
 };
