@@ -6,6 +6,10 @@ import { Admin } from './routes/Admin/index.tsx';
 import { About } from './routes/About/index.tsx';
 import { Index } from './routes/Index/index.tsx';
 
+/**
+ * @description // TODO: À compléter
+ * @return {*} {() => Router}
+ */
 export const router = () => {
   return createBrowserRouter([
     {

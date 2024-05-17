@@ -7,7 +7,31 @@
   position: fixed;
   top: 0;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   background-color: lime;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+}
+
+ul {
+  width: max-content;
+  display: flex;
+  column-gap: 20px;
+  list-style-type: none;
+}
+
+nav {
+  align-self: flex-end;
+}
+
+a {
+  font-variant: small-caps;
+  text-decoration: none;
+  color: white;
 }
 
 .visible {
@@ -16,7 +40,7 @@
 }
 
 .hidden {
-  top: -20px;
+  top: -122px;
   transition: top 0.4s ease-out;
 }
 
