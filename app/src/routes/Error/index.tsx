@@ -1,6 +1,12 @@
 import { useRouteError } from 'react-router-dom';
 
-export function Error() {
+/**
+ *
+ * @description // TODO: À compléter
+ * @export
+ * @return {*}  {JSX.Element}
+ */
+export function Error(): JSX.Element {
   const error = useRouteError() as { statusText: string; message: string };
   return (
     <div>
