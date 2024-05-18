@@ -1,32 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-
-export type CollapsibleHeaderState = 0 | -1 | 1;
+import { useEffect, useState } from 'react';
+import { CollapsibleHeaderState } from '../types/mainPage.ts';
+import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/collapsibleHeader.ts';
 
 /**
  * @description // TODO: À compléter
+ // TODO: À compléter
  * @export
- * @param {string} hash
+ * @param {React.MutableRefObject<number | undefined>} scrollOnNav
  * @return {*} {CollapsibleHeaderState}
  */
-export function useCollapsibleHeader(hash: string): CollapsibleHeaderState {
+export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number | undefined>): CollapsibleHeaderState {
   // TODO: À commenter
   const [position, setPosition] = useState<number>(window.scrollY);
   // TODO: À commenter
-  const [scrollState, setScrollState] = useState<CollapsibleHeaderState>(0);
-  // TODO: À commenter (id atteint)
-  const idReached = useRef<boolean>();
-  // TODO: À commenter
-  const firstRender = useRef<boolean>();
-  // TODO: À commenter
-  useEffect(() => {
-    if (hash) {
-      firstRender.current = true;
-      idReached.current = true;
-    }
-  }, [hash]);
+  const [scrollState, setScrollState] = useState<CollapsibleHeaderState>(TOP_OF_SCREEN);
   // TODO: À commenter
   useEffect(() => {
     const handleScroll = () => {
+      const stateOfScroll = scrollOnNav;
       const moving: number = window.scrollY;
       /**
        *
@@ -34,13 +25,15 @@ export function useCollapsibleHeader(hash: string): CollapsibleHeaderState {
        * @return {*}  {CollapsibleHeaderState}
        */
       const stateOfMovement = (): CollapsibleHeaderState => {
+        if (stateOfScroll.current === moving) return SCROLL_UP;
+        stateOfScroll.current = undefined;
         switch (true) {
-          case position >= moving && moving !== 0:
-            return 1;
+          case position >= moving && moving !== TOP_OF_SCREEN:
+            return SCROLL_UP;
           case moving > position:
-            return -1;
+            return SCROLL_DOWN;
           default:
-            return 0;
+            return TOP_OF_SCREEN;
         }
       };
       setScrollState(stateOfMovement);
@@ -50,17 +43,7 @@ export function useCollapsibleHeader(hash: string): CollapsibleHeaderState {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [position]);
-  // TODO: À commenter
-  if (idReached.current && firstRender.current) {
-    firstRender.current = false;
-    return 1;
-  }
-  // TODO: À commenter
-  if (idReached.current) {
-    idReached.current = undefined;
-    return 1;
-  }
+  }, [position, scrollOnNav]);
   // TODO: À commenter
   return scrollState;
 }

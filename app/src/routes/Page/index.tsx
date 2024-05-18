@@ -1,7 +1,9 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import logo from '@assets/logoAND.png';
-import { CollapsibleHeaderState, useCollapsibleHeader } from '../../hooks/useCollapsibleHeader.ts';
+import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '../../types/mainPage.ts';
+import { useCollapsibleHeader } from '../../hooks/useCollapsibleHeader.ts';
+import { SCROLL_DOWN, TOP_OF_SCREEN } from '../../utils/collapsibleHeader.ts';
 
 import style from './style.module.css';
 
@@ -15,7 +17,12 @@ export function Page(): JSX.Element {
   // TODO: À commenter
   const { pathname, hash, key } = useLocation();
   // TODO: À commenter
-  const headerState = useCollapsibleHeader(hash);
+  const scrollOnNav = useRef<number>();
+  // TODO: À commenter
+  const headerState = useCollapsibleHeader(scrollOnNav);
+  // TODO: À commenter
+  const [outletContext, setOutletContext] = useState<OnSectionPage>();
+  console.log(outletContext);
   // TODO: À commenter
   useEffect((): void => {
     if (hash === '') window.scrollTo(0, 0);
@@ -25,6 +32,7 @@ export function Page(): JSX.Element {
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView();
+          scrollOnNav.current = window.scrollY;
         }
       }, 0);
     }
@@ -37,8 +45,8 @@ export function Page(): JSX.Element {
    * @return {*}  {string}
    */
   const showingHeader = (state: CollapsibleHeaderState): string => {
-    if (state === -1) return style.hidden;
-    if (state === 0) return style.topOfPage;
+    if (state === SCROLL_DOWN) return style.hidden;
+    if (state === TOP_OF_SCREEN) return style.topOfPage;
     return style.visible;
   };
 
@@ -51,19 +59,22 @@ export function Page(): JSX.Element {
         <nav>
           <ul>
             <li>
-              <NavLink to='/#p2'>accueil</NavLink>
+              <NavLink to='/#p1'>accueil</NavLink>
             </li>
             <li>
-              <NavLink to='/#p10'>réalisations</NavLink>
+              <NavLink to='/#p3'>réalisations</NavLink>
             </li>
             <li>
-              <NavLink to='' />
+              <NavLink to='/#p6'>À propos</NavLink>
+            </li>
+            <li>
+              <NavLink to='/#p9'>Services</NavLink>
             </li>
           </ul>
         </nav>
       </header>
       <main className={style.main}>
-        <Outlet />
+        <Outlet context={{ setOutletContext } satisfies OutletContextPage} />
       </main>
       <footer>about</footer>
     </div>

@@ -1,5 +1,5 @@
 .page {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 
@@ -13,8 +13,14 @@
 }
 
 .logo {
+  margin-left: 50px;
   width: 200px;
   height: auto;
+}
+
+nav {
+  margin-right: 50px;
+  align-self: flex-end;
 }
 
 ul {
@@ -22,10 +28,6 @@ ul {
   display: flex;
   column-gap: 20px;
   list-style-type: none;
-}
-
-nav {
-  align-self: flex-end;
 }
 
 a {
