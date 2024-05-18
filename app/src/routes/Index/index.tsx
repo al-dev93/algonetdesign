@@ -10,16 +10,19 @@ import { useOnScreen } from '../../hooks/useOnScreen.ts';
  * @return {*}  {JSX.Element}
  */
 export function Index(): JSX.Element {
+  // TODO: À commenter
   const { setOutletContext } = usePageSection();
+  // TODO: À commenter
   const homeRef = useRef<HTMLElement>(null);
   const workRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
+  // TODO: À commenter
   const onHome = useOnScreen(homeRef, '-100px');
   const onWork = useOnScreen(workRef, '-100px');
   const onAbout = useOnScreen(aboutRef, '-100px');
   const onServices = useOnScreen(servicesRef, '-100px');
-
+  // TODO: À commenter
   useEffect(() => {
     setOutletContext((prev) => ({ ...prev, onHome, onWork, onAbout, onServices }));
   }, [onAbout, onHome, onServices, onWork, setOutletContext]);

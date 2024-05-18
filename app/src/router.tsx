@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Page } from './routes/Page/index.tsx';
 import { Error } from './routes/Error/index.tsx';
 import { Admin } from './routes/Admin/index.tsx';
-import { About } from './routes/About/index.tsx';
+import { LegalNotice } from './routes/LegalNotice/index.tsx';
 import { Index } from './routes/Index/index.tsx';
 
 /**
@@ -22,8 +22,8 @@ export const router = () => {
           element: <Index />,
         },
         {
-          path: '/about',
-          element: <About />,
+          path: '/legal-notice',
+          element: <LegalNotice />,
         },
       ],
     },

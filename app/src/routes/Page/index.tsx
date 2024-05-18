@@ -1,9 +1,9 @@
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import logo from '@assets/logoAND.png';
-import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '../../types/mainPage.ts';
 import { useCollapsibleHeader } from '../../hooks/useCollapsibleHeader.ts';
 import { SCROLL_DOWN, TOP_OF_SCREEN } from '../../utils/collapsibleHeader.ts';
+import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '../../types/mainPage.ts';
 
 import style from './style.module.css';
 
@@ -22,7 +22,6 @@ export function Page(): JSX.Element {
   const headerState = useCollapsibleHeader(scrollOnNav);
   // TODO: À commenter
   const [outletContext, setOutletContext] = useState<OnSectionPage>();
-  console.log(outletContext);
   // TODO: À commenter
   useEffect((): void => {
     if (hash === '') window.scrollTo(0, 0);
@@ -59,16 +58,24 @@ export function Page(): JSX.Element {
         <nav>
           <ul>
             <li>
-              <NavLink to='/#p1'>accueil</NavLink>
+              <NavLink to='/#p1' className={outletContext?.onHome ? style.onScrollView : ''}>
+                accueil
+              </NavLink>
             </li>
             <li>
-              <NavLink to='/#p3'>réalisations</NavLink>
+              <NavLink to='/#p3' className={outletContext?.onWork ? style.onScrollView : ''}>
+                réalisations
+              </NavLink>
             </li>
             <li>
-              <NavLink to='/#p6'>À propos</NavLink>
+              <NavLink to='/#p6' className={outletContext?.onAbout ? style.onScrollView : ''}>
+                À propos
+              </NavLink>
             </li>
             <li>
-              <NavLink to='/#p9'>Services</NavLink>
+              <NavLink to='/#p9' className={outletContext?.onServices ? style.onScrollView : ''}>
+                Services
+              </NavLink>
             </li>
           </ul>
         </nav>

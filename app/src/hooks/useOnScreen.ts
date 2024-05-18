@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
-
-export function useOnScreen(sectionRef: React.RefObject<HTMLElement>, rootMargin = '0px') {
+/**
+ *
+ * @description // TODO: À compléter
+ * @export
+ * @param {React.RefObject<HTMLElement>} sectionRef
+ * @param {string} [rootMargin='0px']
+ * @return {*}  {boolean}
+ */
+export function useOnScreen(sectionRef: React.RefObject<HTMLElement>, rootMargin = '0px'): boolean {
   // TODO: vérify State and setter for storing whether element is visible
-  const [isIntersecting, setIntersecting] = useState(false);
+  const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
   useEffect(() => {
     const targetElement = sectionRef.current;

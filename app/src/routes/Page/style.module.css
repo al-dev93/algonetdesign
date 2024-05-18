@@ -4,22 +4,22 @@
 }
 
 .header {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 50px;
   position: fixed;
   top: 0;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: lime;
 }
 
 .logo {
-  margin-left: 50px;
   width: 200px;
   height: auto;
 }
 
 nav {
-  margin-right: 50px;
   align-self: flex-end;
 }
 
@@ -30,10 +30,15 @@ ul {
   list-style-type: none;
 }
 
-a {
+nav ul a {
   font-variant: small-caps;
   text-decoration: none;
   color: white;
+}
+
+.onScrollView {
+  color: black;
+  text-decoration-line: underline;
 }
 
 .visible {

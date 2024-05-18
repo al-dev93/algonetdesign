@@ -4,6 +4,6 @@
  * @export
  * @return {*}  {JSX.Element}
  */
-export function About(): JSX.Element {
-  return <div>À propos de</div>;
+export function LegalNotice(): JSX.Element {
+  return <div>Mentions légales</div>;
 }

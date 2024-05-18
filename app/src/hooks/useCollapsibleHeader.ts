@@ -4,7 +4,6 @@ import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/collapsibleHeade
 
 /**
  * @description // TODO: À compléter
- // TODO: À compléter
  * @export
  * @param {React.MutableRefObject<number | undefined>} scrollOnNav
  * @return {*} {CollapsibleHeaderState}
