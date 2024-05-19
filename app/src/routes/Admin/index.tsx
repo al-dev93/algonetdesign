@@ -1,6 +1,6 @@
 /**
  *
- * @description // TODO: À compléter
+ * @description page used for site administration
  * @export
  * @return {*}  {JSX.Element}
  */

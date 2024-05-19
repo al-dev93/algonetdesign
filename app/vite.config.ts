@@ -1,4 +1,3 @@
-// import { fileURLToPath, URL } from 'url';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -9,22 +8,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@assets': resolve(__dirname, 'src/assets'),
-      '@types': resolve(__dirname, 'src/types/*'),
+      '@images': resolve(__dirname, 'src/assets/images'),
+      '@styles': resolve(__dirname, 'src/assets/styles'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@hooks': resolve(__dirname, 'src/hooks'),
+      '@routes': resolve(__dirname, 'src/routes'),
+      '@services': resolve(__dirname, 'src/services'),
+      '@types': resolve(__dirname, 'src/types'),
+      '@utils': resolve(__dirname, 'src/utils'),
     },
   },
 });
-
-// https://vitejs.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-//   resolve: {
-//     alias: [
-//       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
-//       { find: '@assets', replacement: fileURLToPath(new URL('./src/shared/assets', import.meta.url)) },
-//       { find: '@cmp', replacement: fileURLToPath(new URL('./src/shared/cmp', import.meta.url)) },
-//       { find: '@stores', replacement: fileURLToPath(new URL('./src/shared/stores', import.meta.url)) },
-//       { find: '@use', replacement: fileURLToPath(new URL('./src/shared/use', import.meta.url)) },
-//     ],
-//   },
-// });

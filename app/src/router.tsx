@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 // COMMENT: importing application routes
-import { Page } from './routes/Page/index.tsx';
-import { Error } from './routes/Error/index.tsx';
-import { Admin } from './routes/Admin/index.tsx';
-import { LegalNotice } from './routes/LegalNotice/index.tsx';
-import { Index } from './routes/Index/index.tsx';
+import { Error } from '@routes/Error';
+import { Admin } from '@routes/Admin';
+import { LegalNotice } from '@routes/LegalNotice';
+import { Index } from '@routes/Index';
+import { Auth } from '@routes/Auth';
+import { Page } from '@routes/Page';
 
 /**
  * @description // TODO: À compléter
@@ -26,6 +27,10 @@ export const router = () => {
           element: <LegalNotice />,
         },
       ],
+    },
+    {
+      path: '/login',
+      element: <Auth />,
     },
     {
       path: '/admin',
