@@ -1,28 +1,33 @@
 import { useEffect, useRef } from 'react';
-import { usePageSection } from '../../hooks/usePageSection.ts';
+
+import { useOnScreen } from '@hooks/useOnScreen.ts';
+import { usePageSection } from '@hooks/usePageSection.ts';
+
 import style from './style.module.css';
-import { useOnScreen } from '../../hooks/useOnScreen.ts';
 
 /**
  *
- * @description // TODO: À compléter
+ * @description home page content inserted into the layout
  * @export
  * @return {*}  {JSX.Element}
  */
 export function Index(): JSX.Element {
-  // TODO: À commenter
+  // COMMENT: uses the custom hook usePageSection to retrieve the
+  //  layout context
   const { setOutletContext } = usePageSection();
-  // TODO: À commenter
+  // COMMENT: references to the HTML elements observed using the
+  //  custom hook useOnScreen
   const homeRef = useRef<HTMLElement>(null);
   const workRef = useRef<HTMLElement>(null);
   const aboutRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
-  // TODO: À commenter
+
   const onHome = useOnScreen(homeRef, '-100px');
   const onWork = useOnScreen(workRef, '-100px');
   const onAbout = useOnScreen(aboutRef, '-100px');
   const onServices = useOnScreen(servicesRef, '-100px');
-  // TODO: À commenter
+  // COMMENT: stores the result of observing HTML elements in the
+  //  state passed with the layout context
   useEffect(() => {
     setOutletContext((prev) => ({ ...prev, onHome, onWork, onAbout, onServices }));
   }, [onAbout, onHome, onServices, onWork, setOutletContext]);

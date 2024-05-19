@@ -1,9 +1,11 @@
 import { useOutletContext } from 'react-router-dom';
-import { OutletContextPage } from '../types/mainPage.ts';
+
+import type { OutletContextPage } from '@/types/index.ts';
 
 /**
  *
- * @description // TODO: À compléter
+ * @description for TypeScript, React-router recommend the parent component provide a custom hook
+ * for accessing the context value.
  * @export
  * @return {*}  {OutletContextPage}
  */

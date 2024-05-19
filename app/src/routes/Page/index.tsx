@@ -1,28 +1,32 @@
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import logo from '@assets/logoAND.png';
-import { useCollapsibleHeader } from '../../hooks/useCollapsibleHeader.ts';
-import { SCROLL_DOWN, TOP_OF_SCREEN } from '../../utils/collapsibleHeader.ts';
-import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '../../types/mainPage.ts';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+
+import logo from '@images/logoAND.png';
+import { SCROLL_DOWN, TOP_OF_SCREEN } from '@utils/constants.ts';
+import { useCollapsibleHeader } from '@hooks/useCollapsibleHeader.ts';
+
+import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
 
 import style from './style.module.css';
 
 /**
  *
- * @description //TODO: À compléter
+ * @description layout page containing common elements
  * @export
  * @return {*}  {JSX.Element}
  */
 export function Page(): JSX.Element {
-  // TODO: À commenter
   const { pathname, hash, key } = useLocation();
-  // TODO: À commenter
+  // COMMENT: scroll level achieved after using the navigation menu
   const scrollOnNav = useRef<number>();
-  // TODO: À commenter
+  // COMMENT: uses the custom hook useCollapsibleHeader to get the
+  //  display state based on the scroll direction
   const headerState = useCollapsibleHeader(scrollOnNav);
-  // TODO: À commenter
+  // COMMENT: stores the result of the useOnScreen hook applied to the
+  //  Index page to indicate the active section
   const [outletContext, setOutletContext] = useState<OnSectionPage>();
-  // TODO: À commenter
+  // COMMENT: sets the scroll level after a page change or after using
+  //  the menu and the anchors elements
   useEffect((): void => {
     if (hash === '') window.scrollTo(0, 0);
     else {
@@ -39,7 +43,8 @@ export function Page(): JSX.Element {
 
   /**
    *
-   * @description //TODO: À compléter
+   * @description extracts the CSS class name based on the display states
+   * of the header
    * @param {CollapsibleHeaderState} state
    * @return {*}  {string}
    */
