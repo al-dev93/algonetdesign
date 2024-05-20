@@ -6,7 +6,7 @@ import { useCollapsibleHeader } from '@hooks/useCollapsibleHeader.ts';
 
 import logo from '@images/brand/logoAND.png';
 
-import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
+import type { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
 
 import style from './style.module.css';
 /**
