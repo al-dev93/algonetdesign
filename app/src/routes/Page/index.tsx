@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
-import logo from '@images/logoAND.png';
 import { SCROLL_DOWN, TOP_OF_SCREEN } from '@utils/constants.ts';
 import { useCollapsibleHeader } from '@hooks/useCollapsibleHeader.ts';
 
-import { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
+import logo from '@images/brand/logoAND.png';
+
+import type { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
 
 import style from './style.module.css';
-
 /**
  *
  * @description layout page containing common elements
