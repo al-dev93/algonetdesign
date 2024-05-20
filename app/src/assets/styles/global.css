@@ -1,4 +1,148 @@
+@font-face {
+  font-family: 'Oswald';
+  src:
+    url('../fonts/oswald/Oswald-Medium.woff2') format('woff2'),
+    url('../fonts/oswald/Oswald-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'),
+    url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    url('../fonts/roboto/Roboto-Medium.woff2') format('woff2'),
+    url('../fonts/roboto/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src:
+    url('../fonts/roboto/Roboto-Bold.woff2') format('woff2'),
+    url('../fonts/roboto/Roboto-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src:
+    url('../fonts/roboto-condensed/RobotoCondensed-Regular.woff2') format('woff2'),
+    url('../fonts/roboto-condensed/RobotoCondensed-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: auto;
+  scroll-behavior: smooth;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
 body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
   margin: 0;
-  width: 100vw;
+  font-family: var(--font-regular);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-textual);
+  font-weight: normal;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-titration);
+  line-height: var(--lh-titration);
+  font-weight: 500;
+}
+
+h1 {
+  font-size: var(--fs-xxl);
+}
+
+h2 {
+  font-size: var(--fs-lg);
+  color: var(--secondary-color);
+}
+
+h3 {
+  margin: 0;
+  font-size: var(--fs-md);
+  line-height: var(--lh-titration);
+  font-weight: 600;
+  color: var(--tertiary-color);
+}
+
+main {
+  width: 100%;
+  max-width: 1300px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: transparent;
+}
+/* TODO: vérifier la pertinence de déclarer en global */
+.applinks-nav {
+  position: fixed;
+  bottom: 0;
+  left: 258px;
+}
+
+section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 45px 0 54px;
+}
+
+button,
+label {
+  font-family: var(--font-accessories);
+  font-size: var(--fs-xs);
+}
+
+button {
+  width: 150px;
+  padding: 12px;
+  border: 1px solid;
+  border-color: var(--tertiary-color);
+  border-radius: var(--br-md);
+  line-height: var(--lh-regular);
+  font-weight: bold;
+  background: var(--button-bg) var(--button-gradient);
+  color: var(--white);
+}
+
+label {
+  line-height: var(--lh-label);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0;
 }
