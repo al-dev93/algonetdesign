@@ -14,6 +14,7 @@ export default defineConfig({
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@routes': resolve(__dirname, 'src/routes'),
       '@services': resolve(__dirname, 'src/services'),
+      '@secure': resolve(__dirname, 'src/services/secure'),
       '@types': resolve(__dirname, 'src/types'),
       '@utils': resolve(__dirname, 'src/utils'),
     },

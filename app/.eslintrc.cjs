@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2023: true },
+  env: { browser: true, ESNext: true },
   extends: [
     'airbnb',
     'airbnb-typescript',

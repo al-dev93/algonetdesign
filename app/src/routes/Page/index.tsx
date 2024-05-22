@@ -6,9 +6,10 @@ import { useCollapsibleHeader } from '@hooks/useCollapsibleHeader.ts';
 
 import logo from '@images/brand/logoAND.png';
 
-import type { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types/index.ts';
+import type { CollapsibleHeaderState, OnSectionPage, OutletContextPage } from '@/types';
 
 import style from './style.module.css';
+import { useFetchData } from '@/hooks/useFetchData';
 /**
  *
  * @description layout page containing common elements
@@ -16,6 +17,8 @@ import style from './style.module.css';
  * @return {*}  {JSX.Element}
  */
 export function Page(): JSX.Element {
+  const { accountList } = useFetchData();
+  console.log(accountList);
   const { pathname, hash, key } = useLocation();
   // COMMENT: scroll level achieved after using the navigation menu
   const scrollOnNav = useRef<number>();
