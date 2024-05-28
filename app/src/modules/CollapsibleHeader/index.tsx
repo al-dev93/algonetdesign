@@ -9,7 +9,8 @@ import type { CollapsibleHeaderProps, CollapsibleHeaderState } from './types';
 import style from './style.module.css';
 /**
  *
- * @description
+ * @description Header component including a logo and a menu. It collapses when
+ * the user scrolls down and expands with hover effect when the user scrolls up
  * @export
  * @param {CollapsibleHeaderProps} { logo, menu, onViewMap, scrollWithOption }
  * @return {*}  {JSX.Element}

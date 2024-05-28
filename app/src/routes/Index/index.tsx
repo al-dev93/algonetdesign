@@ -27,9 +27,8 @@ export function Index(): JSX.Element {
   const onAbout = (useOnScreen(aboutRef, '-100px') && 'about') || '';
   const onServices = (useOnScreen(servicesRef, '-100px') && 'services') || '';
   // COMMENT: stores the result of observing HTML elements in the
-  //  state passed with the layout context
+  //  Ref passed with the layout context
   useEffect(() => {
-    // setOutletContext((prev) => ({ ...prev, onHome, onWork, onAbout, onServices }));
     outletContext.current = [onHome, onWork, onAbout, onServices];
   }, [onAbout, onHome, onServices, onWork]);
 

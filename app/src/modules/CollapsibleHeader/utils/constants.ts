@@ -1,4 +1,4 @@
-import { CollapsibleHeaderState } from '../types';
+import type { CollapsibleHeaderState } from '../types';
 
 // COMMENT: constants indicating the state of the collapsible header
 const SCROLL_UP: CollapsibleHeaderState = 1;

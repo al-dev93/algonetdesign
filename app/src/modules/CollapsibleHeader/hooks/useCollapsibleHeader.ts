@@ -10,6 +10,7 @@ import type { CollapsibleHeaderState } from '../types';
  * @export
  * @param {React.MutableRefObject<number | undefined>} scrollOnNav
  * @return {*} {CollapsibleHeaderState}
+ * @al-dev93
  */
 export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number | undefined>): CollapsibleHeaderState {
   // COMMENT: initial scroll position
@@ -27,6 +28,7 @@ export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number 
        * @description determines the scroll state based on the initial position, movement and scrolling
        * via the menu (scrollOnNav)
        * @return {*}  {CollapsibleHeaderState}
+       * @al-dev93
        */
       const stateOfMovement = (): CollapsibleHeaderState => {
         if (stateOfScroll.current === moving) return SCROLL_UP;
