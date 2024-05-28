@@ -14,7 +14,7 @@ import style from './style.module.css';
 export function Index(): JSX.Element {
   // COMMENT: uses the custom hook usePageSection to retrieve the
   //  layout context
-  const { setOutletContext } = usePageSection();
+  const { outletContext } = usePageSection();
   // COMMENT: references to the HTML elements observed using the
   //  custom hook useOnScreen
   const homeRef = useRef<HTMLElement>(null);
@@ -22,19 +22,19 @@ export function Index(): JSX.Element {
   const aboutRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
 
-  const onHome = useOnScreen(homeRef, '-100px');
-  const onWork = useOnScreen(workRef, '-100px');
-  const onAbout = useOnScreen(aboutRef, '-100px');
-  const onServices = useOnScreen(servicesRef, '-100px');
+  const onHome = (useOnScreen(homeRef, '-100px') && 'home') || '';
+  const onWork = (useOnScreen(workRef, '-100px') && 'work') || '';
+  const onAbout = (useOnScreen(aboutRef, '-100px') && 'about') || '';
+  const onServices = (useOnScreen(servicesRef, '-100px') && 'services') || '';
   // COMMENT: stores the result of observing HTML elements in the
-  //  state passed with the layout context
+  //  Ref passed with the layout context
   useEffect(() => {
-    setOutletContext((prev) => ({ ...prev, onHome, onWork, onAbout, onServices }));
-  }, [onAbout, onHome, onServices, onWork, setOutletContext]);
+    outletContext.current = [onHome, onWork, onAbout, onServices];
+  }, [onAbout, onHome, onServices, onWork]);
 
   return (
     <div className={style.wrapperIndex}>
-      <section ref={homeRef}>
+      <section ref={homeRef} id='home'>
         <p id='p1'>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod eligendi labore laboriosam nesciunt voluptates
           officia sint possimus quae sed eum sunt unde, eveniet nulla, distinctio illum repudiandae fuga reiciendis
@@ -53,7 +53,7 @@ export function Index(): JSX.Element {
         </p>
       </section>
       <br />
-      <section ref={workRef}>
+      <section ref={workRef} id='work'>
         <p id='p3'>
           Error ab rerum earum labore atque veniam eveniet! Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Obcaecati nesciunt amet accusamus commodi eveniet numquam tempore reprehenderit quis. Officiis soluta
@@ -80,7 +80,7 @@ export function Index(): JSX.Element {
         </p>
       </section>
       <br />
-      <section ref={aboutRef}>
+      <section ref={aboutRef} id='about'>
         <p id='p6'>
           Voluptates magni placeat, consectetur ratione, iusto qui tempora architecto, abanimi debitis a quis dolor
           doloremque blanditiis neque. Odio exercitationem mollitia eligendi. Lorem ipsum, dolor sit amet consectetur
@@ -103,7 +103,7 @@ export function Index(): JSX.Element {
       </section>
       <br />
       <br />
-      <section ref={servicesRef}>
+      <section ref={servicesRef} id='services'>
         <p id='p9'>
           Voluptates magni placeat, consectetur ratione, iusto qui tempora architecto, abanimi debitis a quis dolor
           doloremque blanditiis neque. Odio exercitationem mollitia eligendi. Lorem ipsum, dolor sit amet consectetur

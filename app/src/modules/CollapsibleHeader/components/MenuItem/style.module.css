@@ -1,0 +1,11 @@
+/* COMMENT: section not visible on screen */
+.regularItem {
+  color: var(--rich-black);
+  text-decoration: none;
+}
+/* COMMENT: section visible on screen */
+.onScrollView {
+  color: var(--secondary-color);
+  font-weight: 700;
+  text-decoration-line: underline;
+}

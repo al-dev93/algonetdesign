@@ -1,0 +1,49 @@
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 50px;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+}
+
+nav {
+  align-self: flex-end;
+}
+
+ul {
+  width: max-content;
+  display: flex;
+  column-gap: 20px;
+  list-style-type: none;
+}
+
+nav ul a {
+  font-variant: small-caps;
+  text-decoration: none;
+  color: white;
+}
+/* COMMENT: class to display the header in scroll-up mode */
+.visible {
+  top: 0;
+  transition: top 0.4s ease-out;
+  background-color: var(--ligth-bg-menu);
+  backdrop-filter: blur(7px);
+  box-shadow: var(--bsh-collapsible-header);
+}
+/* COMMENT: class to hide the header in scroll-down mode */
+.hidden {
+  top: -143px;
+  transition: top 0.4s ease-out;
+}
+/* COMMENT: class to display the header at the top of the screen */
+.topOfPage {
+  transition: all 0.4s ease-out;
+  background-color: var(--white);
+}

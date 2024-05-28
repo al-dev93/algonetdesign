@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '@utils/constants.ts';
+import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/constants';
 
-import type { CollapsibleHeaderState } from '@/types/index.ts';
+import type { CollapsibleHeaderState } from '../types';
+
 /**
  * @description hook managing a collapsible header based on scroll position.
  * It returns 3 states corresponding to the top of screen, scroll-up and scroll-down
  * @export
  * @param {React.MutableRefObject<number | undefined>} scrollOnNav
  * @return {*} {CollapsibleHeaderState}
+ * @al-dev93
  */
 export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number | undefined>): CollapsibleHeaderState {
   // COMMENT: initial scroll position
@@ -26,6 +28,7 @@ export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number 
        * @description determines the scroll state based on the initial position, movement and scrolling
        * via the menu (scrollOnNav)
        * @return {*}  {CollapsibleHeaderState}
+       * @al-dev93
        */
       const stateOfMovement = (): CollapsibleHeaderState => {
         if (stateOfScroll.current === moving) return SCROLL_UP;

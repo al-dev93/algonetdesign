@@ -1,9 +1,11 @@
+import { MenuType } from '@/modules/CollapsibleHeader/types';
 import { AccountLink } from '@/types/index';
 import { useEffect, useState } from 'react';
 
 export const useFetchData = () => {
   // stored fetch data
   const [accountList, setAccountList] = useState<AccountLink[]>();
+  const [menuList, setMenuList] = useState<MenuType[]>();
   //   const [projectList, setProjectList] = useState<ProjectInfo[]>();
   //   const [skillList, setSkillList] = useState<Skill[]>();
   //   const [errorData, setErrorData] = useState<object>();
@@ -31,6 +33,12 @@ export const useFetchData = () => {
           //     setErrorData((prev) => (prev ? { ...prev, account: fetchError } : {}));
           //   },
         );
+      fetch('http://localhost:5173/api/menuItems')
+        .then((response) => response.json())
+        .then((response) => {
+          const { menuItems } = response;
+          setMenuList(menuItems);
+        });
       //   fetch('http://localhost:3000/api/projects')
       //     .then((response) => response.json())
       //     .then(
@@ -66,5 +74,5 @@ export const useFetchData = () => {
   }, []);
 
   //   return { accountList, projectList, skillList, isLoadedData, errorData };
-  return { accountList };
+  return { accountList, menuList };
 };
