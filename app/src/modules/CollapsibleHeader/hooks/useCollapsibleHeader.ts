@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '@utils/constants.ts';
+import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/constants';
 
-import type { CollapsibleHeaderState } from '@/types/index.ts';
+import type { CollapsibleHeaderState } from '../types';
+
 /**
  * @description hook managing a collapsible header based on scroll position.
  * It returns 3 states corresponding to the top of screen, scroll-up and scroll-down

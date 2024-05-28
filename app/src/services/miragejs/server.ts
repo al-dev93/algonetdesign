@@ -1,11 +1,10 @@
 import { createServer } from 'miragejs';
+
 import { mockedApiModels } from './models/mockedApiModels.ts';
-import {
-  dataAccounts,
-  // dataProjects,
-  // dataSkills,
-  // deliverableAddress,
-} from './fixtures/mockedDataAccounts.ts';
+
+import { dataAccounts } from './fixtures/mockedDataAccounts.ts';
+import { dataMenu } from './fixtures/mockedDataMenu.ts';
+
 import { EncryptedMail } from '@/types';
 
 export function makeServer(encryptedEmail: EncryptedMail, { environment = 'development' } = {}) {
@@ -14,6 +13,7 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
     models: mockedApiModels,
     fixtures: {
       accounts: dataAccounts(encryptedEmail),
+      menuItems: dataMenu,
     },
     // serializers: serializerMockedApi,
     seeds(server) {
@@ -23,6 +23,9 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
       this.namespace = 'api';
       this.get('/accounts', (schema) => {
         return schema.all('account');
+      });
+      this.get('/menuItems', (schema) => {
+        return schema.all('menuItem');
       });
       // this.get('/skills', (schema) => {
       //   return schema.skills.all();
