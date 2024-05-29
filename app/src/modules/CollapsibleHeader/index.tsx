@@ -16,15 +16,16 @@ import style from './style.module.css';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function CollapsibleHeader({ logo, menu, onViewMap, scrollWithOption }: CollapsibleHeaderProps): JSX.Element {
+export function CollapsibleHeader({ logo, menu, onViewMap, scrollWithMenuItem }: CollapsibleHeaderProps): JSX.Element {
   // COMMENT: uses the custom hook useCollapsibleHeader to get the
   //  display state based on the scroll direction
-  const headerState = useCollapsibleHeader(scrollWithOption);
+  const headerState = useCollapsibleHeader(scrollWithMenuItem);
   const { src, alt } = logo ? logo : { src: undefined, alt: undefined };
   /**
    *
    * @description extracts the CSS class name based on the display states
    * of the header
+   * @function
    * @param {CollapsibleHeaderState} state
    * @return {*}  {string}
    * @al-dev93

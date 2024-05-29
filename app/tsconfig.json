@@ -12,6 +12,7 @@
       "@styles/*": ["src/assets/styles/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@modules/*": ["src/modules/*"],
       "@routes/*": ["src/routes/*"],
       "@services/*": ["src/services/*"],
       "@secure/*": ["src/services/secure/*"],

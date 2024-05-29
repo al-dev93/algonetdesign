@@ -8,14 +8,17 @@ import { Auth } from '@routes/Auth';
 import { Page } from '@routes/Page';
 
 /**
+ *
  * @description // TODO: À compléter
- * @return {*} {() => Router}
+ * @param {CryptoKey | undefined} key
+ * @return {*} {(key: CryptoKey | undefined) => Router}
+ * @al-dev93
  */
-export const router = () => {
+export const router = (key: CryptoKey | undefined) => {
   return createBrowserRouter([
     {
       path: '/',
-      element: <Page />,
+      element: <Page cryptoKey={key} />,
       errorElement: <Error />,
       children: [
         {

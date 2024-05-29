@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 /**
  *
- * @description checks if the rootMargin in px of the HTML element passed with sectionRef is visible
- * and stores the result in the boolean state
+ * @description custom hook, checks if the rootMargin in px of the HTML element
+ * passed with sectionRef is visible and stores the result in the boolean state
  * @export
  * @param {React.RefObject<HTMLElement>} sectionRef
  * @param {string} [rootMargin='0px']

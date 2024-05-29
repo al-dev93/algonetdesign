@@ -1,23 +1,26 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-import { CollapsibleHeader } from '@/modules/CollapsibleHeader';
-import { useFetchData } from '@/hooks/useFetchData';
+import { CollapsibleHeader } from '@modules/CollapsibleHeader';
+import { SocialMediaNavBar } from '@modules/SocialMediaNavBar';
+import { useFetchData } from '@hooks/useFetchData';
 
 import logo from '@images/brand/logoAND.png';
 
-import type { OnSectionView, OutletContextPage } from '@/types';
+import type { OnSectionView, OutletContextPage, PageProps } from '@/types';
 import style from './style.module.css';
 /**
  *
  * @description layout page containing common elements
  * @export
+ * @param {PageProps} {cryptoKey}
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function Page(): JSX.Element {
+export function Page({ cryptoKey }: PageProps): JSX.Element {
   // TODO: add comments
   const { accountList, menuList } = useFetchData();
+  const socialContactNavBar = accountList?.filter((item) => item.onPage);
   console.log(accountList, menuList);
   const { pathname, hash, key } = useLocation();
   // COMMENT: scroll level achieved after using the navigation menu
@@ -36,6 +39,7 @@ export function Page(): JSX.Element {
         if (element) {
           element.scrollIntoView();
           scrollWithNav.current = window.scrollY;
+          console.log(scrollWithNav.current);
         }
       }, 0);
     }
@@ -47,8 +51,17 @@ export function Page(): JSX.Element {
         logo={{ src: logo, alt: 'logo' }}
         menu={menuList}
         onViewMap={outletContext}
-        scrollWithOption={scrollWithNav}
+        scrollWithMenuItem={scrollWithNav}
       />
+      {accountList && (
+        <SocialMediaNavBar
+          className={style.socialMediaNavBar}
+          type='left-nav'
+          buttons={socialContactNavBar}
+          cryptoKey={cryptoKey}
+        />
+      )}
+
       <main className={style.main}>
         <Outlet context={{ outletContext } satisfies OutletContextPage} />
       </main>

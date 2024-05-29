@@ -22,5 +22,6 @@ export type CollapsibleHeaderProps = {
   logo?: ImageType;
   menu?: MenuType[];
   onViewMap?: React.MutableRefObject<string[] | undefined>;
-  scrollWithOption: React.MutableRefObject<number | undefined>;
+  scrollWithMenuItem: React.MutableRefObject<number | undefined>;
+  // scrollWithMenuItem: number | undefined;
 };

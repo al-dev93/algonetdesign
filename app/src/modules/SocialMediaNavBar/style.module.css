@@ -1,0 +1,30 @@
+.socialMediaNavBar {
+  width: max-content;
+}
+
+.VerticalNavBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 6px;
+  margin-bottom: 20px;
+}
+
+.lineWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.horizontalNavBar {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+}
+/* COMMENT: style for the navigation bar button */
+.externalLink {
+  color: var(--decorative-light);
+}
+
+.externalLink:hover {
+  color: var(--decorative-dark);
+}

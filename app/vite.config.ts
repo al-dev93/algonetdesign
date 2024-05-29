@@ -12,6 +12,7 @@ export default defineConfig({
       '@styles': resolve(__dirname, 'src/assets/styles'),
       '@components': resolve(__dirname, 'src/components'),
       '@hooks': resolve(__dirname, 'src/hooks'),
+      '@modules': resolve(__dirname, 'src/modules'),
       '@routes': resolve(__dirname, 'src/routes'),
       '@services': resolve(__dirname, 'src/services'),
       '@secure': resolve(__dirname, 'src/services/secure'),

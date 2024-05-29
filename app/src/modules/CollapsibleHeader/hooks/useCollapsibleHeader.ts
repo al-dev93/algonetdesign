@@ -5,34 +5,48 @@ import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/constants';
 import type { CollapsibleHeaderState } from '../types';
 
 /**
- * @description hook managing a collapsible header based on scroll position.
+ * @description custom hook managing a collapsible header based on scroll position.
  * It returns 3 states corresponding to the top of screen, scroll-up and scroll-down
  * @export
  * @param {React.MutableRefObject<number | undefined>} scrollOnNav
  * @return {*} {CollapsibleHeaderState}
  * @al-dev93
  */
-export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number | undefined>): CollapsibleHeaderState {
+export function useCollapsibleHeader(
+  scrollWithMenuItem: React.MutableRefObject<number | undefined>,
+  // scrollWithMenuItem: number | undefined,
+): CollapsibleHeaderState {
   // COMMENT: initial scroll position
   const [position, setPosition] = useState<number>(window.scrollY);
   // COMMENT: scroll state
   const [scrollState, setScrollState] = useState<CollapsibleHeaderState>(TOP_OF_SCREEN);
   // COMMENT: detects the scroll event and determines the direction based on the initial position and movement
   useEffect(() => {
+    /**
+     * @description
+     * @callback
+     * @al-dev93
+     */
     const handleScroll = () => {
       // COMMENT: indicates scrolling performed by the menu
-      const stateOfScroll = scrollOnNav;
+      // let stateOfScroll = scrollWithMenuItem.current;
       const moving: number = window.scrollY;
       /**
        *
        * @description determines the scroll state based on the initial position, movement and scrolling
        * via the menu (scrollOnNav)
+       * @callback
        * @return {*}  {CollapsibleHeaderState}
        * @al-dev93
        */
       const stateOfMovement = (): CollapsibleHeaderState => {
-        if (stateOfScroll.current === moving) return SCROLL_UP;
-        stateOfScroll.current = undefined;
+        // if (stateOfScroll === moving) return SCROLL_UP;
+        // stateOfScroll = undefined;
+        console.log(scrollWithMenuItem.current, moving);
+        if (scrollWithMenuItem.current === moving) return SCROLL_UP;
+        scrollWithMenuItem.current = undefined;
+        // if (scrollWithMenuItem === moving) return SCROLL_UP;
+        // scrollWithMenuItem = undefined;
         switch (true) {
           case position >= moving && moving !== TOP_OF_SCREEN:
             return SCROLL_UP;
@@ -42,13 +56,13 @@ export function useCollapsibleHeader(scrollOnNav: React.MutableRefObject<number 
             return TOP_OF_SCREEN;
         }
       };
-      setScrollState(stateOfMovement);
+      setScrollState(stateOfMovement());
       setPosition(moving);
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [position, scrollOnNav]);
+  }, [position]);
   return scrollState;
 }

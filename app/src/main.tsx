@@ -15,10 +15,9 @@ if (process.env.NODE_ENV === 'development') {
   const encryptedEmail = await encryptEmail('larose.alain@gmail.com', key);
   makeServer(encryptedEmail);
 }
-
 // TODO: À commenter
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router()} />
+    <RouterProvider router={router(key)} />
   </React.StrictMode>,
 );

@@ -13,7 +13,7 @@ export async function encryptEmail(email: string, key: CryptoKey) {
   };
 }
 
-export async function decryptData(encryptedData: string, iv: string, key: CryptoKey) {
+export async function decryptData(encryptedData: any, iv: any, key: any) {
   const encryptedBuffer = Uint8Array.from(atob(encryptedData), (c) => c.charCodeAt(0));
   const ivBuffer = Uint8Array.from(atob(iv), (c) => c.charCodeAt(0));
   const decryptedData = await window.crypto.subtle.decrypt({ name: 'AES-GCM', iv: ivBuffer }, key, encryptedBuffer);
