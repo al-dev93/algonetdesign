@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 import type { MenuItemProps } from '../../types';
+
 import style from './style.module.css';
 /**
  *
@@ -11,10 +12,10 @@ import style from './style.module.css';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function MenuItem({ onView, label, anchor }: MenuItemProps): JSX.Element {
+export function MenuItem({ isVisible, label, anchor }: MenuItemProps): JSX.Element {
   return (
     <li>
-      <NavLink className={onView ? style.onScrollView : style.regularItem} to={`/#${anchor}`}>
+      <NavLink className={isVisible ? style.onScrollView : style.regularItem} to={`/#${anchor}`}>
         {label}
       </NavLink>
     </li>

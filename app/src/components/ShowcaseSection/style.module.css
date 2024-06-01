@@ -1,0 +1,55 @@
+.hero {
+  padding-top: 254px;
+}
+
+.section {
+  height: auto;
+  min-height: 100vh;
+}
+
+.bodySection {
+  padding-bottom: 50px;
+}
+
+.titleSection {
+  width: max-content;
+  padding: 10px 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.catchPhrase,
+.slogan {
+  font-weight: 500;
+}
+
+.catchPhrase {
+  line-height: var(--lh-titration);
+  color: var(--secondary-color);
+  padding-bottom: 30px;
+}
+
+.slogan {
+  font-size: var(--fs-xl);
+  line-height: var(--lh-small);
+  padding-top: 5px;
+  color: var(--secondary-color);
+}
+
+.description {
+  color: var(--tertiary-color);
+}
+
+.hero .description {
+  padding-top: 20px;
+}
+
+.section .description {
+  margin-bottom: 10px;
+}
+
+.section .description:last-of-type {
+  margin-bottom: 50px;
+}

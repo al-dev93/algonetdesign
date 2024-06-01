@@ -6,6 +6,7 @@ import { dataAccounts } from './fixtures/mockedDataAccounts.ts';
 import { dataMenu } from './fixtures/mockedDataMenu.ts';
 
 import { EncryptedMail } from '@/types';
+import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections.ts';
 
 export function makeServer(encryptedEmail: EncryptedMail, { environment = 'development' } = {}) {
   return createServer({
@@ -14,6 +15,7 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
     fixtures: {
       accounts: dataAccounts(encryptedEmail),
       menuItems: dataMenu,
+      showcaseSections: dataShowcaseSections,
     },
     // serializers: serializerMockedApi,
     seeds(server) {
@@ -26,6 +28,9 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
       });
       this.get('/menuItems', (schema) => {
         return schema.all('menuItem');
+      });
+      this.get('/showcaseSections', (schema) => {
+        return schema.all('showcaseSection');
       });
       // this.get('/skills', (schema) => {
       //   return schema.skills.all();

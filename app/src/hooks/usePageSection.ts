@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 
-import type { OutletContextPage } from '@/types/index.ts';
+import type { OutletContextPage } from '@/types';
 
 /**
  *

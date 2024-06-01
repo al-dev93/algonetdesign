@@ -16,7 +16,12 @@ import style from './style.module.css';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function CollapsibleHeader({ logo, menu, onViewMap, scrollWithMenuItem }: CollapsibleHeaderProps): JSX.Element {
+export function CollapsibleHeader({
+  logo,
+  menu,
+  visibleSections,
+  scrollWithMenuItem,
+}: CollapsibleHeaderProps): JSX.Element {
   // COMMENT: uses the custom hook useCollapsibleHeader to get the
   //  display state based on the scroll direction
   const headerState = useCollapsibleHeader(scrollWithMenuItem);
@@ -46,7 +51,12 @@ export function CollapsibleHeader({ logo, menu, onViewMap, scrollWithMenuItem }:
       <nav>
         <ul>
           {menu?.map(({ label, anchor }) => (
-            <MenuItem key={anchor} onView={onViewMap?.current?.includes(anchor)} label={label} anchor={anchor} />
+            <MenuItem
+              key={anchor}
+              isVisible={visibleSections?.current[anchor as keyof typeof visibleSections.current]}
+              label={label}
+              anchor={anchor}
+            />
           ))}
         </ul>
       </nav>

@@ -1,11 +1,12 @@
 import { MenuType } from '@/modules/CollapsibleHeader/types';
-import { AccountLink } from '@/types/index';
+import { AccountLink, IndexPageSection } from '@/types/index';
 import { useEffect, useState } from 'react';
 
-export const useFetchData = () => {
+export const useFetchData = (index?: true) => {
   // stored fetch data
   const [accountList, setAccountList] = useState<AccountLink[]>();
   const [menuList, setMenuList] = useState<MenuType[]>();
+  const [sectionList, setSectionList] = useState<IndexPageSection[]>();
   //   const [projectList, setProjectList] = useState<ProjectInfo[]>();
   //   const [skillList, setSkillList] = useState<Skill[]>();
   //   const [errorData, setErrorData] = useState<object>();
@@ -20,6 +21,15 @@ export const useFetchData = () => {
      * autorun callback to fetch endpoint data
      */
     (function fetchData() {
+      if (index) {
+        fetch('http://localhost:5173/api/showcaseSections')
+          .then((response) => response.json())
+          .then((response) => {
+            const { showcaseSections } = response;
+            setSectionList(showcaseSections);
+          });
+        return;
+      }
       fetch('http://localhost:5173/api/accounts')
         .then((response) => response.json())
         .then(
@@ -74,5 +84,6 @@ export const useFetchData = () => {
   }, []);
 
   //   return { accountList, projectList, skillList, isLoadedData, errorData };
+  if (index) return { sectionList };
   return { accountList, menuList };
 };

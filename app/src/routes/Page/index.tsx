@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import { useFetchData } from '@hooks/useFetchData';
+
 import { CollapsibleHeader } from '@modules/CollapsibleHeader';
 import { SocialMediaNavBar } from '@modules/SocialMediaNavBar';
-import { useFetchData } from '@hooks/useFetchData';
 
 import logo from '@images/brand/logoAND.png';
 
-import type { OnSectionView, OutletContextPage, PageProps } from '@/types';
+import type { OutletContextPage, PageProps, VisibleSections } from '@/types';
+
 import style from './style.module.css';
 /**
  *
@@ -27,7 +29,7 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
   const scrollWithNav = useRef<number>();
   // COMMENT: stores the result of the useOnScreen hook applied to the
   //  Index page to indicate the on screen section in the menu
-  const outletContext = useRef<OnSectionView>();
+  const outletContext = useRef<VisibleSections>({});
   // COMMENT: sets the scroll level after a page change or after using
   //  the menu and the anchors elements
   useEffect((): void => {
@@ -50,7 +52,7 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
       <CollapsibleHeader
         logo={{ src: logo, alt: 'logo' }}
         menu={menuList}
-        onViewMap={outletContext}
+        visibleSections={outletContext}
         scrollWithMenuItem={scrollWithNav}
       />
       {accountList && (
