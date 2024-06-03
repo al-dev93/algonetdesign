@@ -1,14 +1,15 @@
 import { NavLink } from 'react-router-dom';
 
+import style from './style.module.css';
+
 import type { MenuItemProps } from '../../types';
 
-import style from './style.module.css';
 /**
  *
  * @description Menu item component. Contains the anchor to the section
  * and changes style when the section is displayed
  * @export
- * @param {MenuItemProps} { onView, label, anchor }
+ * @param {MenuItemProps} { isVisible, label, anchor }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */

@@ -1,15 +1,13 @@
 import { useEffect, useRef } from 'react';
 
-import { useOnScreen } from '@/hooks/useOnScreen';
-
-import { FormButton } from '../FormButton';
-
+import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
 
-import { CatchPhrase, ShowcaseSectionProps } from './types';
-import { SectionsMenu } from '@/types';
-
 import style from './style.module.css';
+import { FormButton } from '../FormButton';
+
+import type { CatchPhrase, ShowcaseSectionProps } from './types';
+import type { SectionsMenu } from '@/types';
 
 const handleClick = (): void => undefined;
 /**
@@ -19,12 +17,14 @@ const handleClick = (): void => undefined;
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-const ShowcaseSectionTitle = (title: string): JSX.Element => (
-  <div className={style.titleSection}>
-    <h2>{title}</h2>
-    <img src={titleLine} alt='line' />
-  </div>
-);
+function ShowcaseSectionTitle(title: string): JSX.Element {
+  return (
+    <div className={style.titleSection}>
+      <h2>{title}</h2>
+      <img src={titleLine} alt='line' />
+    </div>
+  );
+}
 /**
  *
  * @description // TODO complete
@@ -33,12 +33,15 @@ const ShowcaseSectionTitle = (title: string): JSX.Element => (
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-const ShowcaseHeroSection = (title: string, phrase: CatchPhrase): JSX.Element => (
-  <>
-    <p className={style[phrase.class]}>{phrase.content}</p>
-    <h1>{title}</h1>
-  </>
-);
+function ShowcaseHeroSection(title: string, phrase: CatchPhrase): JSX.Element {
+  const { content, styleClass } = phrase;
+  return (
+    <>
+      <p className={style[styleClass]}>{content}</p>
+      <h1>{title}</h1>
+    </>
+  );
+}
 /**
  *
  * @description // TODO: complete
@@ -65,9 +68,10 @@ export function ShowcaseSection({
   const isRefDisplayed = useOnScreen(sectionRef, '-100px');
 
   useEffect(() => {
+    const section = visibleSections;
     if (!anchor) return;
-    (visibleSections.current as SectionsMenu)[anchor as keyof SectionsMenu] = isRefDisplayed;
-  }, [isRefDisplayed]);
+    (section.current as SectionsMenu)[anchor as keyof SectionsMenu] = isRefDisplayed;
+  }, [anchor, isRefDisplayed, visibleSections]);
 
   return (
     <section className={style[type]} ref={sectionRef} id={anchor}>

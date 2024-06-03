@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
+import { router } from '@/router';
 import { encryptEmail, generateKey } from '@secure/mockedEncryption';
-import { makeServer } from '../src/services/miragejs/server';
-import { router } from '@/router.tsx';
+
+import { makeServer } from './services/miragejs/server';
 
 import '@styles/variables.css';
 import '@styles/global.css';

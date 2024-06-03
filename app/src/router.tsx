@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
+
 // COMMENT: importing application routes
-import { Error } from '@routes/Error';
 import { Admin } from '@routes/Admin';
-import { LegalNotice } from '@routes/LegalNotice';
-import { Index } from '@routes/Index';
 import { Auth } from '@routes/Auth';
+import { Error } from '@routes/Error';
+import { Index } from '@routes/Index';
+import { LegalNotice } from '@routes/LegalNotice';
 import { Page } from '@routes/Page';
 
 /**

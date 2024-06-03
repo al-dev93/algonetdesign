@@ -1,4 +1,4 @@
-import { SectionsRef, VisibleSections } from '@/types';
+import type { MenuType, SectionsRef, VisibleSections } from '@/types';
 
 // COMMENT: type used for logo insertion
 type ImageType = {
@@ -8,11 +8,6 @@ type ImageType = {
 
 // COMMENT: type used for the state of the collapsible header
 export type CollapsibleHeaderState = 0 | -1 | 1;
-// COMMENT: type of menu items
-export type MenuType = {
-  label: string;
-  anchor: SectionsRef;
-};
 // COMMENT: type of propos for the MenuItem component
 export type MenuItemProps = {
   isVisible?: boolean;

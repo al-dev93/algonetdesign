@@ -1,4 +1,5 @@
 import type { IconType } from '.';
+// import type { MenuType } from '@modules/CollapsibleHeader/types';
 
 // TODO: add comments
 export type AccountLink = {
@@ -10,13 +11,24 @@ export type AccountLink = {
   iv?: string;
 };
 
+// COMMENT: type of menu items
+export type MenuType = {
+  label: string;
+  anchor: SectionsRef;
+};
+
+// COMMENT: type of the layout context transmitted to the inserted pages
+export type OutletContextPage = {
+  outletContext: React.MutableRefObject<VisibleSections>;
+};
+
 export type SectionsRef = 'home' | 'work' | 'about' | 'services';
 
 export type IndexPageSection = {
   id: string;
   anchor?: SectionsRef;
   type: 'hero' | 'section';
-  catchPhrase?: { class: string; content: string };
+  catchPhrase?: { styleClass: string; content: string };
   title: string;
 };
 
@@ -27,9 +39,12 @@ export type SectionsMenu = {
   services: boolean;
 };
 
-export type VisibleSections = SectionsMenu | {};
+export type VisibleSections = SectionsMenu | object;
 
-// COMMENT: type of the layout context transmitted to the inserted pages
-export type OutletContextPage = {
-  outletContext: React.MutableRefObject<VisibleSections>;
+export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | null;
+
+export type FetchResultData = {
+  data: FetchData;
+  isLoaded: boolean;
+  error: string | null;
 };

@@ -1,7 +1,22 @@
+/**
+ *
+ * @description // TODO: add comment
+ * @export
+ * @return {*}
+ * @al-dev93
+ */
 export async function generateKey() {
   return window.crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
 }
-
+/**
+ *
+ * @description // TODO: add comment
+ * @export
+ * @param {string} email
+ * @param {CryptoKey} key
+ * @return {*}
+ * @al-dev93
+ */
 export async function encryptEmail(email: string, key: CryptoKey) {
   const iv = window.crypto.getRandomValues(new Uint8Array(12)); // Génération d'un IV
   const encoder = new TextEncoder();
@@ -12,8 +27,18 @@ export async function encryptEmail(email: string, key: CryptoKey) {
     iv: btoa(String.fromCharCode(...iv)),
   };
 }
-
-export async function decryptData(encryptedData: any, iv: any, key: any) {
+/**
+ *
+ * @description // TODO: add comment
+ * @export
+ * @param {any} encryptedData
+ * @param {any} iv
+ * @param {any} key
+ * @return {*} {Promise<string>}
+ * @al-dev93
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function decryptData(encryptedData: any, iv: any, key: any): Promise<string> {
   const encryptedBuffer = Uint8Array.from(atob(encryptedData), (c) => c.charCodeAt(0));
   const ivBuffer = Uint8Array.from(atob(iv), (c) => c.charCodeAt(0));
   const decryptedData = await window.crypto.subtle.decrypt({ name: 'AES-GCM', iv: ivBuffer }, key, encryptedBuffer);

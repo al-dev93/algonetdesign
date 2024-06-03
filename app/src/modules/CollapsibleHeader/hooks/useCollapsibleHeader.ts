@@ -8,7 +8,7 @@ import type { CollapsibleHeaderState } from '../types';
  * @description custom hook managing a collapsible header based on scroll position.
  * It returns 3 states corresponding to the top of screen, scroll-up and scroll-down
  * @export
- * @param {React.MutableRefObject<number | undefined>} scrollOnNav
+ * @param {React.MutableRefObject<number | undefined>} scrollWithMenuItem
  * @return {*} {CollapsibleHeaderState}
  * @al-dev93
  */
@@ -40,11 +40,12 @@ export function useCollapsibleHeader(
        * @al-dev93
        */
       const stateOfMovement = (): CollapsibleHeaderState => {
+        const useMenu = scrollWithMenuItem;
         // if (stateOfScroll === moving) return SCROLL_UP;
         // stateOfScroll = undefined;
         console.log(scrollWithMenuItem.current, moving);
-        if (scrollWithMenuItem.current === moving) return SCROLL_UP;
-        scrollWithMenuItem.current = undefined;
+        if (useMenu.current === moving) return SCROLL_UP;
+        useMenu.current = undefined;
         // if (scrollWithMenuItem === moving) return SCROLL_UP;
         // scrollWithMenuItem = undefined;
         switch (true) {
@@ -63,6 +64,6 @@ export function useCollapsibleHeader(
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [position]);
+  }, [position, scrollWithMenuItem]);
   return scrollState;
 }

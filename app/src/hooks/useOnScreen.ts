@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
  * @param {React.RefObject<HTMLElement>} sectionRef
  * @param {string} [rootMargin='0px']
  * @return {*}  {boolean}
+ * @al-dev93
  */
 export function useOnScreen(sectionRef: React.RefObject<HTMLElement>, rootMargin: string = '0px'): boolean {
   // COMMENT: state and setter for storing whether element is visible

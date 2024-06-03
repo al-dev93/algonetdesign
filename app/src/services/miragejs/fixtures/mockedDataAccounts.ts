@@ -1,4 +1,4 @@
-import { EncryptedMail } from '@/types';
+import type { EncryptedMail } from '@/types';
 
 // TODO: add comments
 export const dataAccounts = (encryptedEmail: EncryptedMail) => [

@@ -1,16 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-import { useFetchData } from '@hooks/useFetchData';
-
-import { CollapsibleHeader } from '@modules/CollapsibleHeader';
-import { SocialMediaNavBar } from '@modules/SocialMediaNavBar';
-
+import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
 import logo from '@images/brand/logoAND.png';
+import { CollapsibleHeader } from '@modules/CollapsibleHeader';
+
+import style from './style.module.css';
 
 import type { OutletContextPage, PageProps, VisibleSections } from '@/types';
 
-import style from './style.module.css';
 /**
  *
  * @description layout page containing common elements
@@ -21,9 +19,6 @@ import style from './style.module.css';
  */
 export function Page({ cryptoKey }: PageProps): JSX.Element {
   // TODO: add comments
-  const { accountList, menuList } = useFetchData();
-  const socialContactNavBar = accountList?.filter((item) => item.onPage);
-  console.log(accountList, menuList);
   const { pathname, hash, key } = useLocation();
   // COMMENT: scroll level achieved after using the navigation menu
   const scrollWithNav = useRef<number>();
@@ -51,18 +46,16 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
     <div className={style.page}>
       <CollapsibleHeader
         logo={{ src: logo, alt: 'logo' }}
-        menu={menuList}
         visibleSections={outletContext}
         scrollWithMenuItem={scrollWithNav}
       />
-      {accountList && (
-        <SocialMediaNavBar
-          className={style.socialMediaNavBar}
-          type='left-nav'
-          buttons={socialContactNavBar}
-          cryptoKey={cryptoKey}
-        />
-      )}
+
+      <SocialMediaNavBar
+        className={style.socialMediaNavBar}
+        type='left-nav'
+        url='http://localhost:5173/api/accounts'
+        cryptoKey={cryptoKey}
+      />
 
       <main className={style.main}>
         <Outlet context={{ outletContext } satisfies OutletContextPage} />

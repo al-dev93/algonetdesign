@@ -2,8 +2,10 @@ import IonIcon from '@reacticons/ionicons';
 
 import { decryptData } from '@services/secure/mockedEncryption';
 
-import type { SocialMediaButtonProps } from '../types';
 import style from './style.module.css';
+
+import type { SocialMediaButtonProps } from '../types';
+
 /**
  *
  * @description navigation bar button component. For mail links,
@@ -15,7 +17,7 @@ import style from './style.module.css';
  * @al-dev93
  */
 export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaButtonProps): JSX.Element {
-  const { icon, address, iv } = button;
+  const { icon, address, iv, service } = button;
   /**
    *
    * @description callback function triggered by the button's onClick event. When
@@ -30,7 +32,7 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
     e.preventDefault();
     const mailTo = `mailto:${await decryptData(address, iv, cryptoKey)}`;
     window.location.href = mailTo;
-    return;
+    return undefined;
   }
 
   return (
@@ -39,6 +41,8 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
       href={button.address}
       target='_blank'
       rel='noopener noreferrer'
+      type='button'
+      aria-label={service}
       onClick={button.service === 'gmail' ? handleClick : undefined}
     >
       <IonIcon className={`${className} ${style.iconStyle}`} name={icon} />

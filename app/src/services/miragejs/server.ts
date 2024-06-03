@@ -1,13 +1,20 @@
 import { createServer } from 'miragejs';
 
-import { mockedApiModels } from './models/mockedApiModels.ts';
+import { dataAccounts } from './fixtures/mockedDataAccounts';
+import { dataMenu } from './fixtures/mockedDataMenu';
+import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections';
+import { mockedApiModels } from './models/mockedApiModels';
 
-import { dataAccounts } from './fixtures/mockedDataAccounts.ts';
-import { dataMenu } from './fixtures/mockedDataMenu.ts';
-
-import { EncryptedMail } from '@/types';
-import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections.ts';
-
+import type { EncryptedMail } from '@/types';
+/**
+ *
+ * @description //TODO: add comment
+ * @export
+ * @param {EncryptedMail} encryptedEmail
+ * @param {*} [{ environment = 'development' }={}]
+ * @return {*}
+ * @al-dev93
+ */
 export function makeServer(encryptedEmail: EncryptedMail, { environment = 'development' } = {}) {
   return createServer({
     environment,

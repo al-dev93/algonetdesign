@@ -1,9 +1,12 @@
-import { SocialMediaButton } from './SocialMediaButton';
-
+import { AccountLink } from '@/types';
+import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
 
-import type { SocialMediaNavBarProps } from './types';
+import { SocialMediaButton } from './SocialMediaButton';
 import style from './style.module.css';
+
+import type { SocialMediaNavBarProps } from './types';
+
 /**
  *
  * @description additional navigation bar component. Includes
@@ -14,6 +17,7 @@ import style from './style.module.css';
  *   changeLinkColor,
  *   type,
  *   buttons,
+ *   url,
  *   cryptoKey,
  * }
  * @return {*}  {JSX.Element}
@@ -24,13 +28,21 @@ export function SocialMediaNavBar({
   changeLinkColor,
   type,
   buttons,
+  url,
   cryptoKey,
 }: SocialMediaNavBarProps): JSX.Element {
   const isVerticalNav = type === 'left-nav' || type === 'right-nav';
+  // COMMENT: determine if we should fetch data based on the presence of buttons
+  const shouldFetch = !buttons;
+  // COMMENT: only use useFetch if shouldFetch is true
+  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  // COMMENT: otherwise use buttons
+  const data = (buttons || (fetchedData as AccountLink[]))?.filter((item) => item.onPage);
+
   return (
     <nav className={`${className} ${style.socialMediaNavBar}`}>
       <ul className={isVerticalNav ? style.VerticalNavBar : style.horizontalNavBar}>
-        {buttons?.map((element) => (
+        {data?.map((element) => (
           <li key={`${element.service}`}>
             <SocialMediaButton
               className={`${style.externalLink} ${changeLinkColor}`}

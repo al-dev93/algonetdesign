@@ -1,6 +1,6 @@
-import { MenuType } from '@modules/CollapsibleHeader/types';
-import { AccountLink, IndexPageSection } from '@/types';
-import { belongsTo, hasMany, Model, Serializer } from 'miragejs';
+import { Model } from 'miragejs';
+
+import type { AccountLink, IndexPageSection, MenuType } from '@/types';
 
 export const mockedApiModels = {
   account: Model.extend<Partial<AccountLink>>({}),

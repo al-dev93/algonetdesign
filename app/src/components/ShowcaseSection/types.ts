@@ -1,7 +1,7 @@
-import { SectionsRef, VisibleSections } from '@/types';
+import type { SectionsRef, VisibleSections } from '@/types';
 
 export type CatchPhrase = {
-  class: string;
+  styleClass: string;
   content: string;
 };
 

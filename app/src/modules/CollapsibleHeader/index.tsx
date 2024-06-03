@@ -1,31 +1,30 @@
 import { Link } from 'react-router-dom';
-import { useCollapsibleHeader } from './hooks/useCollapsibleHeader';
+
+import { useFetchData } from '@/hooks/useFetchData';
+import { MenuType } from '@/types';
 
 import { MenuItem } from './components/MenuItem';
-
+import { useCollapsibleHeader } from './hooks/useCollapsibleHeader';
+import style from './style.module.css';
 import { SCROLL_DOWN, TOP_OF_SCREEN } from './utils/constants';
 
 import type { CollapsibleHeaderProps, CollapsibleHeaderState } from './types';
-import style from './style.module.css';
+
 /**
  *
  * @description Header component including a logo and a menu. It collapses when
  * the user scrolls down and expands with hover effect when the user scrolls up
  * @export
- * @param {CollapsibleHeaderProps} { logo, menu, onViewMap, scrollWithOption }
+ * @param {CollapsibleHeaderProps} { logo, visibleSections, scrollWithMenuItem }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function CollapsibleHeader({
-  logo,
-  menu,
-  visibleSections,
-  scrollWithMenuItem,
-}: CollapsibleHeaderProps): JSX.Element {
+export function CollapsibleHeader({ logo, visibleSections, scrollWithMenuItem }: CollapsibleHeaderProps): JSX.Element {
+  const { data } = useFetchData('http://localhost:5173/api/menuItems', { method: 'GET' });
   // COMMENT: uses the custom hook useCollapsibleHeader to get the
   //  display state based on the scroll direction
   const headerState = useCollapsibleHeader(scrollWithMenuItem);
-  const { src, alt } = logo ? logo : { src: undefined, alt: undefined };
+  const { src, alt } = logo || { src: undefined, alt: undefined };
   /**
    *
    * @description extracts the CSS class name based on the display states
@@ -50,7 +49,7 @@ export function CollapsibleHeader({
       )}
       <nav>
         <ul>
-          {menu?.map(({ label, anchor }) => (
+          {(data as MenuType[])?.map(({ label, anchor }) => (
             <MenuItem
               key={anchor}
               isVisible={visibleSections?.current[anchor as keyof typeof visibleSections.current]}
