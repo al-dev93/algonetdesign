@@ -1,4 +1,4 @@
-import { LegacyRef, forwardRef } from 'react';
+import { LegacyRef, forwardRef, memo } from 'react';
 
 import type { FormButtonProps } from './types';
 /**
@@ -9,7 +9,7 @@ import type { FormButtonProps } from './types';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function FormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTMLButtonElement>): JSX.Element {
+function MemoizedFormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTMLButtonElement>): JSX.Element {
   const { className, form, onClick, name, disabled } = props;
   return (
     <button
@@ -25,6 +25,6 @@ function FormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTMLButtonElement
   );
 }
 
-export const FormButton = forwardRef(
-  FormButtonRef as unknown as React.ForwardRefRenderFunction<HTMLButtonElement, FormButtonProps>,
+export const FormButton = memo(
+  forwardRef(MemoizedFormButtonRef as unknown as React.ForwardRefRenderFunction<HTMLButtonElement, FormButtonProps>),
 );

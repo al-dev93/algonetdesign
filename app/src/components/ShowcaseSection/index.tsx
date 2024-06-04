@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
@@ -56,7 +56,7 @@ function ShowcaseHeroSection(title: string, phrase: CatchPhrase): JSX.Element {
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function ShowcaseSection({
+function MemoizedShowcaseSection({
   anchor,
   catchPhrase,
   title,
@@ -72,6 +72,7 @@ export function ShowcaseSection({
     if (!anchor) return;
     (section.current as SectionsMenu)[anchor as keyof SectionsMenu] = isRefDisplayed;
   }, [anchor, isRefDisplayed, visibleSections]);
+  console.log(`section ${anchor}`);
 
   return (
     <section className={style[type]} ref={sectionRef} id={anchor}>
@@ -83,3 +84,5 @@ export function ShowcaseSection({
     </section>
   );
 }
+
+export const ShowcaseSection = memo(MemoizedShowcaseSection);

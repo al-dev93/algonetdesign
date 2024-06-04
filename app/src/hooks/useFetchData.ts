@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { FetchData, FetchResultData } from '@/types';
 /**
@@ -14,9 +14,10 @@ export function useFetchData(url: string | undefined | null, options: object): F
   const [data, setData] = useState<FetchData>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const hasFetched = useRef<boolean>(false);
 
   useEffect(() => {
-    if (!url) return undefined;
+    if (!url || hasFetched.current) return undefined;
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -35,6 +36,7 @@ export function useFetchData(url: string | undefined | null, options: object): F
         (fetchData) => {
           setData(url ? fetchData[url.substring(26)] : fetchData);
           setIsLoaded(true);
+          hasFetched.current = true;
         },
         (fetchError) => {
           if (fetchError.name !== 'AbortError') {

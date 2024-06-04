@@ -1,3 +1,4 @@
+// TODO: add comment
 export type IconType =
   | 'paper-plane-outline'
   | 'logo-linkedin'

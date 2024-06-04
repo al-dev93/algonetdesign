@@ -1,11 +1,16 @@
-import { Model } from 'miragejs';
+import { Model, belongsTo, hasMany } from 'miragejs';
 
-import type { AccountLink, IndexPageSection, MenuType } from '@/types';
+import type { AccountLink, DetailsSection, IndexPageSection, MenuType } from '@/types';
 
 export const mockedApiModels = {
   account: Model.extend<Partial<AccountLink>>({}),
   menuItem: Model.extend<Partial<MenuType>>({}),
-  showcaseSection: Model.extend<Partial<IndexPageSection>>({}),
+  showcaseSection: Model.extend<Partial<IndexPageSection>>({
+    details: hasMany(),
+  }),
+  detail: Model.extend<Partial<DetailsSection>>({
+    section: belongsTo('showcaseSection'),
+  }),
   // skill: Model,
   // project: Model.extend({
   //   deliverables: hasMany(),

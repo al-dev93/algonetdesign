@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { useFetchData } from '@/hooks/useFetchData';
-import { MenuType } from '@/types';
+import { useFetchData } from '@hooks/useFetchData';
 
 import { MenuItem } from './components/MenuItem';
 import { useCollapsibleHeader } from './hooks/useCollapsibleHeader';
@@ -9,6 +8,7 @@ import style from './style.module.css';
 import { SCROLL_DOWN, TOP_OF_SCREEN } from './utils/constants';
 
 import type { CollapsibleHeaderProps, CollapsibleHeaderState } from './types';
+import type { MenuType } from '@/types';
 
 /**
  *
@@ -25,6 +25,7 @@ export function CollapsibleHeader({ logo, visibleSections, scrollWithMenuItem }:
   //  display state based on the scroll direction
   const headerState = useCollapsibleHeader(scrollWithMenuItem);
   const { src, alt } = logo || { src: undefined, alt: undefined };
+
   /**
    *
    * @description extracts the CSS class name based on the display states

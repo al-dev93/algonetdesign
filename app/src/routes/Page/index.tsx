@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
-import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
 import logo from '@images/brand/logoAND.png';
 import { CollapsibleHeader } from '@modules/CollapsibleHeader';
 
 import style from './style.module.css';
 
 import type { OutletContextPage, PageProps, VisibleSections } from '@/types';
+import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
 
 /**
  *

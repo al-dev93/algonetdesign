@@ -6,6 +6,7 @@ import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections';
 import { mockedApiModels } from './models/mockedApiModels';
 
 import type { EncryptedMail } from '@/types';
+import { detailsShowcaseSections } from './fixtures/mockedDetailsShowcaseSections';
 /**
  *
  * @description //TODO: add comment
@@ -23,6 +24,7 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
       accounts: dataAccounts(encryptedEmail),
       menuItems: dataMenu,
       showcaseSections: dataShowcaseSections,
+      detailsSections: detailsShowcaseSections,
     },
     // serializers: serializerMockedApi,
     seeds(server) {

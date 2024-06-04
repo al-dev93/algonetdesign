@@ -34,6 +34,7 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
     window.location.href = mailTo;
     return undefined;
   }
+  // console.log('button');
 
   return (
     <a

@@ -28,6 +28,8 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint', 'prettier', 'import'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react/display-name': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': [2, { caseSensitive: false }],
@@ -44,6 +46,9 @@ module.exports = {
     ],
   },
   settings: {
+    react: {
+      version: 'detect',
+    },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },

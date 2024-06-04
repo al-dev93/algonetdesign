@@ -1,4 +1,3 @@
-import { AccountLink } from '@/types';
 import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
 
@@ -6,11 +5,14 @@ import { SocialMediaButton } from './SocialMediaButton';
 import style from './style.module.css';
 
 import type { SocialMediaNavBarProps } from './types';
+import type { AccountLink } from '@/types';
+import { memo } from 'react';
 
 /**
  *
  * @description additional navigation bar component. Includes
  * buttons that link to social network, websites, and documents
+ * // TODO: add comment memoized
  * @export
  * @param {SocialMediaNavBarProps} {
  *   className,
@@ -23,7 +25,7 @@ import type { SocialMediaNavBarProps } from './types';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function SocialMediaNavBar({
+function MemoizedSocialMediaNavBar({
   className,
   changeLinkColor,
   type,
@@ -60,3 +62,5 @@ export function SocialMediaNavBar({
     </nav>
   );
 }
+
+export const SocialMediaNavBar = memo(MemoizedSocialMediaNavBar);

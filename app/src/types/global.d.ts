@@ -1,5 +1,6 @@
+import { BelongsTo, HasMany } from 'miragejs/-types';
+
 import type { IconType } from '.';
-// import type { MenuType } from '@modules/CollapsibleHeader/types';
 
 // TODO: add comments
 export type AccountLink = {
@@ -30,6 +31,7 @@ export type IndexPageSection = {
   type: 'hero' | 'section';
   catchPhrase?: { styleClass: string; content: string };
   title: string;
+  details: HasMany<string>;
 };
 
 export type SectionsMenu = {
@@ -41,6 +43,16 @@ export type SectionsMenu = {
 
 export type VisibleSections = SectionsMenu | object;
 
+export type DetailsSection = {
+  id: string;
+  anchorId: string;
+  htmlTag: string;
+  styleClass: string;
+  content: string;
+  section: BelongsTo<string>;
+};
+
+// TODO: add comment
 export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | null;
 
 export type FetchResultData = {
