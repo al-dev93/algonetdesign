@@ -3,10 +3,12 @@ import { createServer } from 'miragejs';
 import { dataAccounts } from './fixtures/mockedDataAccounts';
 import { dataMenu } from './fixtures/mockedDataMenu';
 import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections';
+import { detailShowcaseSections } from './fixtures/mockedDetailsShowcaseSections';
 import { mockedApiModels } from './models/mockedApiModels';
+import { serializerMockedApi } from './serializers/mockedApiSerializers';
 
 import type { EncryptedMail } from '@/types';
-import { detailsShowcaseSections } from './fixtures/mockedDetailsShowcaseSections';
+
 /**
  *
  * @description //TODO: add comment
@@ -16,7 +18,7 @@ import { detailsShowcaseSections } from './fixtures/mockedDetailsShowcaseSection
  * @return {*}
  * @al-dev93
  */
-export function makeServer(encryptedEmail: EncryptedMail, { environment = 'development' } = {}) {
+export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'development' } = {}) {
   return createServer({
     environment,
     models: mockedApiModels,
@@ -24,9 +26,9 @@ export function makeServer(encryptedEmail: EncryptedMail, { environment = 'devel
       accounts: dataAccounts(encryptedEmail),
       menuItems: dataMenu,
       showcaseSections: dataShowcaseSections,
-      detailsSections: detailsShowcaseSections,
+      detailSections: detailShowcaseSections,
     },
-    // serializers: serializerMockedApi,
+    serializers: serializerMockedApi,
     seeds(server) {
       server.loadFixtures();
     },

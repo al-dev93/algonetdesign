@@ -6,8 +6,8 @@ import titleLine from '@images/decorations/title_line.svg';
 import style from './style.module.css';
 import { FormButton } from '../FormButton';
 
-import type { CatchPhrase, ShowcaseSectionProps } from './types';
-import type { SectionsMenu } from '@/types';
+import type { ShowcaseSectionProps } from './types';
+import type { DetailSection, SectionsMenu } from '@/types';
 
 const handleClick = (): void => undefined;
 /**
@@ -17,7 +17,7 @@ const handleClick = (): void => undefined;
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function ShowcaseSectionTitle(title: string): JSX.Element {
+function showcaseSectionTitle(title: string): JSX.Element {
   return (
     <div className={style.titleSection}>
       <h2>{title}</h2>
@@ -25,22 +25,16 @@ function ShowcaseSectionTitle(title: string): JSX.Element {
     </div>
   );
 }
-/**
- *
- * @description // TODO complete
- * @param {string} title
- * @param {CatchPhrase} phrase
- * @return {*}  {JSX.Element}
- * @al-dev93
- */
-function ShowcaseHeroSection(title: string, phrase: CatchPhrase): JSX.Element {
-  const { content, styleClass } = phrase;
-  return (
-    <>
-      <p className={style[styleClass]}>{content}</p>
-      <h1>{title}</h1>
-    </>
-  );
+
+function createElement({ tag, name, content }: DetailSection): JSX.Element | undefined {
+  switch (tag) {
+    case 'p':
+      return <p className={name && style[name]}>{content}</p>;
+    case 'h1':
+      return <h1 className={name && style[name]}>{content}</h1>;
+    default:
+      return <div>ici vient le contenu de la section</div>;
+  }
 }
 /**
  *
@@ -56,16 +50,11 @@ function ShowcaseHeroSection(title: string, phrase: CatchPhrase): JSX.Element {
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function MemoizedShowcaseSection({
-  anchor,
-  catchPhrase,
-  title,
-  type,
-  visibleSections,
-}: ShowcaseSectionProps): JSX.Element {
+function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: ShowcaseSectionProps): JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   // TODO: add comment
   const isRefDisplayed = useOnScreen(sectionRef, '-100px');
+  console.log(content);
 
   useEffect(() => {
     const section = visibleSections;
@@ -75,10 +64,10 @@ function MemoizedShowcaseSection({
   console.log(`section ${anchor}`);
 
   return (
-    <section className={style[type]} ref={sectionRef} id={anchor}>
+    <section className={title ? style.section : style.hero} ref={sectionRef} id={anchor}>
       <div className={style.bodySection}>
-        {type === 'hero' ? ShowcaseHeroSection(title, catchPhrase as CatchPhrase) : ShowcaseSectionTitle(title)}
-        <div>ici vient le contenu de la section</div>
+        {title ? showcaseSectionTitle(title) : null}
+        {content.map((element) => createElement(element))}
       </div>
       <FormButton name='Contact' onClick={handleClick} />
     </section>

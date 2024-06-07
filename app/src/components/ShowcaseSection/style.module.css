@@ -38,12 +38,10 @@
   color: var(--secondary-color);
 }
 
+.businessOverview,
 .description {
-  color: var(--tertiary-color);
-}
-
-.hero .description {
   padding-top: 20px;
+  color: var(--tertiary-color);
 }
 
 .section .description {

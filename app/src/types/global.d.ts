@@ -1,5 +1,3 @@
-import { BelongsTo, HasMany } from 'miragejs/-types';
-
 import type { IconType } from '.';
 
 // TODO: add comments
@@ -28,10 +26,8 @@ export type SectionsRef = 'home' | 'work' | 'about' | 'services';
 export type IndexPageSection = {
   id: string;
   anchor?: SectionsRef;
-  type: 'hero' | 'section';
-  catchPhrase?: { styleClass: string; content: string };
-  title: string;
-  details: HasMany<string>;
+  title?: string;
+  content: DetailSection[];
 };
 
 export type SectionsMenu = {
@@ -43,13 +39,11 @@ export type SectionsMenu = {
 
 export type VisibleSections = SectionsMenu | object;
 
-export type DetailsSection = {
+export type DetailSection = {
   id: string;
-  anchorId: string;
-  htmlTag: string;
-  styleClass: string;
-  content: string;
-  section: BelongsTo<string>;
+  tag: string;
+  name?: string;
+  content?: string;
 };
 
 // TODO: add comment

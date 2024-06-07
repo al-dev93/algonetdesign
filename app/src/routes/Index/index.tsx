@@ -1,10 +1,10 @@
+import { ShowcaseSection } from '@components/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
 import { usePageSection } from '@hooks/usePageSection';
 
 import style from './style.module.css';
 
 import type { IndexPageSection } from '@/types';
-import { ShowcaseSection } from '@components/ShowcaseSection';
 
 /**
  *
@@ -21,15 +21,8 @@ export function Index(): JSX.Element {
 
   return (
     <div className={style.wrapperIndex}>
-      {(data as IndexPageSection[])?.map(({ id, anchor, title, type, catchPhrase }) => (
-        <ShowcaseSection
-          key={id}
-          anchor={anchor}
-          title={title}
-          type={type}
-          catchPhrase={catchPhrase}
-          visibleSections={outletContext}
-        />
+      {(data as IndexPageSection[])?.map(({ id, content, anchor, title }) => (
+        <ShowcaseSection key={id} content={content} anchor={anchor} title={title} visibleSections={outletContext} />
       ))}
     </div>
   );

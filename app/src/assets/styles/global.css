@@ -59,13 +59,17 @@ html {
 
 body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   overflow-x: hidden;
   margin: 0;
   font-family: var(--font-regular);
   font-size: var(--fs-sm);
   line-height: var(--lh-textual);
   font-weight: normal;
+}
+
+.root {
+  min-height: 100vh;
 }
 
 h1,

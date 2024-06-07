@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
 
@@ -6,7 +8,6 @@ import style from './style.module.css';
 
 import type { SocialMediaNavBarProps } from './types';
 import type { AccountLink } from '@/types';
-import { memo } from 'react';
 
 /**
  *

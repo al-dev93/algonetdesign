@@ -1,14 +1,8 @@
-import type { SectionsRef, VisibleSections } from '@/types';
-
-export type CatchPhrase = {
-  styleClass: string;
-  content: string;
-};
+import type { DetailSection, SectionsRef, VisibleSections } from '@/types';
 
 export type ShowcaseSectionProps = {
+  content: DetailSection[];
   anchor?: SectionsRef;
-  type: 'hero' | 'section';
-  catchPhrase?: CatchPhrase;
-  title: string;
+  title?: string;
   visibleSections: React.MutableRefObject<VisibleSections>;
 };

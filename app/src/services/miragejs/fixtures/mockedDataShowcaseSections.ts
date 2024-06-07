@@ -2,31 +2,29 @@ export const dataShowcaseSections = [
   {
     id: '1',
     anchor: 'home',
-    type: 'hero',
-    catchPhrase: { class: 'catchPhrase', content: 'Donnez vie à vos interfaces' },
-    title: 'AlgoNetDesign',
+    detailSectionIds: ['1', '2', '3', '4'],
   },
   {
     id: '2',
     anchor: 'work',
-    type: 'section',
     title: 'Principales réalisations',
+    detailSectionIds: ['5'],
   },
   {
     id: '3',
-    type: 'section',
     title: 'Autres réalisations',
+    detailSectionIds: [],
   },
   {
     id: '4',
     anchor: 'about',
-    type: 'section',
     title: "À propos d'AlgoNetDesign",
+    detailSectionIds: [],
   },
   {
     id: '5',
     anchor: 'services',
-    type: 'section',
     title: "Les services d'AlgoNetDesign",
+    detailSectionIds: [],
   },
 ];

@@ -1,13 +1,13 @@
 import type { EncryptedMail } from '@/types';
 
 // TODO: add comments
-export const dataAccounts = (encryptedEmail: EncryptedMail) => [
+export const dataAccounts = (encryptedEmail?: EncryptedMail) => [
   {
     service: 'gmail',
     icon: 'paper-plane-outline',
     onPage: true,
-    address: encryptedEmail.encryptedEmail,
-    iv: encryptedEmail.iv,
+    address: encryptedEmail?.encryptedEmail,
+    iv: encryptedEmail?.iv,
   },
   {
     service: 'linkedin',
