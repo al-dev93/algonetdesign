@@ -6,4 +6,6 @@ export type IconType =
   | 'logo-npm'
   | 'logo-figma'
   | 'open-outline'
-  | 'document-outline';
+  | 'document-outline'
+  | 'chevron-back-outline'
+  | 'chevron-forward-outline';

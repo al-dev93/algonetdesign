@@ -1,0 +1,38 @@
+.tag {
+  display: flex;
+  align-items: center;
+  padding: 5px 8px;
+  font-family: var(--font-accessories);
+  font-size: var(--fs-xxs);
+  font-weight: 500;
+  color: var(--rich-black);
+}
+
+.tag.thinned {
+  padding: 2px 0px;
+}
+
+.tag.error {
+  position: absolute;
+  line-height: var(--lh-small);
+  font-weight: 600;
+  color: var(--primary-alert-color);
+}
+
+/* .tag.bulleted::before {
+  content: url('../../assets/icons/arrow_right_outline_secondary_color.svg');
+  width: 10px;
+  height: 13px;
+} */
+
+/* .tag.bulleted {
+  width: 154px;
+  gap: 5px;
+} */
+
+.tag.filled {
+  /* border: solid thin var(--quaternary-color); */
+  color: var(--rich-black);
+  background-color: var(--light-primary-color);
+  border-radius: var(--br-xs);
+}
