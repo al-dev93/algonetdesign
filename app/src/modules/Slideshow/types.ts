@@ -1,8 +1,8 @@
 import { ProjectData } from '@/types';
 
 export type SlideshowProps = {
-  projectData: ProjectData[];
-  url: string;
+  projectData?: ProjectData[];
+  url?: string;
 };
 
 export type SlideshowDotsProps = {
@@ -20,7 +20,7 @@ export type ScrollButtonsProps = {
 };
 
 export type PicturesScrollerProps = {
-  pictoLinkList: { link: string | undefined; picture: string }[];
+  pictoLinkList: { link: string | undefined; picture: string; title: string }[];
   slide: Slide;
   duration?: number;
   state: State;

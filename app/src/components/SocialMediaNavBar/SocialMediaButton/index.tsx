@@ -43,10 +43,10 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
       target='_blank'
       rel='noopener noreferrer'
       type='button'
-      aria-label={service}
+      aria-label={`Link to ${service}`}
       onClick={button.service === 'gmail' ? handleClick : undefined}
     >
-      <IonIcon className={`${className} ${style.iconStyle}`} name={icon} />
+      <IonIcon className={`${className} ${style.iconStyle}`} name={icon} role='img' aria-label={`Icon ${service}`} />
     </a>
   );
 }

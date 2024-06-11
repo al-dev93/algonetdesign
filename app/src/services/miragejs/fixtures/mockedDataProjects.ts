@@ -3,7 +3,7 @@ import kasa from '@images/photos/kasa.png';
 import lesPetitsPlats from '@images/photos/les_petits_plats.png';
 import sportSee from '@images/photos/sport_see.png';
 
-export const dataProjects = [
+export const projects = [
   {
     id: 'P6FEYE-al-2207',
     title: 'FishEye',
@@ -12,7 +12,7 @@ export const dataProjects = [
     tags: ['HTML', 'accessibilité', 'JavaScript', 'CSS', 'GitHub'],
     picture: fishEye,
     display: 'slideshow',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['1', '2'],
   },
   {
     id: 'p7LPPA-al-2208',
@@ -22,7 +22,7 @@ export const dataProjects = [
     tags: ['HTML', 'JavaScript', 'CSS', 'Bootstrap', 'Responsive design', 'GitHub'],
     picture: lesPetitsPlats,
     display: 'slideshow',
-    services: ['github', 'document', 'external'],
+    projectDeliverableIds: ['3', '4', '5'],
   },
   {
     id: 'p12ssee-al-2301',
@@ -32,7 +32,7 @@ export const dataProjects = [
     tags: ['React', 'Recharts', 'API REST', 'Modules CSS', 'GitHub', 'JSDoc'],
     picture: sportSee,
     display: 'slideshow',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['6', '7'],
   },
   {
     id: 'p11kasa-al-2212',
@@ -42,7 +42,7 @@ export const dataProjects = [
     tags: ['React', 'React Router', 'modules CSS', 'Responsive design', 'GitHub'],
     picture: kasa,
     display: 'slideshow',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['8', '9'],
   },
   {
     id: 'P3OHMY-al-2205',
@@ -51,7 +51,7 @@ export const dataProjects = [
     tags: ['HTML', 'Animations CSS', 'Sass', 'Responsive design', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['10', '11'],
   },
   {
     id: 'P4GAME-al-2206',
@@ -60,7 +60,7 @@ export const dataProjects = [
     tags: ['HTML', 'JavaScript', 'CSS', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['12', '13'],
   },
   {
     id: 'P9BILD-al-2211',
@@ -69,7 +69,7 @@ export const dataProjects = [
     tags: ['JavaScript', 'Jest', 'Testing Library', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github'],
+    projectDeliverableIds: ['14'],
   },
   {
     id: 'p13agba-al-2302',
@@ -78,7 +78,7 @@ export const dataProjects = [
     tags: ['React', 'React Router', 'Redux', 'API Rest', 'Modules CSS', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github', 'external'],
+    projectDeliverableIds: ['15', '16'],
   },
   {
     id: 'p14hnet-al-2303',
@@ -88,7 +88,7 @@ export const dataProjects = [
     tags: ['React', 'plugin npm', 'Modules CSS', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github', 'npm', 'external'],
+    projectDeliverableIds: ['17', '18', '19'],
   },
   {
     id: 'sasu-al-2307',
@@ -97,6 +97,6 @@ export const dataProjects = [
     tags: ['React', 'TypeScript', 'Node.js', 'Modules CSS', 'Figma', 'GitHub'],
     picture: '',
     display: 'card',
-    services: ['github', 'figma'],
+    projectDeliverableIds: ['20', '21'],
   },
 ];

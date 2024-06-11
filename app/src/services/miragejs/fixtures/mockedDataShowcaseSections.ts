@@ -1,4 +1,4 @@
-export const dataShowcaseSections = [
+export const showcaseSections = [
   {
     id: '1',
     anchor: 'home',

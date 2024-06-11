@@ -1,8 +1,15 @@
 import { Model, belongsTo, hasMany } from 'miragejs';
 
-import type { AccountLink, MenuType, MockedDetailsSection, MockedIndexPageSection } from '@/types';
+import type {
+  AccountLink,
+  MenuType,
+  MockedDeliverable,
+  MockedDetailsSection,
+  MockedIndexPageSection,
+  MockedProjectData,
+} from '@/types';
 
-export const mockedApiModels = {
+export const models = {
   account: Model.extend<Partial<AccountLink>>({}),
   menuItem: Model.extend<Partial<MenuType>>({}),
   showcaseSection: Model.extend<Partial<MockedIndexPageSection>>({
@@ -11,18 +18,15 @@ export const mockedApiModels = {
   detailSection: Model.extend<Partial<MockedDetailsSection>>({
     showcaseSection: belongsTo(),
   }),
+  project: Model.extend<Partial<MockedProjectData>>({
+    projectDeliverables: hasMany(),
+  }),
+  projectDeliverable: Model.extend<Partial<MockedDeliverable>>({
+    project: belongsTo(),
+    account: belongsTo(),
+  }),
   // skill: Model,
   // project: Model.extend({
   //   deliverables: hasMany(),
   // }),
-  // deliverable: Model.extend({
-  //   project: belongsTo(),
-  // }),
 };
-
-// export const serializerMockedApi = {
-//   project: Serializer.extend({
-//     include: ['deliverables'],
-//     embed: true,
-//   }),
-// };

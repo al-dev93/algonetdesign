@@ -45,15 +45,28 @@ export function PicturesScroller({ pictoLinkList, slide, state, duration = 600 }
   return (
     <div className={style.picturesScroller}>
       <div className={style.picturesToScroll} style={slideEffectStyle.current}>
-        <a href={pictoLinkList[pictoLinkList.length - 1].link} className={style.slide} aria-label='gg'>
+        <a
+          href={pictoLinkList[pictoLinkList.length - 1].link}
+          className={style.slide}
+          aria-label={`Link to ${pictoLinkList[pictoLinkList.length - 1].title} website`}
+        >
           <img className={style.picture} src={pictoLinkList[pictoLinkList.length - 1].picture} alt='' />
         </a>
         {pictoLinkList.map((value, index) => (
-          <a href={value.link} key={`${index + 1}`} className={style.slide} aria-label='gg'>
+          <a
+            href={value.link}
+            key={`${index + 1}`}
+            className={style.slide}
+            aria-label={`Link to ${value.title} website`}
+          >
             <img className={style.picture} src={value.picture} alt='' />
           </a>
         ))}
-        <a href={pictoLinkList[0].link} className={style.slide} aria-label='gg'>
+        <a
+          href={pictoLinkList[0].link}
+          className={style.slide}
+          aria-label={`Link to ${pictoLinkList[0].title} website`}
+        >
           <img className={style.picture} src={pictoLinkList[0].picture} alt='' />
         </a>
       </div>

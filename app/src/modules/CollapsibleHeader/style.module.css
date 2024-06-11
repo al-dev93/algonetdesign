@@ -36,6 +36,7 @@ nav ul a {
   background-color: var(--ligth-bg-menu);
   backdrop-filter: blur(7px);
   box-shadow: var(--bsh-collapsible-header);
+  z-index: 100;
 }
 /* COMMENT: class to hide the header in scroll-down mode */
 .hidden {

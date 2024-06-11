@@ -16,13 +16,14 @@ export type SectionsMenu = {
  * @description type of menu items
  */
 export type MenuType = {
+  id: string;
   label: string;
   anchor: SectionsRef;
 };
 
 // TODO: add comments
 export type AccountLink = {
-  id: number;
+  id: string;
   service: string;
   icon: IconType;
   onPage?: boolean;
@@ -66,8 +67,10 @@ export type DetailSection = {
  * @al-dev93
  */
 export type Deliverable = {
+  id: string;
   service: string;
-  address: string;
+  link: string;
+  path: string;
 };
 /**
  * @description

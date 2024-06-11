@@ -1,4 +1,4 @@
-export const detailShowcaseSections = [
+export const detailSections = [
   {
     id: '1',
     tag: 'p',

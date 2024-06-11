@@ -8,12 +8,11 @@
   justify-content: space-between;
 }
 
-.scrollButton {
-  height: 36px;
-  width: auto;
-  padding: 12px 18.75px;
+span.scrollButton {
+  font-size: 44px;
+  padding: 12px;
   border-radius: 50%;
-  color: var(--decorative-dark);
+  color: var(--decorative-light);
   cursor: pointer;
 }
 

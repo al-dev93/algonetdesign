@@ -18,15 +18,16 @@ export function ScrollButtons({ slide, setSlide, setState, maxIndex }: ScrollBut
    */
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     setState(START);
-    const target = e.currentTarget.dataset.icon;
+    const target = e.currentTarget.attributes.getNamedItem('name')?.nodeValue;
     const onLoop =
-      (slide.new === maxIndex && target === 'chevron-right') || (slide.new === 0 && target === 'chevron-left');
+      (slide.new === maxIndex && target === 'chevron-forward-outline') ||
+      (slide.new === 0 && target === 'chevron-back-outline');
 
     if (slide.new >= 0 && slide.new <= maxIndex && !onLoop) {
       setSlide((prev) => ({
         loopSlide: false,
         current: prev.new,
-        new: prev.new + (target === 'chevron-right' ? 1 : -1),
+        new: prev.new + (target === 'chevron-forward-outline' ? 1 : -1),
       }));
       return;
     }
@@ -39,8 +40,20 @@ export function ScrollButtons({ slide, setSlide, setState, maxIndex }: ScrollBut
 
   return (
     <div className={style.scrollButtons}>
-      <IonIcon className={style.scrollButton} name='chevron-back-outline' onClick={handleClick} />
-      <IonIcon className={style.scrollButton} name='chevron-forward-outline' onClick={handleClick} />
+      <IonIcon
+        className={style.scrollButton}
+        name='chevron-back-outline'
+        onClick={handleClick}
+        aria-label='Previous slide'
+        role='button'
+      />
+      <IonIcon
+        className={style.scrollButton}
+        name='chevron-forward-outline'
+        onClick={handleClick}
+        aria-label='Next slide'
+        role='button'
+      />
     </div>
   );
 }

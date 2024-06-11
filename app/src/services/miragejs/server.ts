@@ -1,11 +1,13 @@
 import { createServer } from 'miragejs';
 
-import { dataAccounts } from './fixtures/mockedDataAccounts';
-import { dataMenu } from './fixtures/mockedDataMenu';
-import { dataShowcaseSections } from './fixtures/mockedDataShowcaseSections';
-import { detailShowcaseSections } from './fixtures/mockedDetailsShowcaseSections';
-import { mockedApiModels } from './models/mockedApiModels';
-import { serializerMockedApi } from './serializers/mockedApiSerializers';
+import { accounts } from './fixtures/mockedDataAccounts';
+import { menuItems } from './fixtures/mockedDataMenu';
+import { projects } from './fixtures/mockedDataProjects';
+import { showcaseSections } from './fixtures/mockedDataShowcaseSections';
+import { detailSections } from './fixtures/mockedDetailsShowcaseSections';
+import { projectDeliverables } from './fixtures/mockedProjectDeliverables';
+import { models } from './models/mockedApiModels';
+import { serializers } from './serializers/mockedApiSerializers';
 
 import type { EncryptedMail } from '@/types';
 
@@ -21,14 +23,16 @@ import type { EncryptedMail } from '@/types';
 export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'development' } = {}) {
   return createServer({
     environment,
-    models: mockedApiModels,
+    models,
     fixtures: {
-      accounts: dataAccounts(encryptedEmail),
-      menuItems: dataMenu,
-      showcaseSections: dataShowcaseSections,
-      detailSections: detailShowcaseSections,
+      accounts: accounts(encryptedEmail),
+      menuItems,
+      showcaseSections,
+      detailSections,
+      projects,
+      projectDeliverables,
     },
-    serializers: serializerMockedApi,
+    serializers,
     seeds(server) {
       server.loadFixtures();
     },
@@ -43,11 +47,11 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       this.get('/showcaseSections', (schema) => {
         return schema.all('showcaseSection');
       });
+      this.get('/projects', (schema) => {
+        return schema.all('project');
+      });
       // this.get('/skills', (schema) => {
       //   return schema.skills.all();
-      // });
-      // this.get('/projects', (schema) => {
-      //   return schema.projects.all();
       // });
       // this.get('/projects/:id/deliverables', (schema, request) => {
       //   const project = schema.projects.find(request.params.id);
