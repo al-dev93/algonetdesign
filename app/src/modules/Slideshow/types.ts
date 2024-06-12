@@ -20,7 +20,7 @@ export type ScrollButtonsProps = {
 };
 
 export type PicturesScrollerProps = {
-  pictoLinkList: { link: string | undefined; picture: string; title: string }[];
+  slideContent: ProjectData[];
   slide: Slide;
   duration?: number;
   state: State;

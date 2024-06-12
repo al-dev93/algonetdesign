@@ -4,9 +4,12 @@ import { START } from '../../utils/constants';
 import type { SlideshowDotsProps } from '../../types';
 
 /**
- * @description
- * @param param0
- * @returns
+ *
+ * @description // TODO: add comment
+ * @export
+ * @param {SlideshowDotsProps} { slidesIndex, active, setSlide, setState }
+ * @return {*}  {JSX.Element}
+ * @al-dev93
  */
 export function SlideshowDots({ slidesIndex, active, setSlide, setState }: SlideshowDotsProps): JSX.Element {
   /**

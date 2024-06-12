@@ -18,7 +18,8 @@ export const serializers = {
           attrs.deliverables = project.projectDeliverables.models.map((projectDeliverable: any) => {
             const deliverableAttrs = projectDeliverable.attrs;
             deliverableAttrs.service = projectDeliverable.account.attrs.service;
-            deliverableAttrs.link = `${projectDeliverable.account.attrs.address}${deliverableAttrs.path}`;
+            deliverableAttrs.address = `${projectDeliverable.account.attrs.address}${deliverableAttrs.path}`;
+            deliverableAttrs.icon = projectDeliverable.account.attrs.icon;
             return deliverableAttrs;
           });
           return attrs;

@@ -69,8 +69,9 @@ export type DetailSection = {
 export type Deliverable = {
   id: string;
   service: string;
-  link: string;
-  path: string;
+  icon: IconType;
+  address: string;
+  path?: string;
 };
 /**
  * @description

@@ -4,9 +4,12 @@ import { STOP } from '../../utils/constants';
 import type { FadeProps } from '../../types';
 
 /**
- * @description
- * @param param0
- * @returns
+ *
+ * @description // TODO: add component
+ * @export
+ * @param {FadeProps} { children, state, slide, duration = 600 }
+ * @return {*}  {JSX.Element}
+ * @al-dev93
  */
 export function Fade({ children, state, slide, duration = 600 }: FadeProps): JSX.Element {
   const animationDuration = slide.loopSlide ? `${duration * 1.5}ms` : `${duration}ms`;

@@ -6,9 +6,12 @@ import { START } from '../../utils/constants';
 import type { ScrollButtonsProps } from '../../types';
 
 /**
- * @description
- * @param param0
- * @returns
+ *
+ * @description //TODO: add comment
+ * @export
+ * @param {ScrollButtonsProps} { slide, setSlide, setState, maxIndex }
+ * @return {*}  {JSX.Element}
+ * @al-dev93
  */
 export function ScrollButtons({ slide, setSlide, setState, maxIndex }: ScrollButtonsProps): JSX.Element {
   /**

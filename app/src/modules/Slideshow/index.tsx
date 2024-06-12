@@ -12,11 +12,14 @@ import style from './style.module.css';
 import { PENDING, START, STOP } from './utils/constants';
 
 import type { Slide, SlideshowProps, State } from './types';
-import type { AccountLink, ProjectData } from '@/types';
+import type { ProjectData } from '@/types';
 
 /**
- * @description
- * @returns
+ *
+ * @description // TODO: add comment
+ * @param {SlideshowProps} { projectData, url }
+ * @return {*}  {JSX.Element}
+ * @al-dev93
  */
 function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
   // COMMENT: determine if we should fetch data based on the presence of buttons
@@ -28,19 +31,12 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
   const data = useMemo(() => {
     return (projectData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
   }, [fetchedData, projectData]);
-  // TODO: add comment
-  const pictoLinkList = useMemo(() => {
-    return data?.reduce((acc: { link: string | undefined; picture: string; title: string }[], current) => {
-      const link = current.deliverables.find((item) => item.service === 'external')?.link;
-      return current.picture ? [...acc, { link, picture: current.picture, title: current.title }] : [...acc];
-    }, []);
-  }, [data]);
 
   const [slide, setSlide] = useState<Slide>({ current: 0, new: 0, loopSlide: false });
   const [state, setState] = useState<State>(STOP);
 
   /**
-   * @description
+   * @description // TODO: add comment
    */
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -54,12 +50,11 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
   }, [state]);
 
   return (
-    data &&
-    pictoLinkList && (
+    data && (
       <article className={style.slideshow}>
         <div className={style.picturesScrollerWrapper}>
-          <ScrollButtons slide={slide} setSlide={setSlide} setState={setState} maxIndex={pictoLinkList.length - 1} />
-          <PicturesScroller pictoLinkList={pictoLinkList} slide={slide} state={state} />
+          <ScrollButtons slide={slide} setSlide={setSlide} setState={setState} maxIndex={data.length - 1} />
+          <PicturesScroller slideContent={data} slide={slide} state={state} />
           <SlideshowDots slidesIndex={[...data.keys()]} active={slide.new} setSlide={setSlide} setState={setState} />
         </div>
         <Fade state={state} slide={slide}>
@@ -73,7 +68,7 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
               <SocialMediaNavBar
                 className={style.navButtons}
                 changeLinkColor={style.externalLinks}
-                buttons={data[state === START ? slide.current : slide.new].deliverables as unknown as AccountLink[]}
+                buttons={data[state === START ? slide.current : slide.new].deliverables}
               />
             </footer>
           </div>

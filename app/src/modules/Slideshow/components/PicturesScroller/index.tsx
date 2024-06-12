@@ -6,11 +6,14 @@ import { STOP } from '../../utils/constants';
 import type { PicturesScrollerProps, SlideStyle } from '../../types';
 
 /**
- * @description
- * @param param0
- * @returns
+ *
+ * @description // TODO: add comment
+ * @export
+ * @param {PicturesScrollerProps} { slideContent, slide, state, duration = 600 }
+ * @return {*}  {JSX.Element}
+ * @al-dev93
  */
-export function PicturesScroller({ pictoLinkList, slide, state, duration = 600 }: PicturesScrollerProps): JSX.Element {
+export function PicturesScroller({ slideContent, slide, state, duration = 600 }: PicturesScrollerProps): JSX.Element {
   const intitialSlideStyle: SlideStyle = {
     transform: `translateX(-100%)`,
     transition: `none`,
@@ -32,29 +35,29 @@ export function PicturesScroller({ pictoLinkList, slide, state, duration = 600 }
    */
   useEffect(() => {
     const offsetSlide = () => {
-      if (slide.new === 0 && slide.loopSlide) return -(pictoLinkList.length + 1);
-      if (slide.new === pictoLinkList.length - 1 && slide.loopSlide) return pictoLinkList.length - 1;
+      if (slide.new === 0 && slide.loopSlide) return -(slideContent.length + 1);
+      if (slide.new === slideContent.length - 1 && slide.loopSlide) return slideContent.length - 1;
       return -1;
     };
     slideEffectStyle.current = {
       transform: `translateX(${(-slide.new + offsetSlide()) * 100}%)`,
       transition: `ease ${duration}ms`,
     };
-  }, [duration, pictoLinkList.length, slide]);
+  }, [duration, slideContent.length, slide]);
 
   return (
     <div className={style.picturesScroller}>
       <div className={style.picturesToScroll} style={slideEffectStyle.current}>
         <a
-          href={pictoLinkList[pictoLinkList.length - 1].link}
+          href={slideContent[slideContent.length - 1].deliverables.find((item) => item.service === 'external')?.address}
           className={style.slide}
-          aria-label={`Link to ${pictoLinkList[pictoLinkList.length - 1].title} website`}
+          aria-label={`Link to ${slideContent[slideContent.length - 1].title} website`}
         >
-          <img className={style.picture} src={pictoLinkList[pictoLinkList.length - 1].picture} alt='' />
+          <img className={style.picture} src={slideContent[slideContent.length - 1].picture} alt='' />
         </a>
-        {pictoLinkList.map((value, index) => (
+        {slideContent.map((value, index) => (
           <a
-            href={value.link}
+            href={value.deliverables.find((item) => item.service === 'external')?.address}
             key={`${index + 1}`}
             className={style.slide}
             aria-label={`Link to ${value.title} website`}
@@ -63,11 +66,11 @@ export function PicturesScroller({ pictoLinkList, slide, state, duration = 600 }
           </a>
         ))}
         <a
-          href={pictoLinkList[0].link}
+          href={slideContent[0].deliverables.find((item) => item.service === 'external')?.address}
           className={style.slide}
-          aria-label={`Link to ${pictoLinkList[0].title} website`}
+          aria-label={`Link to ${slideContent[0].title} website`}
         >
-          <img className={style.picture} src={pictoLinkList[0].picture} alt='' />
+          <img className={style.picture} src={slideContent[0].picture} alt='' />
         </a>
       </div>
     </div>
