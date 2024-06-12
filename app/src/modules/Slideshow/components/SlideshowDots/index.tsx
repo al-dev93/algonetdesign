@@ -13,8 +13,10 @@ import type { SlideshowDotsProps } from '../../types';
  */
 export function SlideshowDots({ slidesIndex, active, setSlide, setState }: SlideshowDotsProps): JSX.Element {
   /**
-   * @description
-   * @param value
+   * @description // TODO: add comment
+   * @callback
+   * @param {number} value
+   * @al-dev93
    */
   const handleClick = (value: number): void => {
     setState(START);

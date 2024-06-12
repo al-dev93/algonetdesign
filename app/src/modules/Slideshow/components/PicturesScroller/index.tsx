@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { ProjectData } from '@/types';
+
 import style from './style.module.css';
 import { STOP } from '../../utils/constants';
 
@@ -45,19 +47,45 @@ export function PicturesScroller({ slideContent, slide, state, duration = 600 }:
     };
   }, [duration, slideContent.length, slide]);
 
+  const getSlide = (key: 'first' | 'last' | ProjectData) => {
+    switch (key) {
+      case 'first': {
+        const { title, picture } = slideContent[slideContent.length - 1];
+        const { address } = slideContent[slideContent.length - 1].deliverables.find(
+          (item) => item.service === 'external',
+        ) as { address: string | undefined };
+        return { title, picture, address };
+      }
+      case 'last': {
+        const { title, picture } = slideContent[0];
+        const { address } = slideContent[0].deliverables.find((item) => item.service === 'external') as {
+          address: string | undefined;
+        };
+        return { title, picture, address };
+      }
+      default: {
+        const { title, picture } = key;
+        const { address } = key.deliverables.find((item) => item.service === 'external') as {
+          address: string | undefined;
+        };
+        return { title, picture, address };
+      }
+    }
+  };
+
   return (
     <div className={style.picturesScroller}>
       <div className={style.picturesToScroll} style={slideEffectStyle.current}>
         <a
-          href={slideContent[slideContent.length - 1].deliverables.find((item) => item.service === 'external')?.address}
+          href={getSlide('first').address}
           className={style.slide}
-          aria-label={`Link to ${slideContent[slideContent.length - 1].title} website`}
+          aria-label={`Link to ${getSlide('first').title} website`}
         >
-          <img className={style.picture} src={slideContent[slideContent.length - 1].picture} alt='' />
+          <img className={style.picture} src={getSlide('first').picture} alt='' />
         </a>
         {slideContent.map((value, index) => (
           <a
-            href={value.deliverables.find((item) => item.service === 'external')?.address}
+            href={getSlide(value).address}
             key={`${index + 1}`}
             className={style.slide}
             aria-label={`Link to ${value.title} website`}
@@ -66,11 +94,11 @@ export function PicturesScroller({ slideContent, slide, state, duration = 600 }:
           </a>
         ))}
         <a
-          href={slideContent[0].deliverables.find((item) => item.service === 'external')?.address}
+          href={getSlide('last').address}
           className={style.slide}
-          aria-label={`Link to ${slideContent[0].title} website`}
+          aria-label={`Link to ${getSlide('last').title} website`}
         >
-          <img className={style.picture} src={slideContent[0].picture} alt='' />
+          <img className={style.picture} src={getSlide('last').picture} alt='' />
         </a>
       </div>
     </div>

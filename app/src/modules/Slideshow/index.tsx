@@ -34,6 +34,7 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
 
   const [slide, setSlide] = useState<Slide>({ current: 0, new: 0, loopSlide: false });
   const [state, setState] = useState<State>(STOP);
+  const activeSlide = data?.[state === START ? slide.current : slide.new];
 
   /**
    * @description // TODO: add comment
@@ -50,7 +51,7 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
   }, [state]);
 
   return (
-    data && (
+    activeSlide && (
       <article className={style.slideshow}>
         <div className={style.picturesScrollerWrapper}>
           <ScrollButtons slide={slide} setSlide={setSlide} setState={setState} maxIndex={data.length - 1} />
@@ -60,15 +61,15 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
         <Fade state={state} slide={slide}>
           <div className={style.slideshowWrapper}>
             <header className={style.header}>
-              <h3>{data[state === START ? slide.current : slide.new].title}</h3>
+              <h3>{activeSlide.title}</h3>
             </header>
-            <p className={style.description}>{data[state === START ? slide.current : slide.new].description}</p>
+            <p className={style.description}>{activeSlide.description}</p>
             <footer className={style.footer}>
-              <SkillsList list={data[state === START ? slide.current : slide.new].tags} />
+              <SkillsList list={activeSlide.tags} />
               <SocialMediaNavBar
                 className={style.navButtons}
                 changeLinkColor={style.externalLinks}
-                buttons={data[state === START ? slide.current : slide.new].deliverables}
+                buttons={activeSlide.deliverables}
               />
             </footer>
           </div>
