@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useReducer } from 'react';
 
 import { SkillsList } from '@components/SkillsList';
 import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
@@ -8,10 +8,11 @@ import { Fade } from './components/Fade';
 import { PicturesScroller } from './components/PicturesScroller';
 import { ScrollButtons } from './components/ScrollButtons';
 import { SlideshowDots } from './components/SlideshowDots';
+import { slideshowReducer } from './reducer/slideshowReducer';
 import style from './style.module.css';
-import { PENDING, START, STOP } from './utils/constants';
+import { INIT_MAX_INDEX_SLIDE, PENDING, SLIDE_TRANSITION, START, STOP } from './utils/constants';
 
-import type { Slide, SlideshowProps, State } from './types';
+import type { SlideshowProps, SlideshowState } from './types';
 import type { ProjectData } from '@/types';
 
 /**
@@ -26,39 +27,54 @@ function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
   const shouldFetch = !projectData;
   // COMMENT: only use useFetch if shouldFetch is true
   const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
-  console.log(fetchedData, url);
   // TODO: otherwise use buttons ... complete
   const data = useMemo(() => {
     return (projectData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
   }, [fetchedData, projectData]);
 
-  const [slide, setSlide] = useState<Slide>({ current: 0, new: 0, loopSlide: false });
-  const [state, setState] = useState<State>(STOP);
-  const activeSlide = data?.[state === START ? slide.current : slide.new];
+  const initialSlideshowState: SlideshowState = {
+    current: 0,
+    new: 0,
+    loopSlide: false,
+    slideTransition: STOP,
+    maxIndexSlide: 0,
+  };
+
+  const [slideshowState, slideshowDispatch] = useReducer(slideshowReducer, initialSlideshowState);
+
+  useEffect(() => {
+    if (data) slideshowDispatch({ type: INIT_MAX_INDEX_SLIDE, payload: { maxIndexSlide: data.length - 1 } });
+  }, [data]);
 
   /**
    * @description // TODO: add comment
    */
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (state === START) {
-      timer = setTimeout(() => setState(PENDING), 300);
+    if (slideshowState.slideTransition === START) {
+      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: PENDING }), 300);
     }
-    if (state === PENDING) {
-      timer = setTimeout(() => setState(STOP), 300);
+    if (slideshowState.slideTransition === PENDING) {
+      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: STOP }), 300);
     }
     return () => clearTimeout(timer);
-  }, [state]);
+  }, [slideshowState.slideTransition]);
+
+  const activeSlide = data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new];
 
   return (
     activeSlide && (
       <article className={style.slideshow}>
         <div className={style.picturesScrollerWrapper}>
-          <ScrollButtons slide={slide} setSlide={setSlide} setState={setState} maxIndex={data.length - 1} />
-          <PicturesScroller slideContent={data} slide={slide} state={state} />
-          <SlideshowDots slidesIndex={[...data.keys()]} active={slide.new} setSlide={setSlide} setState={setState} />
+          <ScrollButtons slideshowDispatch={slideshowDispatch} />
+          <PicturesScroller slideContent={data} slideshowState={slideshowState} />
+          <SlideshowDots
+            slidesIndex={[...data.keys()]}
+            slideshowDispatch={slideshowDispatch}
+            slideshowState={slideshowState}
+          />
         </div>
-        <Fade state={state} slide={slide}>
+        <Fade state={slideshowState}>
           <div className={style.slideshowWrapper}>
             <header className={style.header}>
               <h3>{activeSlide.title}</h3>

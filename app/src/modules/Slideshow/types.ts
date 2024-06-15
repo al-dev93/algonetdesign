@@ -1,4 +1,18 @@
-import { ProjectData } from '@/types';
+import { Dispatch } from 'react';
+
+import {
+  CHANGE_SCROLLING_DOT,
+  CHANGE_SLIDE,
+  INIT_MAX_INDEX_SLIDE,
+  NEXT_SLIDE,
+  PENDING,
+  PREVIOUS_SLIDE,
+  SLIDE_TRANSITION,
+  START,
+  STOP,
+} from './utils/constants';
+
+import type { ProjectData } from '@/types';
 
 export type SlideshowProps = {
   projectData?: ProjectData[];
@@ -7,39 +21,69 @@ export type SlideshowProps = {
 
 export type SlideshowDotsProps = {
   slidesIndex: number[];
-  active: number;
-  setSlide: React.Dispatch<React.SetStateAction<Slide>>;
-  setState: React.Dispatch<React.SetStateAction<State>>;
+  slideshowDispatch: Dispatch<SlideshowAction>;
+  slideshowState: SlideshowState;
 };
 
 export type ScrollButtonsProps = {
-  slide: Slide;
-  setSlide: React.Dispatch<React.SetStateAction<Slide>>;
-  setState: React.Dispatch<React.SetStateAction<State>>;
-  maxIndex: number;
+  slideshowDispatch: Dispatch<SlideshowAction>;
 };
 
 export type PicturesScrollerProps = {
   slideContent: ProjectData[];
-  slide: Slide;
   duration?: number;
-  state: State;
+  slideshowState: SlideshowState;
+};
+
+export type PicturesScrollerSlide = {
+  address?: string;
+  picture?: string;
+  title: string;
 };
 
 export type FadeProps = {
   children: JSX.Element;
-  state: State;
-  slide: Slide;
+  state: SlideshowState;
   duration?: number;
 };
 
-export type State = 1 | 2 | 3;
-
-export type Slide = {
+export type SlideshowState = {
   current: number;
   new: number;
   loopSlide: boolean;
+  slideTransition: SlideTransition;
+  maxIndexSlide: number;
 };
+
+type SlideTransition = typeof START | typeof PENDING | typeof STOP;
+
+export type SlideDirection = typeof NEXT_SLIDE | typeof PREVIOUS_SLIDE;
+
+type ChangeSlideAction = {
+  type: typeof CHANGE_SLIDE;
+  payload: { direction: SlideDirection; transition: SlideTransition };
+};
+
+type ChangeScrollingDotAction = {
+  type: typeof CHANGE_SCROLLING_DOT;
+  payload: { dot: number; transition: SlideTransition };
+};
+
+type SlideTransitionAction = {
+  type: typeof SLIDE_TRANSITION;
+  payload: SlideTransition;
+};
+
+type InitMaxIndexSlideAction = {
+  type: typeof INIT_MAX_INDEX_SLIDE;
+  payload: { maxIndexSlide: number };
+};
+
+export type SlideshowAction =
+  | ChangeScrollingDotAction
+  | ChangeSlideAction
+  | SlideTransitionAction
+  | InitMaxIndexSlideAction;
 
 export type SlideStyle =
   | {

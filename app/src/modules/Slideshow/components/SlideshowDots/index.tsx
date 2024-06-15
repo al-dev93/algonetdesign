@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import { START } from '../../utils/constants';
+import { CHANGE_SCROLLING_DOT, START } from '../../utils/constants';
 
 import type { SlideshowDotsProps } from '../../types';
 
@@ -7,11 +7,11 @@ import type { SlideshowDotsProps } from '../../types';
  *
  * @description // TODO: add comment
  * @export
- * @param {SlideshowDotsProps} { slidesIndex, active, setSlide, setState }
+ * @param {SlideshowDotsProps} { slidesIndex, slideshowDispatch, slideshowState }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function SlideshowDots({ slidesIndex, active, setSlide, setState }: SlideshowDotsProps): JSX.Element {
+export function SlideshowDots({ slidesIndex, slideshowDispatch, slideshowState }: SlideshowDotsProps): JSX.Element {
   /**
    * @description // TODO: add comment
    * @callback
@@ -19,12 +19,7 @@ export function SlideshowDots({ slidesIndex, active, setSlide, setState }: Slide
    * @al-dev93
    */
   const handleClick = (value: number): void => {
-    setState(START);
-    setSlide((prev) => ({
-      current: prev.new,
-      new: value,
-      loopSlide: Math.abs(value - active) === slidesIndex.length - 1,
-    }));
+    slideshowDispatch({ type: CHANGE_SCROLLING_DOT, payload: { dot: value, transition: START } });
   };
 
   return (
@@ -32,7 +27,7 @@ export function SlideshowDots({ slidesIndex, active, setSlide, setState }: Slide
       {slidesIndex.map((value) => (
         <div
           key={value}
-          className={`${style.dot} ${active === value ? style.active : style.notActive}`}
+          className={`${style.dot} ${slideshowState.new === value ? style.active : style.notActive}`}
           onClick={() => handleClick(value)}
           role='presentation'
         />

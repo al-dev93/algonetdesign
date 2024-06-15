@@ -13,8 +13,8 @@ export function SkillsList({ tagColor, list, type = 'row' }: SkillsListProps): J
 
   return (
     <ul className={listStyle}>
-      {list?.map((value, index) => (
-        <li key={`${index + 1}`}>
+      {list?.map((value) => (
+        <li key={value}>
           <Tag className={tagColor} tag={value} type={type} />
         </li>
       ))}

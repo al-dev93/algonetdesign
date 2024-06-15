@@ -1,21 +1,19 @@
 import { useEffect, useRef } from 'react';
 
-import { ProjectData } from '@/types';
-
 import style from './style.module.css';
 import { STOP } from '../../utils/constants';
 
-import type { PicturesScrollerProps, SlideStyle } from '../../types';
-
+import type { PicturesScrollerProps, PicturesScrollerSlide, SlideStyle } from '../../types';
+import type { ProjectData } from '@/types';
 /**
  *
  * @description // TODO: add comment
  * @export
- * @param {PicturesScrollerProps} { slideContent, slide, state, duration = 600 }
+ * @param {PicturesScrollerProps} { slideContent, slideshowState, duration = 600 }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function PicturesScroller({ slideContent, slide, state, duration = 600 }: PicturesScrollerProps): JSX.Element {
+export function PicturesScroller({ slideContent, slideshowState, duration = 600 }: PicturesScrollerProps): JSX.Element {
   const intitialSlideStyle: SlideStyle = {
     transform: `translateX(-100%)`,
     transition: `none`,
@@ -23,31 +21,46 @@ export function PicturesScroller({ slideContent, slide, state, duration = 600 }:
   const slideEffectStyle = useRef<SlideStyle>(intitialSlideStyle);
 
   /**
-   * @description
+   * @description // TODO: add comment
    */
   useEffect(() => {
-    if (slide.loopSlide && state === STOP)
+    if (slideshowState.loopSlide && slideshowState.slideTransition === STOP)
       slideEffectStyle.current = {
-        transform: `translateX(${-(slide.new + 1) * 100}%)`,
+        transform: `translateX(${-(slideshowState.new + 1) * 100}%)`,
         transition: 'none',
       };
-  }, [slide, state]);
+  }, [slideshowState.loopSlide, slideshowState.new, slideshowState.slideTransition]);
   /**
-   * @description
+   * @description // TODO: add comment
    */
   useEffect(() => {
-    const offsetSlide = () => {
-      if (slide.new === 0 && slide.loopSlide) return -(slideContent.length + 1);
-      if (slide.new === slideContent.length - 1 && slide.loopSlide) return slideContent.length - 1;
+    /**
+     *
+     * @description // TODO: add comment
+     * @return {*}  {number}
+     * @al-dev93
+     */
+    const offsetSlide = (): number => {
+      if (slideshowState.new === 0 && slideshowState.loopSlide) return -(slideshowState.maxIndexSlide + 2);
+      if (slideshowState.new === slideshowState.maxIndexSlide && slideshowState.loopSlide)
+        return slideshowState.maxIndexSlide;
       return -1;
     };
+
     slideEffectStyle.current = {
-      transform: `translateX(${(-slide.new + offsetSlide()) * 100}%)`,
+      transform: `translateX(${(-slideshowState.new + offsetSlide()) * 100}%)`,
       transition: `ease ${duration}ms`,
     };
-  }, [duration, slideContent.length, slide]);
+  }, [duration, slideshowState.loopSlide, slideshowState.maxIndexSlide, slideshowState.new]);
 
-  const getSlide = (key: 'first' | 'last' | ProjectData) => {
+  /**
+   *
+   * @description // TODO: add comment
+   * @param {('first' | 'last' | ProjectData)} key
+   * @return {*}  {PicturesScrollerSlide}
+   * @al-dev93
+   */
+  const getSlide = (key: 'first' | 'last' | ProjectData): PicturesScrollerSlide => {
     switch (key) {
       case 'first': {
         const { title, picture } = slideContent[slideContent.length - 1];
@@ -83,10 +96,10 @@ export function PicturesScroller({ slideContent, slide, state, duration = 600 }:
         >
           <img className={style.picture} src={getSlide('first').picture} alt='' />
         </a>
-        {slideContent.map((value, index) => (
+        {slideContent.map((value) => (
           <a
             href={getSlide(value).address}
-            key={`${index + 1}`}
+            key={value.id}
             className={style.slide}
             aria-label={`Link to ${value.title} website`}
           >

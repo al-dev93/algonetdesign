@@ -1,44 +1,28 @@
 import IonIcon from '@reacticons/ionicons';
 
 import style from './style.module.css';
-import { START } from '../../utils/constants';
+import { CHANGE_SLIDE, START } from '../../utils/constants';
 
-import type { ScrollButtonsProps } from '../../types';
+import type { ScrollButtonsProps, SlideDirection } from '../../types';
 
 /**
  *
  * @description //TODO: add comment
  * @export
- * @param {ScrollButtonsProps} { slide, setSlide, setState, maxIndex }
+ * @param {ScrollButtonsProps} { slideshowDispatch }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-export function ScrollButtons({ slide, setSlide, setState, maxIndex }: ScrollButtonsProps): JSX.Element {
+export function ScrollButtons({ slideshowDispatch }: ScrollButtonsProps): JSX.Element {
   /**
-   * @description
-   * @param e
-   * @returns
+   *
+   * @description // TODO: add comment
+   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e
+   * @al-dev93
    */
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    setState(START);
-    const target = e.currentTarget.attributes.getNamedItem('name')?.nodeValue;
-    const onLoop =
-      (slide.new === maxIndex && target === 'chevron-forward-outline') ||
-      (slide.new === 0 && target === 'chevron-back-outline');
-
-    if (slide.new >= 0 && slide.new <= maxIndex && !onLoop) {
-      setSlide((prev) => ({
-        loopSlide: false,
-        current: prev.new,
-        new: prev.new + (target === 'chevron-forward-outline' ? 1 : -1),
-      }));
-      return;
-    }
-    setSlide((prev) => ({
-      loopSlide: onLoop,
-      current: prev.new,
-      new: slide.new === 0 ? maxIndex : 0,
-    }));
+    const target = e.currentTarget.attributes.getNamedItem('name')?.nodeValue as SlideDirection;
+    slideshowDispatch({ type: CHANGE_SLIDE, payload: { direction: target, transition: START } });
   };
 
   return (
