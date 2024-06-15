@@ -40,7 +40,9 @@ function MemoizedSocialMediaNavBar({
   // COMMENT: only use useFetch if shouldFetch is true
   const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
   // COMMENT: otherwise use buttons
-  const data = (buttons || (fetchedData as AccountLink[]))?.filter((item) => item.onPage);
+  const data = type
+    ? (buttons || (fetchedData as AccountLink[]))?.filter((item) => item.onPage)
+    : buttons || (fetchedData as AccountLink[]);
 
   return (
     <nav className={`${className} ${style.socialMediaNavBar}`}>

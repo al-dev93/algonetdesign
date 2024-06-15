@@ -1,8 +1,29 @@
 import type { IconType } from '.';
 
+/**
+ * @description on the main page as the layout
+ */
+
+// TODO: add comments
+
+export type SectionsMenu = {
+  home: boolean;
+  work: boolean;
+  about: boolean;
+  services: boolean;
+};
+/**
+ * @description type of menu items
+ */
+export type MenuType = {
+  id: string;
+  label: string;
+  anchor: SectionsRef;
+};
+
 // TODO: add comments
 export type AccountLink = {
-  id: number;
+  id: string;
   service: string;
   icon: IconType;
   onPage?: boolean;
@@ -10,16 +31,14 @@ export type AccountLink = {
   iv?: string;
 };
 
-// COMMENT: type of menu items
-export type MenuType = {
-  label: string;
-  anchor: SectionsRef;
-};
-
 // COMMENT: type of the layout context transmitted to the inserted pages
 export type OutletContextPage = {
   outletContext: React.MutableRefObject<VisibleSections>;
 };
+
+// NOTE: on the index page
+
+export type TagType = 'row' | 'wrapp' | 'table' | 'error';
 
 export type SectionsRef = 'home' | 'work' | 'about' | 'services';
 
@@ -28,13 +47,6 @@ export type IndexPageSection = {
   anchor?: SectionsRef;
   title?: string;
   content: DetailSection[];
-};
-
-export type SectionsMenu = {
-  home: boolean;
-  work: boolean;
-  about: boolean;
-  services: boolean;
 };
 
 export type VisibleSections = SectionsMenu | object;
@@ -46,8 +58,51 @@ export type DetailSection = {
   content?: string;
 };
 
+// TODO add comments
+
+/**
+ * @description
+ * @type
+ * @export
+ * @al-dev93
+ */
+export type Deliverable = {
+  id: string;
+  service: string;
+  icon: IconType;
+  address: string;
+  path?: string;
+};
+/**
+ * @description
+ * @type
+ * @al-dev93
+ */
+type DisplayMode = 'slideshow' | 'card';
+/**
+ * @description
+ * @type
+ * @export
+ * @al-dev93
+ */
+export type ProjectData = {
+  id: string;
+  title: string;
+  description: string;
+  tags?: string[];
+  picture?: string;
+  display?: DisplayMode;
+  deliverables: Deliverable[];
+};
+
 // TODO: add comment
-export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | null;
+/**
+ * @description
+ * @type
+ * @export
+ * @al-dev93
+ */
+export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | ProjectData[] | null;
 
 export type FetchResultData = {
   data: FetchData;
