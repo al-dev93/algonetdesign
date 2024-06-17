@@ -4,7 +4,7 @@ import { decryptData } from '@services/secure/mockedEncryption';
 
 import style from './style.module.css';
 
-import type { SocialMediaButtonProps } from '../types';
+import type { SocialMediaButtonProps } from '../../types';
 
 /**
  *

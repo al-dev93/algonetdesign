@@ -20,9 +20,9 @@ import Card from '../Card';
  * @al-dev93
  */
 function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: ShowcaseSectionProps): JSX.Element {
-  const { data: fetchedData } = useFetchData('http://localhost:5173/api/projects', { method: 'GET' });
+  const { data: fetchedProjectData } = useFetchData('http://localhost:5173/api/projects', { method: 'GET' });
 
-  const projectData = (fetchedData as ProjectData[])?.reduce(
+  const projectData = (fetchedProjectData as ProjectData[])?.reduce(
     (acc: { slideshow: ProjectData[]; card: ProjectData[] }, current) => {
       const property = current.display;
       if (current.display) acc[property as DisplayMode] = [...acc[property as DisplayMode], current];

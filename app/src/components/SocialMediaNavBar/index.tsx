@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
 
-import { SocialMediaButton } from './SocialMediaButton';
+import { SocialMediaButton } from './components/SocialMediaButton';
 import style from './style.module.css';
 
 import type { SocialMediaNavBarProps } from './types';
