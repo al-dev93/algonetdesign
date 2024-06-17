@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef } from 'react';
 
+import { useFetchData } from '@/hooks/useFetchData';
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
 import { Slideshow } from '@modules/Slideshow';
@@ -8,7 +9,8 @@ import style from './style.module.css';
 import { FormButton } from '../FormButton';
 
 import type { ShowcaseSectionProps } from './types';
-import type { DetailSection, SectionsMenu } from '@/types';
+import type { DetailSection, DisplayMode, ProjectData, SectionsMenu } from '@/types';
+import Card from '../Card';
 
 /**
  *
@@ -18,6 +20,17 @@ import type { DetailSection, SectionsMenu } from '@/types';
  * @al-dev93
  */
 function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: ShowcaseSectionProps): JSX.Element {
+  const { data: fetchedData } = useFetchData('http://localhost:5173/api/projects', { method: 'GET' });
+
+  const projectData = (fetchedData as ProjectData[])?.reduce(
+    (acc: { slideshow: ProjectData[]; card: ProjectData[] }, current) => {
+      const property = current.display;
+      if (current.display) acc[property as DisplayMode] = [...acc[property as DisplayMode], current];
+      return acc;
+    },
+    { slideshow: [], card: [] },
+  );
+
   const handleClick = (): void => undefined;
   /**
    *
@@ -56,7 +69,13 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
           </h1>
         );
       case 'Slideshow':
-        return <Slideshow key={id} url='http://localhost:5173/api/projects' />;
+        return <Slideshow key={id} projectData={projectData?.slideshow} />;
+      case 'Cards':
+        return (
+          <div className={style.cardsWrapper}>
+            {projectData?.card?.map((project) => <Card key={project.id} projectData={project} />)}
+          </div>
+        );
       default:
         return <div key={id}>ici vient le contenu de la section</div>;
     }

@@ -19,6 +19,8 @@ export function Index(): JSX.Element {
   const { outletContext } = usePageSection();
   const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
 
+  console.log(data);
+
   return (
     <div className={style.wrapperIndex}>
       {(data as IndexPageSection[])?.map(({ id, content, anchor, title }) => (

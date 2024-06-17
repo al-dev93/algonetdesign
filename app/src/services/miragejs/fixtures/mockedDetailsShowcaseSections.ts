@@ -32,4 +32,9 @@ export const detailSections = [
     tag: 'Slideshow',
     showcaseSectionId: '2',
   },
+  {
+    id: '6',
+    tag: 'Cards',
+    showcaseSectionId: '3',
+  },
 ];

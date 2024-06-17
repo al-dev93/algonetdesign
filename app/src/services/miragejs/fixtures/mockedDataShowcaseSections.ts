@@ -13,7 +13,7 @@ export const showcaseSections = [
   {
     id: '3',
     title: 'Autres réalisations',
-    detailSectionIds: [],
+    detailSectionIds: ['6'],
   },
   {
     id: '4',
