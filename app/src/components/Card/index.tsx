@@ -13,22 +13,20 @@ import type { CardProps } from './types';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function Card({ projectData }: CardProps): JSX.Element {
+export function Card({ data: cardData }: CardProps): JSX.Element {
   return (
     <article className={style.card}>
       <header className={style.cardHeader}>
         <IonIcon className={style.folderIcon} name='folder-open-outline' />
-        <SocialMediaNavBar changeLinkColor={style.cardAdditionalNav} type='card' buttons={projectData.deliverables} />
+        <SocialMediaNavBar changeLinkColor={style.cardAdditionalNav} type='card' buttons={cardData.deliverables} />
       </header>
       <div className={style.cardMain}>
-        <h3>{projectData.title}</h3>
-        <p className={style.cardDescription}>{projectData.description}</p>
+        <h3>{cardData.title}</h3>
+        <p className={style.cardDescription}>{cardData.description}</p>
       </div>
       <footer className={style.cardFooter}>
-        <SkillsList tagColor={style.cardSkillsList} type='wrapp' list={projectData.tags} />
+        <SkillsList tagColor={style.cardSkillsList} type='wrapp' list={cardData.tags} />
       </footer>
     </article>
   );
 }
-
-export default Card;
