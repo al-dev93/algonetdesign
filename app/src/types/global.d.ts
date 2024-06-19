@@ -54,8 +54,10 @@ export type VisibleSections = SectionsMenu | object;
 export type DetailSection = {
   id: string;
   tag: string;
+  wrapped?: boolean;
   name?: string;
   content?: string;
+  urlContent?: string;
 };
 
 // TODO add comments

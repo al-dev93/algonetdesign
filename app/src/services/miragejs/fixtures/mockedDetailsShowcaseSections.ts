@@ -30,6 +30,15 @@ export const detailSections = [
   {
     id: '5',
     tag: 'Slideshow',
+    urlContent: 'http://localhost:5173/api/projects',
     showcaseSectionId: '2',
+  },
+  {
+    id: '6',
+    tag: 'Card',
+    name: 'cardsWrapper',
+    urlContent: 'http://localhost:5173/api/projects',
+    wrapped: true,
+    showcaseSectionId: '3',
   },
 ];

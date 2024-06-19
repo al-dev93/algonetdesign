@@ -33,6 +33,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': [2, { caseSensitive: false }],
+    'react/jsx-props-no-spreading': 'off',
     //*
     // 'import/no-unresolved': ['error', { commonjs: true }],
     // 'import/no-extraneous-dependencies': 'error',

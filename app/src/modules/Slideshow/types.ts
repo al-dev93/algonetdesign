@@ -15,7 +15,7 @@ import {
 import type { ProjectData } from '@/types';
 
 export type SlideshowProps = {
-  projectData?: ProjectData[];
+  data?: ProjectData[];
   url?: string;
 };
 

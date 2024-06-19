@@ -2,13 +2,15 @@ import { memo, useEffect, useRef } from 'react';
 
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
-import { Slideshow } from '@modules/Slideshow';
 
+import { DynamicElement } from './components/DynamicElement';
+import { DynamicElementContainer } from './components/DynamicElementContainer';
 import style from './style.module.css';
+import { COMPONENT_MAP } from './utils/constants';
 import { FormButton } from '../FormButton';
 
 import type { ShowcaseSectionProps } from './types';
-import type { DetailSection, SectionsMenu } from '@/types';
+import type { SectionsMenu } from '@/types';
 
 /**
  *
@@ -34,33 +36,6 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
       </div>
     );
   };
-  /**
-   *
-   * @description // TODO: add comment
-   * @param {DetailSection} { id, tag, name, content: contentElement }
-   * @return {*}  {(JSX.Element | undefined)}
-   * @al-dev93
-   */
-  const createElement = ({ id, tag, name, content: contentElement }: DetailSection): JSX.Element | undefined => {
-    switch (tag) {
-      case 'p':
-        return (
-          <p key={id} className={name && style[name]}>
-            {contentElement}
-          </p>
-        );
-      case 'h1':
-        return (
-          <h1 key={id} className={name && style[name]}>
-            {contentElement}
-          </h1>
-        );
-      case 'Slideshow':
-        return <Slideshow key={id} url='http://localhost:5173/api/projects' />;
-      default:
-        return <div key={id}>ici vient le contenu de la section</div>;
-    }
-  };
 
   const sectionRef = useRef<HTMLElement>(null);
   // TODO: add comment
@@ -78,7 +53,26 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
     <section className={title ? style.section : style.hero} ref={sectionRef} id={anchor}>
       <div className={style.bodySection}>
         {title ? showcaseSectionTitle(title) : null}
-        {content.map((element) => createElement(element))}
+        {content.map((element) =>
+          !element.wrapped ? (
+            <DynamicElement // TODO: add comment
+              key={element.id}
+              tag={element.tag as keyof JSX.IntrinsicElements | keyof typeof COMPONENT_MAP}
+              url={element.urlContent}
+              className={element.name && style[element.name]}
+            >
+              {element.content}
+            </DynamicElement>
+          ) : (
+            <DynamicElementContainer // TODO: add comment
+              key={element.id}
+              tag={element.tag}
+              className={`${style[element.name ?? '']}`}
+              filterValue='card'
+              url='http://localhost:5173/api/projects'
+            />
+          ),
+        )}
       </div>
       <FormButton name='Contact' onClick={handleClick} />
     </section>

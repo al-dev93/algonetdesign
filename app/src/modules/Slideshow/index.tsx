@@ -22,15 +22,15 @@ import type { ProjectData } from '@/types';
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function MemoizedSlideshow({ projectData, url }: SlideshowProps): JSX.Element {
+function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.Element {
   // COMMENT: determine if we should fetch data based on the presence of buttons
-  const shouldFetch = !projectData;
+  const shouldFetch = !slideshowData;
   // COMMENT: only use useFetch if shouldFetch is true
   const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
   // TODO: otherwise use buttons ... complete
   const data = useMemo(() => {
-    return (projectData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
-  }, [fetchedData, projectData]);
+    return (slideshowData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
+  }, [fetchedData, slideshowData]);
 
   const initialSlideshowState: SlideshowState = {
     current: 0,

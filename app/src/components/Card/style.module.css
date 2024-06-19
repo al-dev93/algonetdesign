@@ -1,0 +1,70 @@
+.card {
+  margin: 0;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* background-color: var(--element-bg); */
+  background-color: var(--panel-bg);
+  border-radius: var(--br-sm);
+}
+
+.card:hover {
+  background-color: var(--decorative-dark);
+  box-shadow: 5px 5px 8px -1px var(--dark-bg-menu);
+  transform: translate3d(8px, -9px, 0);
+  transition: ease-in-out 450ms;
+}
+
+.cardHeader {
+  margin: 0;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.folderIcon {
+  font-size: 32px;
+  color: var(--decorative-dark);
+}
+.card:hover .cardAdditionalNav {
+  color: var(--dark-primary);
+}
+
+.card:hover .cardAdditionalNav:hover {
+  color: var(--white);
+}
+
+.cardMain {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardDescription {
+  flex: 1 0 130px;
+  overflow: hidden;
+  font-size: var(--fs-xs);
+  color: var(--tertiary-color);
+}
+
+.cardSkillsList,
+.cardAdditionalNav {
+  color: var(--decorative-dark);
+}
+
+.card:hover .folderIcon,
+.card:hover .cardSkillsList {
+  color: var(--dark-primary);
+}
+
+.card:hover .cardDescription,
+.card:hover h3 {
+  color: var(--white);
+}
+
+.cardFooter {
+  margin: 0;
+  padding: 0;
+}
