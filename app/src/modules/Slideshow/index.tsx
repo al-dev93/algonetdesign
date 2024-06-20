@@ -13,7 +13,7 @@ import style from './style.module.css';
 import { INIT_MAX_INDEX_SLIDE, PENDING, SLIDE_TRANSITION, START, STOP } from './utils/constants';
 
 import type { SlideshowProps, SlideshowState } from './types';
-import type { ProjectData } from '@/types';
+import type { AccountLink, ProjectData } from '@/types';
 
 /**
  *
@@ -61,6 +61,7 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
   }, [slideshowState.slideTransition]);
 
   const activeSlide = data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new];
+  console.log(activeSlide?.deliverables);
 
   return (
     activeSlide && (
@@ -85,7 +86,7 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
               <SocialMediaNavBar
                 className={style.navButtons}
                 changeLinkColor={style.externalLinks}
-                buttons={activeSlide.deliverables}
+                buttons={activeSlide.deliverables as AccountLink[]}
               />
             </footer>
           </div>

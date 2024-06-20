@@ -19,7 +19,7 @@ export const showcaseSections = [
     id: '4',
     anchor: 'about',
     title: "À propos d'AlgoNetDesign",
-    detailSectionIds: [],
+    detailSectionIds: ['7', '8', '9', '10'],
   },
   {
     id: '5',

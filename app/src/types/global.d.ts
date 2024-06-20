@@ -58,6 +58,7 @@ export type DetailSection = {
   name?: string;
   content?: string;
   urlContent?: string;
+  boldContent?: DetailSection[];
 };
 
 // TODO add comments

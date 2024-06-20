@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs';
 
+import { boldDetailSections } from './fixtures/mockedBoldDetailsShowcaseSections';
 import { accounts } from './fixtures/mockedDataAccounts';
 import { menuItems } from './fixtures/mockedDataMenu';
 import { projects } from './fixtures/mockedDataProjects';
@@ -29,6 +30,7 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       menuItems,
       showcaseSections,
       detailSections,
+      boldDetailSections,
       projects,
       projectDeliverables,
     },

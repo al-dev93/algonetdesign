@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Serializer } from 'miragejs';
 
 export const serializers = {
@@ -8,13 +9,18 @@ export const serializers = {
       return 'content';
     },
   }),
+  detailSection: Serializer.extend({
+    include: ['boldDetailSections'],
+    embed: true,
+    keyForEmbeddedRelationship() {
+      return 'boldContent';
+    },
+  }),
   project: Serializer.extend({
     serialize(object) {
       const json = {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         projects: object.models.map((project: any) => {
           const { attrs } = project;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           attrs.deliverables = project.projectDeliverables.models.map((projectDeliverable: any) => {
             const deliverableAttrs = projectDeliverable.attrs;
             deliverableAttrs.service = projectDeliverable.account.attrs.service;
