@@ -98,6 +98,12 @@ export type ProjectData = {
   deliverables: Deliverable[];
 };
 
+export type Skill = {
+  id: string;
+  text: string;
+  value: number;
+};
+
 // TODO: add comment
 /**
  * @description
@@ -105,7 +111,7 @@ export type ProjectData = {
  * @export
  * @al-dev93
  */
-export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | ProjectData[] | null;
+export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | ProjectData[] | Skill[] | null;
 
 export type FetchResultData = {
   data: FetchData;

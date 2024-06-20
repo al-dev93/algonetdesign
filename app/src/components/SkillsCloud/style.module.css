@@ -1,0 +1,7 @@
+.skillsCloudWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--panel-bg);
+  border-radius: var(--br-lg);
+}

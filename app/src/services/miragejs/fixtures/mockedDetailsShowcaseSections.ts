@@ -76,4 +76,10 @@ export const detailSections = [
     showcaseSectionId: '4',
     boldDetailSectionIds: ['5', '6'],
   },
+  {
+    id: '11',
+    tag: 'SkillsCloud',
+    urlContent: 'http://localhost:5173/api/skills',
+    showcaseSectionId: '4',
+  },
 ];

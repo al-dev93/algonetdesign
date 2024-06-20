@@ -8,11 +8,13 @@ import type {
   MockedDetailsSection,
   MockedIndexPageSection,
   MockedProjectData,
+  Skill,
 } from '@/types';
 
 export const models = {
   account: Model.extend<Partial<AccountLink>>({}),
   menuItem: Model.extend<Partial<MenuType>>({}),
+  skill: Model.extend<Partial<Skill>>({}),
   showcaseSection: Model.extend<Partial<MockedIndexPageSection>>({
     detailSections: hasMany(),
   }),
@@ -30,8 +32,4 @@ export const models = {
     project: belongsTo(),
     account: belongsTo(),
   }),
-  // skill: Model,
-  // project: Model.extend({
-  //   deliverables: hasMany(),
-  // }),
 };

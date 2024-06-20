@@ -1,4 +1,4 @@
-import { ShowcaseSection } from '@components/ShowcaseSection';
+import { ShowcaseSection } from '@/modules/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
 import { usePageSection } from '@hooks/usePageSection';
 

@@ -7,7 +7,7 @@ import { DynamicElement } from './components/DynamicElement';
 import { DynamicElementContainer } from './components/DynamicElementContainer';
 import style from './style.module.css';
 import { COMPONENT_MAP } from './utils/constants';
-import { FormButton } from '../FormButton';
+import { FormButton } from '../../components/FormButton';
 
 import type { ShowcaseSectionProps } from './types';
 import type { SectionsMenu } from '@/types';

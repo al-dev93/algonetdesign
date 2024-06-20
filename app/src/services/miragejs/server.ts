@@ -5,6 +5,7 @@ import { accounts } from './fixtures/mockedDataAccounts';
 import { menuItems } from './fixtures/mockedDataMenu';
 import { projects } from './fixtures/mockedDataProjects';
 import { showcaseSections } from './fixtures/mockedDataShowcaseSections';
+import { skills } from './fixtures/mockedDataSkills';
 import { detailSections } from './fixtures/mockedDetailsShowcaseSections';
 import { projectDeliverables } from './fixtures/mockedProjectDeliverables';
 import { models } from './models/mockedApiModels';
@@ -33,6 +34,7 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       boldDetailSections,
       projects,
       projectDeliverables,
+      skills,
     },
     serializers,
     seeds(server) {
@@ -52,9 +54,9 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       this.get('/projects', (schema) => {
         return schema.all('project');
       });
-      // this.get('/skills', (schema) => {
-      //   return schema.skills.all();
-      // });
+      this.get('/skills', (schema) => {
+        return schema.all('skill');
+      });
       // this.get('/projects/:id/deliverables', (schema, request) => {
       //   const project = schema.projects.find(request.params.id);
       //   return project.deliverables;
