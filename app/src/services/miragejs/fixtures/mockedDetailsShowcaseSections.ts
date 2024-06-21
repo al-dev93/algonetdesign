@@ -41,4 +41,45 @@ export const detailSections = [
     wrapped: true,
     showcaseSectionId: '3',
   },
+  {
+    id: '7',
+    tag: 'p',
+    name: 'description',
+    content:
+      'Développeur concepteur de logiciel, j’ai choisi de déployer mon activité en l’adossant à une société unipersonnelle: Sasu.',
+    showcaseSectionId: '4',
+  },
+  {
+    id: '8',
+    tag: 'p',
+    name: 'description',
+    content:
+      'Spécialisée dans le développement Front-end, Sasu peut intégrer une maquette existante ou la créer en élaborant le design avec vous.',
+    showcaseSectionId: '4',
+    boldDetailSectionIds: ['1', '2'],
+  },
+  {
+    id: '9',
+    tag: 'p',
+    name: 'description',
+    content:
+      "Sasu peut également vous aider à mettre en oeuvre ou à améliorer votre projet. Elle proposera ainsi de déboguer un code défectueux, de refactoriser une base de code pour l'optimiser, de créer des tests pour accroître la fiabilité, ou encore de convertir une application avec des technologies récentes.",
+    showcaseSectionId: '4',
+    boldDetailSectionIds: ['3', '4'],
+  },
+  {
+    id: '10',
+    tag: 'p',
+    name: 'description',
+    content:
+      'HTML et CSS sont au coeur des technologies maîtrisées par Sasu. Elles sont complétées par la liste ci-dessous. Enfin, pour une application nécessitant un Back-end modeste, Sasu peut en assurer la création.',
+    showcaseSectionId: '4',
+    boldDetailSectionIds: ['5', '6'],
+  },
+  {
+    id: '11',
+    tag: 'SkillsCloud',
+    urlContent: 'http://localhost:5173/api/skills',
+    showcaseSectionId: '4',
+  },
 ];

@@ -17,7 +17,7 @@ export function Card({ data: cardData }: CardProps): JSX.Element {
   return (
     <article className={style.card}>
       <header className={style.cardHeader}>
-        <IonIcon className={style.folderIcon} name='folder-open-outline' />
+        <IonIcon className={style.folderIcon} name='folder-open-sharp' />
         <SocialMediaNavBar changeLinkColor={style.cardAdditionalNav} type='card' buttons={cardData.deliverables} />
       </header>
       <div className={style.cardMain}>

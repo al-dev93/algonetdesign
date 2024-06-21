@@ -7,7 +7,7 @@ import { DynamicElement } from './components/DynamicElement';
 import { DynamicElementContainer } from './components/DynamicElementContainer';
 import style from './style.module.css';
 import { COMPONENT_MAP } from './utils/constants';
-import { FormButton } from '../FormButton';
+import { FormButton } from '../../components/FormButton';
 
 import type { ShowcaseSectionProps } from './types';
 import type { SectionsMenu } from '@/types';
@@ -48,6 +48,7 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
   }, [anchor, isRefDisplayed, visibleSections]);
 
   console.log(`section ${anchor}`);
+  console.log(content);
 
   return (
     <section className={title ? style.section : style.hero} ref={sectionRef} id={anchor}>
@@ -62,6 +63,17 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
               className={element.name && style[element.name]}
             >
               {element.content}
+              {element.boldContent?.length
+                ? element.boldContent.map((item) => (
+                    <DynamicElement
+                      key={item.id}
+                      tag={item.tag as keyof JSX.IntrinsicElements | keyof typeof COMPONENT_MAP}
+                      className={item.name && style[item.name]}
+                    >
+                      {item.content}
+                    </DynamicElement>
+                  ))
+                : null}
             </DynamicElement>
           ) : (
             <DynamicElementContainer // TODO: add comment

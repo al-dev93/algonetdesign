@@ -73,7 +73,7 @@ export const projectDeliverables = [
   },
   {
     id: '13',
-    path: '/P4GAME-al-2206',
+    path: '/P4GAME-al-2206/P4GAME-al-2206/starterOnly',
     projectId: 'P4GAME-al-2206',
     accountId: '6',
   },
