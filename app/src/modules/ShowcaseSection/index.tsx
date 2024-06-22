@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef } from 'react';
 
+import { ModalFormButton } from '@components/ModalFormButton';
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
 
@@ -7,7 +8,6 @@ import { DynamicElement } from './components/DynamicElement';
 import { DynamicElementContainer } from './components/DynamicElementContainer';
 import style from './style.module.css';
 import { COMPONENT_MAP } from './utils/constants';
-import { FormButton } from '../../components/FormButton';
 
 import type { ShowcaseSectionProps } from './types';
 import type { SectionsMenu } from '@/types';
@@ -15,12 +15,17 @@ import type { SectionsMenu } from '@/types';
 /**
  *
  * @description // TODO: add comment
- * @param {ShowcaseSectionProps} { content, anchor, title, visibleSections }
+ * @param {ShowcaseSectionProps} { content, anchor, title, visibleSections, openModalFormDialog }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
-function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: ShowcaseSectionProps): JSX.Element {
-  const handleClick = (): void => undefined;
+function MemoizedShowcaseSection({
+  content,
+  anchor,
+  title,
+  visibleSections,
+  openModalFormDialog,
+}: ShowcaseSectionProps): JSX.Element {
   /**
    *
    * @description // TODO: complete
@@ -86,7 +91,7 @@ function MemoizedShowcaseSection({ content, anchor, title, visibleSections }: Sh
           ),
         )}
       </div>
-      <FormButton name='Contact' onClick={handleClick} />
+      <ModalFormButton name='Contact' onClick={openModalFormDialog} />
     </section>
   );
 }

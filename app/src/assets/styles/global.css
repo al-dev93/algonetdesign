@@ -117,13 +117,22 @@ section {
   padding: 45px 0 54px;
 }
 
-button,
+button {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding: 0 0 2px;
+  border: none;
+  background: none;
+}
+
+/* .appButton,
 label {
   font-family: var(--font-accessories);
   font-size: var(--fs-xs);
-}
+} */
 
-button {
+/* .appButton {
   width: 150px;
   padding: 12px;
   border: 1px solid;
@@ -133,12 +142,14 @@ button {
   font-weight: bold;
   background: var(--button-bg) var(--button-gradient);
   color: var(--white);
-}
+} */
 
 label {
   line-height: var(--lh-label);
   font-size: var(--fs-xs);
   font-weight: 500;
+  font-family: var(--font-accessories);
+  font-size: var(--fs-xs);
 }
 
 ul {

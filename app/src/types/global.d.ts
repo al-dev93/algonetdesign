@@ -1,5 +1,8 @@
+import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+
 import type { IconType } from '.';
 
+export type SetStateBoolean = Dispatch<SetStateAction<boolean>>;
 /**
  * @description on the main page as the layout
  */
@@ -33,7 +36,7 @@ export type AccountLink = {
 
 // COMMENT: type of the layout context transmitted to the inserted pages
 export type OutletContextPage = {
-  outletContext: React.MutableRefObject<VisibleSections>;
+  outletContext: MutableRefObject<VisibleSections>;
 };
 
 // NOTE: on the index page

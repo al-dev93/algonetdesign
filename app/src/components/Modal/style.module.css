@@ -1,0 +1,74 @@
+.modal {
+  position: fixed;
+  width: max-content;
+  top: 50%;
+  bottom: 50%;
+  padding: 0;
+  border: none;
+}
+
+.modal::backdrop {
+  background: rgba(0, 53, 84, 0.7);
+}
+
+.modalWrapper {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--white);
+}
+
+.modalWrapper.alert {
+  background-color: var(--quaternary-color);
+}
+
+.modalHeader {
+  padding: 20px 20px 0px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalCloseButton {
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.modalCloseIcon.alert {
+  color: var(--primary-color);
+}
+
+.modalTitleWrapper {
+  width: max-content;
+  padding: 5px 0;
+  align-self: center;
+}
+
+.modalTitle {
+  margin-bottom: 8px;
+  font-size: var(--fs-lg);
+  color: var(--quaternary-color);
+}
+
+.modalSlogan {
+  margin-left: 12px;
+  font-size: var(--fs-sm);
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.modalInnerWrapper {
+  width: max-content;
+}
+
+.modalFooter {
+  padding-bottom: 30px;
+}
+
+.buttonForm {
+  margin: 0 auto;
+}
+
+.buttonForm:disabled {
+  opacity: 0.5;
+  border: transparent;
+}

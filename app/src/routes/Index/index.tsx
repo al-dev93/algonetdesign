@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import { Modal } from '@/components/Modal';
 import { ShowcaseSection } from '@/modules/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
 import { usePageSection } from '@hooks/usePageSection';
@@ -18,13 +21,32 @@ export function Index(): JSX.Element {
   //  layout context
   const { outletContext } = usePageSection();
   const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
+  const [openFormDialog, setOpenFormDialog] = useState<boolean>(false);
+
+  const handleClick = (): void => setOpenFormDialog(true);
 
   console.log(data);
 
   return (
     <div className={style.wrapperIndex}>
+      <Modal
+        open={openFormDialog}
+        setOpen={setOpenFormDialog}
+        title='Dialogue'
+        button={{ name: 'soumettre' }}
+        closeIcon
+      >
+        fenêtre modale
+      </Modal>
       {(data as IndexPageSection[])?.map(({ id, content, anchor, title }) => (
-        <ShowcaseSection key={id} content={content} anchor={anchor} title={title} visibleSections={outletContext} />
+        <ShowcaseSection
+          key={id}
+          content={content}
+          anchor={anchor}
+          title={title}
+          visibleSections={outletContext}
+          openModalFormDialog={handleClick}
+        />
       ))}
     </div>
   );

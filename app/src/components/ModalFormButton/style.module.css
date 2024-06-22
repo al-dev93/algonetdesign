@@ -1,0 +1,15 @@
+.appButton {
+  display: block;
+  width: 150px;
+  padding: 12px;
+  border: 1px solid;
+  border-color: var(--tertiary-color);
+  border-radius: var(--br-md);
+  line-height: var(--lh-regular);
+  font-weight: bold;
+  background: var(--button-bg) var(--button-gradient);
+  color: var(--white);
+  font-family: var(--font-accessories);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
