@@ -1,0 +1,92 @@
+.inputFormWrapper {
+  position: relative;
+}
+
+.inputContainer {
+  position: relative;
+  width: fit-content;
+  padding-top: 12px;
+  color: var(--decorative-light);
+  font-weight: 600;
+  border: 1px solid var(--dark-secondary);
+  border-radius: var(--br-xxs);
+  cursor: text;
+}
+
+.inputContainer.isEdited {
+  margin: 0 -2px -2px 0;
+  border: 2px solid var(--tertiary-color);
+  color: var(--tertiary-color);
+}
+
+.inputContainer:hover:not(.isEdited, :focus-within) {
+  border: 1px solid var(--decorative-dark);
+  color: var(--decorative-dark);
+  font-weight: 500;
+}
+
+.inputContainer:focus-within {
+  margin: 0 -2px -2px 0;
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.inputContainer:hover.isInError,
+.inputContainer:focus-within.isInError {
+  color: var(--primary-alert-color);
+}
+
+.inputContainer:hover.isInError {
+  border: 1px solid var(--primary-alert-color);
+}
+
+.inputContainer:focus-within.isInError {
+  border: 2px solid var(--primary-alert-color);
+}
+
+.labelContainer {
+  position: absolute;
+  display: flex;
+  top: -12px;
+  left: 10px;
+  background-color: white;
+}
+
+.label {
+  display: block;
+  padding: 0 4px 0 2px;
+}
+
+.markInfo {
+  vertical-align: top;
+  font-size: 11px;
+  padding-right: 4px;
+}
+
+.inputBox {
+  width: 366px;
+  height: 32px;
+  padding: 0px 8px 8px 8px;
+  line-height: var(--lh-label);
+  font-family: var(--font-regular);
+  font-size: var(--fs-xs);
+  border: none;
+  outline: none;
+  background: none;
+}
+
+.inputBox.textArea {
+  margin: 0 0 -2.5px;
+  min-width: 366px;
+  width: 476px;
+  max-width: 100vw;
+  min-height: 138px;
+  max-height: 100vh;
+}
+
+.inputBox::placeholder {
+  align-self: flex-start;
+  font-size: var(--fs-xxs);
+  color: var(--decorative-dark);
+}

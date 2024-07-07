@@ -2,6 +2,10 @@ import { Dispatch, MutableRefObject, SetStateAction } from 'react';
 
 import type { IconType } from '.';
 
+export type StringObject = {
+  readonly [key: string]: string;
+};
+
 export type SetStateBoolean = Dispatch<SetStateAction<boolean>>;
 /**
  * @description on the main page as the layout
@@ -36,7 +40,9 @@ export type AccountLink = {
 
 // COMMENT: type of the layout context transmitted to the inserted pages
 export type OutletContextPage = {
-  outletContext: MutableRefObject<VisibleSections>;
+  viewSectionContext: MutableRefObject<VisibleSections>;
+  setOpenContactFormDialog: SetStateBoolean;
+  // outletContext: MutableRefObject<VisibleSections>;
 };
 
 // NOTE: on the index page
@@ -107,6 +113,51 @@ export type Skill = {
   value: number;
 };
 
+// NOTE: data for the contact form
+
+export type ContactFormModal = {
+  id: string;
+  url: string;
+  submitButtonName: string;
+  title: string;
+  subtitle: string;
+  alertOnSubmit: string[];
+};
+
+type InputType = 'text' | 'email' | 'tel';
+type InputTag = 'input' | 'textarea';
+
+export type TooltipContent = {
+  id: string;
+  line: string;
+  lineHeight?: number;
+};
+
+export type FormInput = {
+  id: string;
+  tag: InputTag;
+  type?: InputType;
+  placeholder: string;
+  pattern?: string;
+  required?: boolean;
+  minLength?: number;
+};
+
+export type ErrorMessage = {
+  patternMismatch?: string;
+  tooShort?: string;
+  valueMissing?: string;
+};
+
+export type ContactFormInput = {
+  id: string;
+  label: string;
+  input: FormInput;
+  tooltipContent?: string | TooltipContent | TooltipContent[];
+};
+
+// NOTE: data fetched via the useFetchData hook
+
 // TODO: add comment
 /**
  * @description
@@ -114,7 +165,15 @@ export type Skill = {
  * @export
  * @al-dev93
  */
-export type FetchData = AccountLink[] | MenuType[] | IndexPageSection[] | ProjectData[] | Skill[] | null;
+export type FetchData =
+  | AccountLink[]
+  | MenuType[]
+  | IndexPageSection[]
+  | ProjectData[]
+  | Skill[]
+  | ContactFormInput[]
+  | ContactFormModal[]
+  | null;
 
 export type FetchResultData = {
   data: FetchData;

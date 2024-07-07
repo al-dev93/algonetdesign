@@ -8,11 +8,12 @@ import { Fade } from './components/Fade';
 import { PicturesScroller } from './components/PicturesScroller';
 import { ScrollButtons } from './components/ScrollButtons';
 import { SlideshowDots } from './components/SlideshowDots';
+import { slideshowInitialState } from './reducer/slideshowInitialState';
 import { slideshowReducer } from './reducer/slideshowReducer';
 import style from './style.module.css';
 import { INIT_MAX_INDEX_SLIDE, PENDING, SLIDE_TRANSITION, START, STOP } from './utils/constants';
 
-import type { SlideshowProps, SlideshowState } from './types';
+import type { SlideshowProps } from './types';
 import type { AccountLink, ProjectData } from '@/types';
 
 /**
@@ -32,15 +33,7 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
     return (slideshowData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
   }, [fetchedData, slideshowData]);
 
-  const initialSlideshowState: SlideshowState = {
-    current: 0,
-    new: 0,
-    loopSlide: false,
-    slideTransition: STOP,
-    maxIndexSlide: 0,
-  };
-
-  const [slideshowState, slideshowDispatch] = useReducer(slideshowReducer, initialSlideshowState);
+  const [slideshowState, slideshowDispatch] = useReducer(slideshowReducer, slideshowInitialState);
 
   useEffect(() => {
     if (data) slideshowDispatch({ type: INIT_MAX_INDEX_SLIDE, payload: { maxIndexSlide: data.length - 1 } });
@@ -61,7 +54,7 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
   }, [slideshowState.slideTransition]);
 
   const activeSlide = data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new];
-  console.log(activeSlide?.deliverables);
+  // console.log(activeSlide?.deliverables);
 
   return (
     activeSlide && (

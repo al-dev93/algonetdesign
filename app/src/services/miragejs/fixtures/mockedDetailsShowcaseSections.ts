@@ -46,7 +46,7 @@ export const detailSections = [
     tag: 'p',
     name: 'description',
     content:
-      'Développeur concepteur de logiciel, j’ai choisi de déployer mon activité en l’adossant à une société unipersonnelle: Sasu.',
+      'Développeur concepteur de logiciel, j’ai choisi de déployer mon activité en l’adossant à une société unipersonnelle: AlgoNetDesign.',
     showcaseSectionId: '4',
   },
   {
@@ -54,7 +54,7 @@ export const detailSections = [
     tag: 'p',
     name: 'description',
     content:
-      'Spécialisée dans le développement Front-end, Sasu peut intégrer une maquette existante ou la créer en élaborant le design avec vous.',
+      'Spécialisée dans le développement Front-end, AlgoNetDesign peut intégrer une maquette existante ou la créer en élaborant le design avec vous.',
     showcaseSectionId: '4',
     boldDetailSectionIds: ['1', '2'],
   },
@@ -63,7 +63,7 @@ export const detailSections = [
     tag: 'p',
     name: 'description',
     content:
-      "Sasu peut également vous aider à mettre en oeuvre ou à améliorer votre projet. Elle proposera ainsi de déboguer un code défectueux, de refactoriser une base de code pour l'optimiser, de créer des tests pour accroître la fiabilité, ou encore de convertir une application avec des technologies récentes.",
+      "AlgoNetDesign peut également vous aider à mettre en oeuvre ou à améliorer votre projet. Elle proposera ainsi de déboguer un code défectueux, de refactoriser une base de code pour l'optimiser, de créer des tests pour accroître la fiabilité, ou encore de convertir une application avec des technologies récentes.",
     showcaseSectionId: '4',
     boldDetailSectionIds: ['3', '4'],
   },
@@ -72,7 +72,7 @@ export const detailSections = [
     tag: 'p',
     name: 'description',
     content:
-      'HTML et CSS sont au coeur des technologies maîtrisées par Sasu. Elles sont complétées par la liste ci-dessous. Enfin, pour une application nécessitant un Back-end modeste, Sasu peut en assurer la création.',
+      'HTML et CSS sont au coeur des technologies maîtrisées par AlgoNetDesign. Elles sont complétées par la liste ci-dessous. Enfin, pour une application nécessitant un Back-end modeste, AlgoNetDesign peut en assurer la création.',
     showcaseSectionId: '4',
     boldDetailSectionIds: ['5', '6'],
   },

@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
-import { Modal } from '@/components/Modal';
-import { ShowcaseSection } from '@/modules/ShowcaseSection';
+import { ShowcaseSection } from '@components/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
 import { usePageSection } from '@hooks/usePageSection';
 
@@ -19,32 +16,20 @@ import type { IndexPageSection } from '@/types';
 export function Index(): JSX.Element {
   // COMMENT: uses the custom hook usePageSection to retrieve the
   //  layout context
-  const { outletContext } = usePageSection();
+  const { viewSectionContext, setOpenContactFormDialog } = usePageSection();
   const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
-  const [openFormDialog, setOpenFormDialog] = useState<boolean>(false);
 
-  const handleClick = (): void => setOpenFormDialog(true);
-
-  console.log(data);
+  const handleClick = (): void => setOpenContactFormDialog(true);
 
   return (
     <div className={style.wrapperIndex}>
-      <Modal
-        open={openFormDialog}
-        setOpen={setOpenFormDialog}
-        title='Dialogue'
-        button={{ name: 'soumettre' }}
-        closeIcon
-      >
-        fenêtre modale
-      </Modal>
       {(data as IndexPageSection[])?.map(({ id, content, anchor, title }) => (
         <ShowcaseSection
           key={id}
           content={content}
           anchor={anchor}
           title={title}
-          visibleSections={outletContext}
+          visibleSections={viewSectionContext}
           openModalFormDialog={handleClick}
         />
       ))}
