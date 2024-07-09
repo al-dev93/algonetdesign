@@ -39,7 +39,8 @@ export type PopoverProps = {
   fillList?: string[];
   firstItemFocused?: boolean;
   prevFocusNode?: HTMLInputElement | HTMLTextAreaElement | null;
-  dispatch: Dispatch<ModalDialogContactFormAction>;
+  // dispatch: Dispatch<ModalDialogContactFormAction>;
+  inputAutocomplete: (content: string) => void;
 };
 
 export type OverlayType = typeof HISTORY | typeof AUTOCOMPLETE;
@@ -57,7 +58,7 @@ export type Validity = {
 };
 
 type InputStatus = 'remplir' | 'modifier';
-type InputBorderBox = 'isEdited' | 'isInError';
+export type InputBorderBox = 'isEdited' | 'isInError';
 
 export type ModalDialogContactFormState = {
   [name: string]: {
@@ -72,59 +73,83 @@ export type ModalDialogContactFormState = {
   };
 };
 
-type ChangeInputBorderBoxAction = {
-  type: typeof SET_INPUT_BORDER_BOX;
-  payload: {
-    name: string;
-    borderStyle: InputBorderBox;
-  };
-};
+type InputComponent =
+  | {
+      type: typeof SET_INPUT_BORDER_BOX;
+      payload: {
+        name: string;
+        borderStyle: InputBorderBox;
+      };
+    }
+  | {
+      type: typeof SET_INPUT_FOCUS;
+      payload: {
+        name: string;
+        isFocused: boolean;
+      };
+    }
+  | {
+      type: typeof SET_INPUT_ERROR;
+      payload: {
+        name: string;
+        inputError: Validity | undefined;
+      };
+    }
+  | {
+      type: typeof DELETE_INPUT_ERROR;
+      payload: {
+        name: string;
+      };
+    }
+  | {
+      type: typeof SET_INPUT_VALUE;
+      payload: {
+        name: string;
+        inputValue: string;
+      };
+    }
+  | {
+      type: typeof DELETE_INPUT_VALUE;
+      payload: {
+        name: string;
+      };
+    };
 
-type ErrorTagName = {
-  type: typeof SET_ERROR_TAG_NAME | typeof DELETE_ERROR_TAG_NAME;
-  payload: {
-    name: string;
-    errorTagName?: InputStatus;
-  };
-};
+type ErrorTagComponent =
+  | {
+      type: typeof SET_ERROR_TAG_NAME;
+      payload: {
+        name: string;
+        errorTagName?: InputStatus;
+      };
+    }
+  | {
+      type: typeof DELETE_ERROR_TAG_NAME;
+      payload: {
+        name: string;
+      };
+    };
 
-type SetInputFocus = {
-  type: typeof SET_INPUT_FOCUS;
-  payload: {
-    name: string;
-    isFocused: boolean;
-  };
-};
+type AutoComplete =
+  | {
+      type: typeof SET_AUTO_COMPLETE;
+      payload: {
+        name: string;
+        autoComplete: string[];
+      };
+    }
+  | {
+      type: typeof SET_OVERLAY_FIRST_ITEM_FOCUS;
+      payload: {
+        name: string;
+        overlayFirstItemFocus: boolean;
+      };
+    }
+  | {
+      type: typeof RESET_AUTO_COMPLETE_OVERLAY;
+      payload: {
+        name: string;
+      };
+    };
 
-type InputError = {
-  type: typeof SET_INPUT_ERROR | typeof DELETE_INPUT_ERROR;
-  payload: {
-    name: string;
-    inputError?: Validity | undefined;
-  };
-};
-
-type AutoCompleteOverlay = {
-  type: typeof SET_AUTO_COMPLETE | typeof SET_OVERLAY_FIRST_ITEM_FOCUS | typeof RESET_AUTO_COMPLETE_OVERLAY;
-  payload: {
-    name: string;
-    autoComplete?: string[];
-    overlayFirstItemFocus?: boolean;
-  };
-};
-
-type InputValue = {
-  type: typeof SET_INPUT_VALUE | typeof DELETE_INPUT_VALUE;
-  payload: {
-    name: string;
-    inputValue?: string;
-  };
-};
-
-export type ModalDialogContactFormAction =
-  | ChangeInputBorderBoxAction
-  | ErrorTagName
-  | SetInputFocus
-  | InputError
-  | InputValue
-  | AutoCompleteOverlay;
+export type ModalDialogContactFormAction = InputComponent | ErrorTagComponent | AutoComplete;

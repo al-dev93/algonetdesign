@@ -42,7 +42,6 @@ export type AccountLink = {
 export type OutletContextPage = {
   viewSectionContext: MutableRefObject<VisibleSections>;
   setOpenContactFormDialog: SetStateBoolean;
-  // outletContext: MutableRefObject<VisibleSections>;
 };
 
 // NOTE: on the index page

@@ -7,8 +7,18 @@ import type { Validity } from '../types';
  * @return {*}  {Validity}
  * @al-dev93
  */
-export function getInputValidityProperties(input: HTMLInputElement | HTMLTextAreaElement): Validity {
-  const { minLength } = input;
+export function getInputValidityProperties(input: HTMLInputElement | HTMLTextAreaElement, content?: string): Validity {
+  const { minLength, required } = input;
+  const { pattern } = input as HTMLInputElement;
+
+  if (content) {
+    const valueMissing = required ? !content.length : undefined;
+    const patternMismatch = pattern ? !new RegExp(pattern).test(content) : undefined;
+    const tooShort = minLength ? !(content.length >= minLength) : undefined;
+    const valid = (!valueMissing ?? true) && (!patternMismatch ?? true) && (!tooShort ?? true);
+    return { minLength, patternMismatch, tooShort, valid, valueMissing };
+  }
+
   const { patternMismatch, tooShort, valid, valueMissing } = input.validity;
   return { minLength, patternMismatch, tooShort, valid, valueMissing };
 }

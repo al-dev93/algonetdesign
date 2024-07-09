@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import style from './style.module.css';
-import { putAutoCompleteInInput } from './utils/autoCompleteHelpers';
+// import { putAutoCompleteInInput } from './utils/autoCompleteHelpers';
 
 import type { PopoverProps } from '../../types';
 /**
@@ -23,7 +23,8 @@ export function Popover({
   fillList,
   firstItemFocused,
   prevFocusNode,
-  dispatch,
+  inputAutocomplete,
+  // dispatch,
 }: PopoverProps): JSX.Element | null {
   const activeItem = useRef<number>(0);
   const ulRef = useRef<HTMLUListElement>(null);
@@ -66,7 +67,8 @@ export function Popover({
       return;
     }
     if (event.code === 'Enter' && prevFocusNode)
-      putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
+      // putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
+      inputAutocomplete(event.currentTarget.textContent ?? '');
   };
   /**
    *
@@ -78,7 +80,8 @@ export function Popover({
   const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
     event.preventDefault();
     event.stopPropagation();
-    if (prevFocusNode) putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
+    // if (prevFocusNode) putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
+    inputAutocomplete(event.currentTarget.textContent ?? '');
   };
 
   /**

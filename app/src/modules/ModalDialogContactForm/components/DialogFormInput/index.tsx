@@ -34,7 +34,7 @@ export function DialogFormInput({
   dispatch,
 }: DialogFormInputProps): JSX.Element {
   const inputElementRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  const { toggleUpdate } = useContactForm(inputElementRef, state, dispatch);
+  const [setInputAutocomplete] = useContactForm(inputElementRef, dispatch);
   // console.log(toggleUpdate);
   // console.log(state);
 
@@ -79,7 +79,7 @@ export function DialogFormInput({
               fillList={state[name].autoComplete}
               firstItemFocused={state[name].overlayFirstItemFocus}
               prevFocusNode={inputElementRef.current}
-              dispatch={dispatch}
+              inputAutocomplete={setInputAutocomplete}
             />
           )}
         </div>

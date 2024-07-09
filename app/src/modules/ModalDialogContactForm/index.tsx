@@ -37,6 +37,7 @@ export function ModalDialogContactForm({ open, setOpen, data: contactFormModal, 
 
   // console.log(alertOnSubmit);
   // console.log(data);
+  // console.log(contactFormState);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
