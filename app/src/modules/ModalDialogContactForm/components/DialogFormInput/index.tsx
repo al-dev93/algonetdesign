@@ -75,11 +75,13 @@ export function DialogFormInput({
           />
           {state[name].isFocused && (
             <Popover
-              errorMessage='test'
-              fillList={state[name].autoComplete}
+              autocompleteList={state[name].autoComplete}
+              errorMessage={input.error}
+              errorState={state[name].inputError}
               firstItemFocused={state[name].overlayFirstItemFocus}
-              prevFocusNode={inputElementRef.current}
               inputAutocomplete={setInputAutocomplete}
+              prevFocusNode={inputElementRef.current}
+              // url={`http://localhost:5173/api/contactFormInputs/${name}`}
             />
           )}
         </div>

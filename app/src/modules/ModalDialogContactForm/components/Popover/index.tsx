@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import style from './style.module.css';
-// import { putAutoCompleteInInput } from './utils/autoCompleteHelpers';
 
 import type { PopoverProps } from '../../types';
 /**
@@ -13,19 +12,23 @@ import type { PopoverProps } from '../../types';
  *   fillList,
  *   firstItemFocused,
  *   prevFocusNode,
- *   dispatch,
+ *   inputAutocomplete,
  * }
  * @return {*}  {(JSX.Element | null)}
  * @al-dev93
  */
 export function Popover({
+  autocompleteList,
   errorMessage,
-  fillList,
+  errorState,
   firstItemFocused,
-  prevFocusNode,
   inputAutocomplete,
-  // dispatch,
+  prevFocusNode,
 }: PopoverProps): JSX.Element | null {
+  const listOfError = errorState
+    ? Object.entries(errorState).filter(([key, value]) => key !== 'minLength' && key !== 'valid' && value)
+    : undefined;
+
   const activeItem = useRef<number>(0);
   const ulRef = useRef<HTMLUListElement>(null);
   /**
@@ -37,13 +40,13 @@ export function Popover({
    * @al-dev93
    */
   const setActiveItem = (ulNode: HTMLUListElement, count: boolean): void => {
-    if (fillList && activeItem.current > 0 && activeItem.current < fillList.length - 1)
+    if (autocompleteList && activeItem.current > 0 && activeItem.current < autocompleteList.length - 1)
       activeItem.current += count ? 1 : -1;
-    else if (fillList && activeItem.current === 0)
-      activeItem.current = count ? activeItem.current + 1 : fillList.length - 1;
-    else if (fillList && activeItem.current === fillList.length - 1)
+    else if (autocompleteList && activeItem.current === 0)
+      activeItem.current = count ? activeItem.current + 1 : autocompleteList.length - 1;
+    else if (autocompleteList && activeItem.current === autocompleteList.length - 1)
       activeItem.current = count ? 0 : activeItem.current - 1;
-    return fillList && fillList?.length > 1
+    return autocompleteList && autocompleteList?.length > 1
       ? (ulNode?.children.item(activeItem.current) as HTMLLIElement).focus()
       : (ulNode?.children.item(0) as HTMLLIElement).focus();
   };
@@ -66,9 +69,7 @@ export function Popover({
       prevFocusNode?.focus();
       return;
     }
-    if (event.code === 'Enter' && prevFocusNode)
-      // putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
-      inputAutocomplete(event.currentTarget.textContent ?? '');
+    if (event.code === 'Enter' && prevFocusNode) inputAutocomplete(event.currentTarget.textContent ?? '');
   };
   /**
    *
@@ -80,7 +81,6 @@ export function Popover({
   const handleClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
     event.preventDefault();
     event.stopPropagation();
-    // if (prevFocusNode) putAutoCompleteInInput(prevFocusNode, event.currentTarget.textContent ?? '', dispatch);
     inputAutocomplete(event.currentTarget.textContent ?? '');
   };
 
@@ -100,13 +100,19 @@ export function Popover({
   }, [firstItemFocused]);
 
   return (
-    ((errorMessage || !!fillList?.length) && (
+    ((errorState || !!autocompleteList?.length) && (
       <div className={style.popoverWrapper}>
-        {errorMessage && <p className={style.errorMessage}>{errorMessage}</p>}
-        <div className={`${style.autocompleteWrapper} ${!fillList ? style.disable : undefined}`}>
+        {errorState && (
+          <p className={style.errorMessage}>
+            {listOfError
+              ? listOfError.map(([key]) => errorMessage?.[key as keyof typeof errorMessage]).join('\n')
+              : null}
+          </p>
+        )}
+        <div className={`${style.autocompleteWrapper} ${!autocompleteList ? style.disable : undefined}`}>
           <span className={style.borderTopList} />
           <ul className={style.listPopoverItem} ref={ulRef}>
-            {fillList?.map((value) => (
+            {autocompleteList?.map((value) => (
               <li
                 key={value}
                 className={style.popoverItem}

@@ -132,6 +132,13 @@ export type TooltipContent = {
   lineHeight?: number;
 };
 
+export type ErrorMessage = {
+  id: string;
+  patternMismatch?: string;
+  tooShort?: string;
+  valueMissing?: string;
+};
+
 export type FormInput = {
   id: string;
   tag: InputTag;
@@ -140,12 +147,7 @@ export type FormInput = {
   pattern?: string;
   required?: boolean;
   minLength?: number;
-};
-
-export type ErrorMessage = {
-  patternMismatch?: string;
-  tooShort?: string;
-  valueMissing?: string;
+  error?: ErrorMessage;
 };
 
 export type ContactFormInput = {
@@ -172,6 +174,7 @@ export type FetchData =
   | Skill[]
   | ContactFormInput[]
   | ContactFormModal[]
+  | ErrorMessage[]
   | null;
 
 export type FetchResultData = {

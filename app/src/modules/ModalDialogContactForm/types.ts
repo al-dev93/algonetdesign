@@ -35,12 +35,13 @@ export type DialogFormInputProps = {
 };
 
 export type PopoverProps = {
-  errorMessage?: string;
-  fillList?: string[];
+  autocompleteList?: string[];
+  errorMessage?: ErrorMessage;
+  errorState?: Validity;
   firstItemFocused?: boolean;
-  prevFocusNode?: HTMLInputElement | HTMLTextAreaElement | null;
-  // dispatch: Dispatch<ModalDialogContactFormAction>;
   inputAutocomplete: (content: string) => void;
+  prevFocusNode?: HTMLInputElement | HTMLTextAreaElement | null;
+  // url?: string;
 };
 
 export type OverlayType = typeof HISTORY | typeof AUTOCOMPLETE;
