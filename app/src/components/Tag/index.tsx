@@ -7,7 +7,7 @@ import type { TagProps } from './types';
  * @param param0
  * @returns
  */
-function Tag({ className, tag, type, position }: TagProps): JSX.Element {
+export function Tag({ className, tag, type, position }: TagProps): JSX.Element {
   return (
     <span
       className={`${className} ${style.tag} ${type === 'row' && style.filled}
@@ -18,7 +18,3 @@ function Tag({ className, tag, type, position }: TagProps): JSX.Element {
     </span>
   );
 }
-
-export default Tag;
-
-// ${type === 'table' && `${style.thinned} ${style.bulleted}`}

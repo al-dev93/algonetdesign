@@ -7,7 +7,7 @@ export const boldDetailSections = [
   {
     id: '2',
     tag: 'b',
-    content: "Sasu veut répondre à votre attente d'interface utilisateur esthétique, responsive et accessible.",
+    content: "AlgoNetDesign répond à votre attente d'interface utilisateur esthétique, responsive et accessible.",
     detailSectionId: '8',
   },
   {
@@ -18,7 +18,7 @@ export const boldDetailSections = [
   {
     id: '4',
     tag: 'b',
-    content: 'Sasu veut oeuvrer à la performance de votre projet.',
+    content: 'AlgoNetDesign oeuvre pour la performance de votre projet.',
     detailSectionId: '9',
   },
   {
@@ -30,7 +30,7 @@ export const boldDetailSections = [
     id: '6',
     tag: 'b',
     content:
-      "Sasu s'appuie sur un large éventail de technologie pour proposer des applications dynamiques et réactives",
+      "AlgoNetDesign s'appuie sur un large éventail de technologie pour proposer des applications dynamiques et réactives",
     detailSectionId: '10',
   },
 ];

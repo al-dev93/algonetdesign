@@ -1,6 +1,5 @@
+import { DynamicElement } from '@components/DynamicElement';
 import { useFetchData } from '@hooks/useFetchData';
-
-import { DynamicElement } from '../DynamicElement';
 
 import type { DynamicElementContainerProps } from './types';
 

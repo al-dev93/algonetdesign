@@ -1,6 +1,6 @@
 import { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 
-import { COMPONENT_MAP } from '../../utils/constants';
+import { COMPONENT_MAP } from '@utils/constants';
 
 export type ComponentType = keyof typeof COMPONENT_MAP;
 

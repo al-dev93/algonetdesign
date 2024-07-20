@@ -1,22 +1,20 @@
 import type { AccountLink } from '@/types';
 
-export type SocialMediaNavBarProps =
+export type SocialMediaNavBarProps = {
+  className?: string;
+  changeLinkColor?: string;
+  type?: 'left-nav' | 'right-nav' | 'card';
+  cryptoKey?: CryptoKey;
+} & (
   | {
-      className?: string;
-      changeLinkColor?: string;
-      type?: 'left-nav' | 'right-nav' | 'card';
       buttons?: AccountLink[];
-      url?: undefined;
-      cryptoKey?: CryptoKey;
+      url?: never;
     }
   | {
-      className?: string;
-      changeLinkColor?: string;
-      type?: 'left-nav' | 'right-nav' | 'card';
-      buttons?: undefined;
+      buttons?: never;
       url?: string;
-      cryptoKey?: CryptoKey;
-    };
+    }
+);
 
 export type SocialMediaButtonProps = {
   className?: string;

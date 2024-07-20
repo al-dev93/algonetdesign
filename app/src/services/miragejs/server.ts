@@ -1,7 +1,12 @@
 import { createServer } from 'miragejs';
 
 import { boldDetailSections } from './fixtures/mockedBoldDetailsShowcaseSections';
+import { contactFormTooltips } from './fixtures/mockedContactFormTooltips';
 import { accounts } from './fixtures/mockedDataAccounts';
+import { contactFormInputs } from './fixtures/mockedDataContactFormInputs';
+import { contactFormModals } from './fixtures/mockedDataContactFormModals';
+import { errorMessages } from './fixtures/mockedDataErrorMessages';
+import { formInputs } from './fixtures/mockedDataFormInputs';
 import { menuItems } from './fixtures/mockedDataMenu';
 import { projects } from './fixtures/mockedDataProjects';
 import { showcaseSections } from './fixtures/mockedDataShowcaseSections';
@@ -35,6 +40,11 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       projects,
       projectDeliverables,
       skills,
+      contactFormInputs,
+      formInputs,
+      errorMessages,
+      contactFormModals,
+      contactFormTooltips,
     },
     serializers,
     seeds(server) {
@@ -57,6 +67,21 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       this.get('/skills', (schema) => {
         return schema.all('skill');
       });
+      this.get('/contactFormInputs', (schema) => {
+        return schema.all('contactFormInput');
+      });
+      this.get('/contactFormModals', (schema) => {
+        return schema.all('contactFormModal');
+      });
+      this.get('/contactFormInputs/:id', (schema, request) => {
+        const inputId = request.params.id;
+        const contactFormInput = schema.find('contactFormInput', inputId);
+        return contactFormInput;
+      });
+
+      // this.get('/contactFormModals', (schema) => {
+      //   return schema.all('contactFormModal');
+      // });
       // this.get('/projects/:id/deliverables', (schema, request) => {
       //   const project = schema.projects.find(request.params.id);
       //   return project.deliverables;

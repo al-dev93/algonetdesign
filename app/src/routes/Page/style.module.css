@@ -1,5 +1,6 @@
 .page {
   position: relative;
+  overflow: auto;
   width: 100vw;
   height: auto;
   background-color: var(--white);
@@ -17,7 +18,10 @@
   width: 100%;
   max-width: 1300px;
   min-height: 100vh;
-  overflow-y: scroll;
   margin: 0 auto;
   background-color: transparent;
+}
+
+.scrollOff {
+  position: fixed;
 }

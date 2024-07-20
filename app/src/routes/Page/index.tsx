@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
 import logo from '@images/brand/logoAND.png';
 import { CollapsibleHeader } from '@modules/CollapsibleHeader';
+import { ModalDialogContactForm } from '@modules/ModalDialogContactForm';
 
 import style from './style.module.css';
 
@@ -24,7 +25,10 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
   const scrollWithNav = useRef<number>();
   // COMMENT: stores the result of the useOnScreen hook applied to the
   //  Index page to indicate the on screen section in the menu
-  const outletContext = useRef<VisibleSections>({});
+  const viewSectionContext = useRef<VisibleSections>({});
+
+  const [openContactFormDialog, setOpenContactFormDialog] = useState<boolean>(false);
+
   // COMMENT: sets the scroll level after a page change or after using
   //  the menu and the anchors elements
   useEffect((): void => {
@@ -42,14 +46,26 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
     }
   }, [hash, pathname, key]);
 
+  useEffect(() => {
+    if (openContactFormDialog) {
+      document.body.classList.add('scrollOff');
+      return;
+    }
+    document.body.classList.remove('scrollOff');
+  }, [openContactFormDialog]);
+
   return (
     <div className={style.page}>
       <CollapsibleHeader
         logo={{ src: logo, alt: 'logo' }}
-        visibleSections={outletContext}
+        visibleSections={viewSectionContext}
         scrollWithMenuItem={scrollWithNav}
       />
-
+      <ModalDialogContactForm
+        open={openContactFormDialog}
+        setOpen={setOpenContactFormDialog}
+        url='http://localhost:5173/api/contactFormModals'
+      />
       <SocialMediaNavBar
         className={style.socialMediaNavBar}
         type='left-nav'
@@ -58,9 +74,9 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
       />
 
       <main className={style.main}>
-        <Outlet context={{ outletContext } satisfies OutletContextPage} />
+        <Outlet context={{ viewSectionContext, setOpenContactFormDialog } satisfies OutletContextPage} />
       </main>
-      <footer>about</footer>
+      <footer>Pied-de-page</footer>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import IonIcon from '@reacticons/ionicons';
+import { MouseEvent } from 'react';
 
 import style from './style.module.css';
 import { CHANGE_SLIDE, START } from '../../utils/constants';
@@ -17,10 +18,10 @@ export function ScrollButtons({ slideshowDispatch }: ScrollButtonsProps): JSX.El
   /**
    *
    * @description // TODO: add comment
-   * @param {React.MouseEvent<HTMLDivElement, MouseEvent>} e
+   * @param {MouseEvent<HTMLDivElement, globalThis.MouseEvent>} e
    * @al-dev93
    */
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const handleClick = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>): void => {
     const target = e.currentTarget.attributes.getNamedItem('name')?.nodeValue as SlideDirection;
     slideshowDispatch({ type: CHANGE_SLIDE, payload: { direction: target, transition: START } });
   };

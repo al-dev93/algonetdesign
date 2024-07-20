@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 import type { MenuType, SectionsRef, VisibleSections } from '@/types';
 
 // COMMENT: type used for logo insertion
@@ -18,6 +20,6 @@ export type MenuItemProps = {
 export type CollapsibleHeaderProps = {
   logo?: ImageType;
   menu?: MenuType[];
-  visibleSections?: React.MutableRefObject<VisibleSections>;
-  scrollWithMenuItem: React.MutableRefObject<number | undefined>;
+  visibleSections?: MutableRefObject<VisibleSections>;
+  scrollWithMenuItem: MutableRefObject<number | undefined>;
 };

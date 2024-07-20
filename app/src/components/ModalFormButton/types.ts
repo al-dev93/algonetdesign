@@ -1,9 +1,9 @@
-import type { MouseEventHandler } from 'react';
+import { MouseEventButton } from '@/types';
 
 export type FormButtonProps = {
   className?: string;
   form?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventButton;
   name: string;
   disabled?: boolean;
 };

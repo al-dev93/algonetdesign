@@ -2,6 +2,22 @@
 import { Serializer } from 'miragejs';
 
 export const serializers = {
+  contactFormInput: Serializer.extend({
+    include: ['formInput', 'contactFormTooltips'],
+    embed: true,
+    keyForEmbeddedRelationship(modelName) {
+      if (modelName === 'formInput') return 'input';
+      if (modelName === 'contactFormTooltips') return 'tooltipContent';
+      return modelName;
+    },
+  }),
+  formInput: Serializer.extend({
+    include: ['errorMessage'],
+    embed: true,
+    keyForEmbeddedRelationship() {
+      return 'error';
+    },
+  }),
   showcaseSection: Serializer.extend({
     include: ['detailSections'],
     embed: true,

@@ -2,8 +2,8 @@ import { Text } from '@visx/text';
 import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
 import { memo } from 'react';
 
-import { useFetchData } from '@/hooks/useFetchData';
 import { Skill } from '@/types';
+import { useFetchData } from '@hooks/useFetchData';
 
 import style from './style.module.css';
 import { SkillsCloudProps } from './types';

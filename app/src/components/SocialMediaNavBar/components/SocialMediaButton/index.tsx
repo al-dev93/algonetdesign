@@ -1,4 +1,5 @@
 import IonIcon from '@reacticons/ionicons';
+import { MouseEvent } from 'react';
 
 import { decryptData } from '@services/secure/mockedEncryption';
 
@@ -24,11 +25,11 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
    * the send mail button is clicked, it encrypts the email address and opens the
    * email client for composing a new message
    * @callback
-   * @param {React.MouseEvent} e
+   * @param {MouseEvent} e
    * @return {*}  {(Promise<string | undefined>)}
    * @al-dev93
    */
-  async function handleClick(e: React.MouseEvent): Promise<string | undefined> {
+  async function handleClick(e: MouseEvent): Promise<string | undefined> {
     e.preventDefault();
     const mailTo = `mailto:${await decryptData(address, iv, cryptoKey)}`;
     window.location.href = mailTo;
