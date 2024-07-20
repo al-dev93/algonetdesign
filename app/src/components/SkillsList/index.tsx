@@ -1,5 +1,5 @@
 import style from './style.module.css';
-import Tag from '../Tag';
+import { Tag } from '../Tag';
 
 import type { SkillsListProps } from './types';
 

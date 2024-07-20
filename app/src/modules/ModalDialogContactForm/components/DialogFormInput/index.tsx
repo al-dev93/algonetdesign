@@ -1,8 +1,9 @@
 import IonIcon from '@reacticons/ionicons';
 import { LegacyRef, useRef } from 'react';
 
+import { DialogFormInputElement } from '@/types';
 import { DynamicElement } from '@components/DynamicElement';
-import Tag from '@components/Tag';
+import { Tag } from '@components/Tag';
 import { Tooltip } from '@components/Tooltip';
 
 import style from './style.module.css';
@@ -15,27 +16,26 @@ import type { DialogFormInputProps } from '../../types';
  * @description // TODO: add comment
  * @export
  * @param {DialogFormInputProps} {
- *   name,
- *   label,
- *   input,
- *   tooltipContent,
- *   state,
  *   dispatch,
+ *   input,
+ *   label,
+ *   name,
+ *   state,
+ *   tooltipContent,
  * }
  * @return {*}  {JSX.Element}
  * @al-dev93
  */
 export function DialogFormInput({
-  name,
-  label,
-  input,
-  tooltipContent,
-  state,
   dispatch,
+  input,
+  label,
+  name,
+  state,
+  tooltipContent,
 }: DialogFormInputProps): JSX.Element {
-  const inputElementRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const inputElementRef = useRef<DialogFormInputElement>(null);
   const [setInputAutocomplete] = useContactForm(inputElementRef, dispatch);
-  // console.log(toggleUpdate);
   // console.log(state);
 
   return (
@@ -64,15 +64,17 @@ export function DialogFormInput({
             placeholder={input.placeholder}
             required={input.required}
             autoComplete='off'
-            ref={inputElementRef as LegacyRef<HTMLInputElement | HTMLTextAreaElement>}
+            ref={inputElementRef as LegacyRef<DialogFormInputElement>}
           />
 
-          <Tag
-            type='error'
-            tag={state[name].inputStatusTag}
-            // FIXME: utiliser une classe css et supprimer cette prop
-            position={input.id === 'message' ? { bottom: 0, left: '10px' } : { bottom: 0, right: '10px' }}
-          />
+          {state[name].inputStatusTag && (
+            <Tag
+              type='error'
+              tag={state[name].inputStatusTag}
+              // FIXME: utiliser une classe css et supprimer cette prop
+              position={input.id === 'message' ? { bottom: 0, left: '10px' } : { bottom: 0, right: '10px' }}
+            />
+          )}
           {state[name].isFocused && (
             <Popover
               autocompleteList={state[name].autoComplete}
@@ -81,7 +83,6 @@ export function DialogFormInput({
               firstItemFocused={state[name].overlayFirstItemFocus}
               inputAutocomplete={setInputAutocomplete}
               prevFocusNode={inputElementRef.current}
-              // url={`http://localhost:5173/api/contactFormInputs/${name}`}
             />
           )}
         </div>

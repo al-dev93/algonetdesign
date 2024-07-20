@@ -1,3 +1,7 @@
+.hiddenVisibility {
+  opacity: 0;
+}
+
 .contactForm {
   margin: 0 20px;
   padding: 30px 15px 20px;

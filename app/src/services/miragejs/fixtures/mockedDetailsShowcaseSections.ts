@@ -29,20 +29,6 @@ export const detailSections = [
   },
   {
     id: '5',
-    tag: 'Slideshow',
-    urlContent: 'http://localhost:5173/api/projects',
-    showcaseSectionId: '2',
-  },
-  {
-    id: '6',
-    tag: 'Card',
-    name: 'cardsWrapper',
-    urlContent: 'http://localhost:5173/api/projects',
-    wrapped: true,
-    showcaseSectionId: '3',
-  },
-  {
-    id: '7',
     tag: 'p',
     name: 'description',
     content:
@@ -50,7 +36,7 @@ export const detailSections = [
     showcaseSectionId: '4',
   },
   {
-    id: '8',
+    id: '6',
     tag: 'p',
     name: 'description',
     content:
@@ -59,7 +45,7 @@ export const detailSections = [
     boldDetailSectionIds: ['1', '2'],
   },
   {
-    id: '9',
+    id: '7',
     tag: 'p',
     name: 'description',
     content:
@@ -68,7 +54,7 @@ export const detailSections = [
     boldDetailSectionIds: ['3', '4'],
   },
   {
-    id: '10',
+    id: '8',
     tag: 'p',
     name: 'description',
     content:
@@ -77,9 +63,23 @@ export const detailSections = [
     boldDetailSectionIds: ['5', '6'],
   },
   {
-    id: '11',
+    id: '9',
     tag: 'SkillsCloud',
     urlContent: 'http://localhost:5173/api/skills',
     showcaseSectionId: '4',
+  },
+  {
+    id: '10',
+    tag: 'Slideshow',
+    urlContent: 'http://localhost:5173/api/projects',
+    showcaseSectionId: '2',
+  },
+  {
+    id: '11',
+    tag: 'Card',
+    name: 'cardsWrapper',
+    urlContent: 'http://localhost:5173/api/projects',
+    wrapped: true,
+    showcaseSectionId: '3',
   },
 ];

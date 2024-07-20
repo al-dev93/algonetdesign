@@ -1,6 +1,7 @@
 import IonIcon from '@reacticons/ionicons';
 import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef } from 'react';
 
+import { KeyboardEventButton, KeyboardEventDiv } from '@/types';
 import { ModalFormButton } from '@components/ModalFormButton';
 
 import style from './style.module.css';
@@ -13,6 +14,7 @@ import type { ModalProps } from './types';
  * @export
  * @param {ModalProps} {
  *   children,
+ *   className,
  *   open,
  *   setOpen,
  *   button,
@@ -27,6 +29,7 @@ import type { ModalProps } from './types';
  */
 export function Modal({
   children,
+  className,
   open,
   setOpen,
   button,
@@ -67,21 +70,21 @@ export function Modal({
   /**
    *
    * @description // TODO: add comment
-   * @param {KeyboardEvent<HTMLButtonElement>} e
+   * @param {KeyboardEventButton} e
    * @return {*}  {void}
    * @al-dev93
    */
-  const handleCloseKeyDown = (e: KeyboardEvent<HTMLButtonElement>): void => {
+  const handleCloseKeyDown = (e: KeyboardEventButton): void => {
     if (e.code === 'Enter') setOpenFalse(e);
   };
   /**
    *
    * @description // TODO: add comment
-   * @param {KeyboardEvent<HTMLDivElement>} e
+   * @param {KeyboardEventDiv} e
    * @return {*}  {void}
    * @al-dev93
    */
-  const handleShiftKey = (e: KeyboardEvent<HTMLDivElement>): void => {
+  const handleShiftKey = (e: KeyboardEventDiv): void => {
     const shiftKeyPress = shiftKeyRef.current;
 
     shiftKeyRef.current = (e.code === 'ShiftLeft' || e.code === 'ShiftLeft') && shiftKeyPress ? false : shiftKeyPress;
@@ -89,11 +92,11 @@ export function Modal({
   /**
    *
    * @description // TODO: add comment
-   * @param {KeyboardEvent<HTMLDivElement>} e
+   * @param {KeyboardEventDiv} e
    * @return {*}  {void}
    * @al-dev93
    */
-  const handleTabIndex = (e: KeyboardEvent<HTMLDivElement>): void => {
+  const handleTabIndex = (e: KeyboardEventDiv): void => {
     const focusElement = {
       first: closeRef.current,
       last: buttonRef.current?.disabled ? lastFormChildRef.current ?? null : buttonRef.current,
@@ -165,7 +168,7 @@ export function Modal({
   }, [setOpenFalse]);
 
   return (
-    <dialog className={style.modal} ref={dialogRef}>
+    <dialog className={`${style.modal} ${className}`} ref={dialogRef}>
       <div
         className={`${style.modalWrapper} ${customStyle && style[customStyle]}`}
         role='presentation'
@@ -176,7 +179,7 @@ export function Modal({
           <header className={style.modalHeader}>
             {closeIcon && (
               <button
-                className={style.modalCloseButton}
+                className={`${style.modalCloseButton} ${customStyle && style[customStyle]}`}
                 type='button'
                 ref={closeRef}
                 name='closeButton'
@@ -185,7 +188,7 @@ export function Modal({
                 tabIndex={0}
                 aria-label='close modale'
               >
-                <IonIcon className={customStyle && style[customStyle]} name='close' />
+                <IonIcon name='close' />
               </button>
             )}
             {(title || subTitle) && (

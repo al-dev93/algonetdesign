@@ -1,19 +1,7 @@
-import { ModalDialogContactFormState } from '../types';
-
-export const modalDialogContactFormInitialState: ModalDialogContactFormState = {
-  name: {
-    isFocused: false,
-  },
-  company: {
-    isFocused: false,
-  },
-  email: {
-    isFocused: false,
-  },
-  tel: {
-    isFocused: false,
-  },
-  message: {
-    isFocused: false,
-  },
-};
+export function createContactFormInitialState(listOfproperties: string[] | []) {
+  return (
+    listOfproperties?.reduce((acc: object, input: string) => {
+      return input ? { ...acc, [input]: { isFocused: false } } : {};
+    }, {}) || {}
+  );
+}

@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
 
+import { DialogFormInputElement } from '@/types';
 import { SET_INPUT_VALUE } from '@modules/ModalDialogContactForm/utils/constants';
 
 import type { ModalDialogContactFormAction } from '@modules/ModalDialogContactForm/types';
@@ -7,13 +8,13 @@ import type { ModalDialogContactFormAction } from '@modules/ModalDialogContactFo
  *
  * @description // TODO: add comment
  * @export
- * @param {(HTMLInputElement | HTMLTextAreaElement)} input
+ * @param {DialogFormInputElement} input
  * @param {string} inputValue
  * @param {Dispatch<ModalDialogContactFormAction>} dispatch
  * @al-dev93
  */
 export function putAutoCompleteInInput(
-  input: HTMLInputElement | HTMLTextAreaElement,
+  input: DialogFormInputElement,
   inputValue: string,
   dispatch: Dispatch<ModalDialogContactFormAction>,
 ): void {

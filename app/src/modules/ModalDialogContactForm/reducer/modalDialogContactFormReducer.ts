@@ -2,6 +2,7 @@ import {
   DELETE_ERROR_TAG_NAME,
   DELETE_INPUT_ERROR,
   DELETE_INPUT_VALUE,
+  INIT_DIALOG_CONTACT_FORM_STATE,
   RESET_AUTO_COMPLETE_OVERLAY,
   SET_AUTO_COMPLETE,
   SET_ERROR_TAG_NAME,
@@ -27,6 +28,10 @@ export function modalDialogContactFormReducer(
   action: ModalDialogContactFormAction,
 ): ModalDialogContactFormState {
   switch (action.type) {
+    case INIT_DIALOG_CONTACT_FORM_STATE:
+      return action.payload.reduce((acc: object, input: string) => {
+        return input ? { ...acc, [input]: { isFocused: false } } : {};
+      }, {});
     case SET_INPUT_BORDER_BOX:
       return {
         ...state,

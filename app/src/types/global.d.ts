@@ -1,12 +1,34 @@
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import { Dispatch, MouseEventHandler, MutableRefObject, SetStateAction } from 'react';
 
 import type { IconType } from '.';
 
 export type StringObject = {
   readonly [key: string]: string;
 };
-
+/**
+ *
+ */
 export type SetStateBoolean = Dispatch<SetStateAction<boolean>>;
+/**
+ *
+ */
+export type MouseEventButton = MouseEventHandler<HTMLButtonElement>;
+/**
+ *
+ */
+export type KeyboardEventButton = KeyboardEvent<HTMLButtonElement>;
+/**
+ *
+ */
+export type KeyboardEventDiv = KeyboardEvent<HTMLDivElement>;
+/**
+ *
+ */
+export type DialogFormElement = HTMLElement | HTMLInputElement | HTMLTextAreaElement;
+/**
+ *
+ */
+export type DialogFormInputElement = HTMLInputElement | HTMLTextAreaElement;
 /**
  * @description on the main page as the layout
  */
@@ -113,7 +135,6 @@ export type Skill = {
 };
 
 // NOTE: data for the contact form
-
 export type ContactFormModal = {
   id: string;
   url: string;

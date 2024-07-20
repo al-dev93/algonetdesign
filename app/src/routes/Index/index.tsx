@@ -19,7 +19,7 @@ export function Index(): JSX.Element {
   const { viewSectionContext, setOpenContactFormDialog } = usePageSection();
   const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
 
-  const handleClick = (): void => setOpenContactFormDialog(true);
+  const handleClick = (): void => setOpenContactFormDialog((state) => !state);
 
   return (
     <div className={style.wrapperIndex}>

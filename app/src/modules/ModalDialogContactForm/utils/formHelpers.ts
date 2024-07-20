@@ -1,21 +1,28 @@
-import type { Validity } from '../types';
+import { DialogFormInputElement, StringObject } from '@/types';
+
+import type { ModalDialogContactFormState, Validity } from '../types';
 /**
  *
  * @description // TODO: add comment
- * @export
- * @param {(HTMLInputElement | HTMLTextAreaElement)} input
+ * @function getInputValidityProperties
+ * @param {DialogFormInputElement} input - // TODO: add comment
+ * @param {(boolean | undefined)} isAutocompleted - // TODO: add comment
  * @return {*}  {Validity}
+ * @exports
  * @al-dev93
  */
-export function getInputValidityProperties(input: HTMLInputElement | HTMLTextAreaElement, content?: string): Validity {
-  const { minLength, required } = input;
+export function getInputValidityProperties(
+  input: DialogFormInputElement,
+  isAutocompleted: boolean | undefined,
+): Validity {
+  const { minLength, required, value } = input;
   const { pattern } = input as HTMLInputElement;
 
-  if (content) {
-    const valueMissing = required ? !content.length : undefined;
-    const patternMismatch = pattern ? !new RegExp(pattern).test(content) : undefined;
-    const tooShort = minLength ? !(content.length >= minLength) : undefined;
-    const valid = (!valueMissing ?? true) && (!patternMismatch ?? true) && (!tooShort ?? true);
+  if (isAutocompleted) {
+    const valueMissing = required ? !value.length : false;
+    const patternMismatch = pattern ? !new RegExp(pattern).test(value) : false;
+    const tooShort = minLength ? !(value.length >= minLength) : false;
+    const valid = !valueMissing && !patternMismatch && !tooShort;
     return { minLength, patternMismatch, tooShort, valid, valueMissing };
   }
 
@@ -25,15 +32,16 @@ export function getInputValidityProperties(input: HTMLInputElement | HTMLTextAre
 /**
  *
  * @description //TODO: add comment
- * @export
- * @param {(HTMLInputElement | HTMLTextAreaElement)} input
- * @param {boolean} isStored
- * @param {boolean} [filter]
+ * @function getAutocompleteInput
+ * @param {DialogFormInputElement} input - // TODO: add comment
+ * @param {boolean} isStored - // TODO: add comment
+ * @param {boolean} [filter] - // TODO: add comment (optional)
  * @return {*}  {(string[] | undefined)}
+ * @exports
  * @al-dev93
  */
 export function getAutocompleteInput(
-  input: HTMLInputElement | HTMLTextAreaElement,
+  input: DialogFormInputElement,
   isStored: boolean,
   filter?: boolean,
 ): string[] | undefined {
@@ -45,4 +53,33 @@ export function getAutocompleteInput(
       : undefined;
   }
   return isStored ? JSON.parse(localStorage.getItem(input.name) ?? '[]') : undefined;
+}
+/**
+ *
+ * @description // TODO: add comment
+ * @function getSubmitData
+ * @param {ModalDialogContactFormState} contactFormState - // TODO: add comment
+ * @return {*} {StringObject | undefined}
+ * @exports
+ * @al-dev93
+ */
+export function getSubmitData(contactFormState: ModalDialogContactFormState): StringObject | undefined {
+  const inputValues: { [key: string]: string | '' } | undefined = {};
+  Object.keys(contactFormState).forEach((item) => {
+    if (contactFormState[item].inputError) return;
+    inputValues[item] = contactFormState[item].inputValue || '';
+  });
+  return { ...inputValues };
+}
+/**
+ *
+ * @description // TODO: add comment
+ * @function formatInputNumber
+ * @param {string} number - // TODO: add comment
+ * @return {*}  {string}
+ * @exports
+ * @al-dev93
+ */
+export function formatInputNumber(number: string): string {
+  return number.replace(/\s/g, '').replace(/(\d{2})(?=\d)/g, '$1 ');
 }

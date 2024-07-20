@@ -1,5 +1,7 @@
 import { Dispatch, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
+import { DialogFormInputElement } from '@/types';
+
 import {
   AUTOCOMPLETE,
   DELETE_ERROR_TAG_NAME,
@@ -14,62 +16,64 @@ import {
   SET_INPUT_VALUE,
   SET_OVERLAY_FIRST_ITEM_FOCUS,
 } from '../utils/constants';
-import { getAutocompleteInput, getInputValidityProperties } from '../utils/formHelpers';
+import { formatInputNumber, getAutocompleteInput, getInputValidityProperties } from '../utils/formHelpers';
 
 import type { InputBorderBox, ModalDialogContactFormAction, OverlayType, Validity } from '../types';
 /**
  *
+ * custom hook useContactForm
+ * @param {(RefObject<DialogFormInputElement>)} inputRef - // TODO: add comment
+ * @param {Dispatch<ModalDialogContactFormAction>} dispatch - // TODO: add comment
  * @description // TODO: add comment
- * @export
- * @param {(RefObject<HTMLInputElement | HTMLTextAreaElement>)} inputRef
- * @param {Dispatch<ModalDialogContactFormAction>} dispatch
- * @param {ModalDialogContactFormState} [state]
+ * @exports useContactForm
  * @return {*}
  */
 export function useContactForm(
-  inputRef: RefObject<HTMLInputElement | HTMLTextAreaElement>,
+  inputRef: RefObject<DialogFormInputElement>,
   dispatch: Dispatch<ModalDialogContactFormAction>,
 ) {
   const storageRef = useRef<boolean>(false);
   const overlayRef = useRef<OverlayType>();
-  const autoCompleteContent = useRef<string>();
-  const autoCompleteValidity = useRef<Validity>();
   const [isInputFilled, setIsInputFilled] = useState<boolean>(false);
 
   /**
    *
-   * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
-   * @param {string} [inputContent]
-   * @return {*} {void}
+   * updates the validity state of the active input field.
+   * @param {DialogFormInputElement} input - // TODO: add comment
+   * @param {boolean} [isAutocompleted] - // TODO: add comment (optional)
+   * @description isAutocompleted allows for differentiated handling in the case
+   * of an auto-completed value.
+   * @return {*} {Validity}
    * @al-dev93
    */
   const updateErrorState = useCallback(
-    (input: HTMLInputElement | HTMLTextAreaElement, inputContent?: string): void => {
+    (input: DialogFormInputElement, isAutocompleted?: boolean): Validity => {
       const { name } = input;
-      const inputError = inputContent ? autoCompleteValidity.current : getInputValidityProperties(input);
+      const inputError = getInputValidityProperties(input, isAutocompleted);
       if (inputError?.valid) dispatch({ type: DELETE_INPUT_ERROR, payload: { name } });
       else
         dispatch({
           type: SET_INPUT_ERROR,
           payload: { name, inputError },
         });
+      return inputError;
     },
     [dispatch],
   );
   /**
    *
-   * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
-   * @param {string} [inputContent]
+   * manages the display and update of a tag in the active required input field,
+   * indicating whether it needs to be filled or modified.
+   * @param {DialogFormInputElement} input
+   * @param {Validity} inputValidity
    * @return {*} {void}
    * @al-dev93
    */
   const setInputErrorTag = useCallback(
-    (input: HTMLInputElement | HTMLTextAreaElement, inputContent?: string): void => {
-      const { name, validity } = input;
-      const error = inputContent ? !autoCompleteValidity.current?.valid : !validity.valid;
-      const valueMissing = inputContent ? autoCompleteValidity.current?.valueMissing : validity.valueMissing;
+    (input: DialogFormInputElement, inputValidity: Validity): void => {
+      const { name } = input;
+      const error = !inputValidity.valid;
+      const { valueMissing } = inputValidity;
       if (error) {
         const errorTagName = valueMissing ? 'remplir' : 'modifier';
         dispatch({
@@ -85,20 +89,44 @@ export function useContactForm(
   );
   /**
    *
-   * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
-   * @param {string} [inputContent]
+   * sets the border style of the active input field to distinguish between an incorrect
+   * input and a correctly edited input field.
+   * @param {DialogFormInputElement} input
+   * @param {Validity} inputValidity
    * @return {*} {void}
    * @al-dev93
    */
   const setInputBorderBox = useCallback(
-    (input: HTMLInputElement | HTMLTextAreaElement, inputContent?: string): void => {
-      const { name, value, validity } = input;
-      const error = inputContent ? !autoCompleteValidity.current?.valid : !validity.valid;
-      const borderStyle = (error ? 'isInError' : (!!value || !!inputContent) && 'isEdited') as InputBorderBox;
+    (input: DialogFormInputElement, inputValidity: Validity): void => {
+      const { name, value } = input;
+      const error = !inputValidity.valid;
+      const borderStyle = (error ? 'isInError' : !!value && 'isEdited') as InputBorderBox;
       dispatch({ type: SET_INPUT_BORDER_BOX, payload: { name, borderStyle } });
     },
     [dispatch],
+  );
+  /**
+   *
+   * edits the active form input field's by updating the border, error tag, and error state.
+   * @param {DialogFormInputElement} input
+   * @param {boolean} [isAutocompleted]
+   * @description this function ensures the update of the validity state, the display or
+   * removal of an error tag for a required field, and the application of a border style based
+   * on the error state or correct editing.
+   * isAutocompleted differentiates error handling between a manually entered value and a vakue
+   * injected via auto-completion.
+   * @return {*} {boolean}
+   * @al-dev93
+   */
+  const editFormInput = useCallback(
+    (input: DialogFormInputElement, isAutocompleted?: boolean): boolean => {
+      const { required } = input;
+      const inputValidity = updateErrorState(input, isAutocompleted);
+      if (required) setInputErrorTag(input, inputValidity);
+      setInputBorderBox(input, inputValidity);
+      return inputValidity.valid;
+    },
+    [setInputBorderBox, setInputErrorTag, updateErrorState],
   );
   /**
    *
@@ -107,33 +135,28 @@ export function useContactForm(
    */
   useEffect(() => {
     const input = inputRef.current;
-    const required = input?.required;
     if (input) {
-      updateErrorState(input, autoCompleteContent.current);
-      if (required) setInputErrorTag(input, autoCompleteContent.current);
-      setInputBorderBox(input, autoCompleteContent.current);
-      storageRef.current = !!localStorage.getItem(input.name);
-      if (autoCompleteContent.current) {
-        autoCompleteContent.current = undefined;
-        autoCompleteValidity.current = undefined;
-      }
+      const { name } = input;
+      editFormInput(input);
+      storageRef.current = !!localStorage.getItem(name);
     }
-  }, [inputRef, setInputBorderBox, setInputErrorTag, updateErrorState, inputRef.current?.value]);
+  }, [editFormInput, inputRef]);
   /**
    *
    * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
+   * @param {DialogFormInputElement} input
    * @return {*} {void}
    * @al-dev93
    */
   const onInputEvent = useCallback(
-    (input: HTMLInputElement | HTMLTextAreaElement): void => {
+    (input: DialogFormInputElement): void => {
       const { name } = input;
+      editFormInput(input);
       const autoComplete = getAutocompleteInput(input, storageRef.current, true);
       overlayRef.current = AUTOCOMPLETE;
       if (autoComplete) dispatch({ type: SET_AUTO_COMPLETE, payload: { name, autoComplete } });
     },
-    [dispatch],
+    [dispatch, editFormInput],
   );
   /**
    *
@@ -173,9 +196,13 @@ export function useContactForm(
     (event: Event): void => {
       const input = inputRef.current;
       if (!input) return;
-      const { name, value: inputValue } = input;
+      const { name, type, value: inputValue } = input;
       const error = !input.validity.valid;
       if (event.type === 'input') {
+        if (type === 'tel') {
+          const formattedValue = formatInputNumber(inputValue);
+          input.value = formattedValue;
+        }
         onInputEvent(input);
         return;
       }
@@ -247,7 +274,6 @@ export function useContactForm(
   /**
    *
    * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
    * @return {*} {void}
    * @al-dev93
    */
@@ -258,7 +284,6 @@ export function useContactForm(
   /**
    *
    * @description //TODO: add comment
-   * @param {(HTMLInputElement | HTMLTextAreaElement)} input
    * @return {*} {void}
    * @al-dev93
    */
@@ -294,31 +319,10 @@ export function useContactForm(
     if (!input) return;
     const { name } = input;
     if (content) {
-      autoCompleteContent.current = content;
-      autoCompleteValidity.current = getInputValidityProperties(input, content);
-      if (autoCompleteValidity.current.valid)
-        dispatch({ type: SET_INPUT_VALUE, payload: { name, inputValue: content } });
-      input.focus();
       input.value = content;
+      input.focus();
+      if (editFormInput(input, !!content)) dispatch({ type: SET_INPUT_VALUE, payload: { name, inputValue: content } });
     }
   }
-
-  // const setErrorMessage = (errorMessage: InputErrorMessage): string | undefined => {
-  //   if (!error) return undefined;
-  //   return Object.entries(errorMessage[name]).reduce((acc: string, [key, message]) => {
-  //     if (error[key as keyof Validity]) {
-  //       if (name !== 'email') {
-  //         if (name === 'name' && key === 'tooShort')
-  //           return !acc
-  //             ? `${label} ${message} ${error.minLength} caractères`
-  //             : `${acc}\nIl ${message} ${error.minLength} caractères`;
-  //         return !acc ? `${label} ${message}` : `${acc}\nIl ${message}`;
-  //       }
-  //       if (key === 'valueMissing') return `${label} ${message}`;
-  //       return !acc ? `${message}` : `${acc}\n${message}`;
-  //     }
-  //     return acc;
-  //   }, ``);
-  // };
   return [putAutoCompleteInInput];
 }
