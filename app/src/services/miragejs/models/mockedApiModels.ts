@@ -14,9 +14,11 @@ import type {
   Skill,
   MockedContactFormTooltip,
   MockedErrorMessage,
+  ContactMessage,
 } from '@/types';
 
 export const models = {
+  message: Model.extend<Partial<ContactMessage>>({}),
   account: Model.extend<Partial<AccountLink>>({}),
   menuItem: Model.extend<Partial<MenuType>>({}),
   skill: Model.extend<Partial<Skill>>({}),

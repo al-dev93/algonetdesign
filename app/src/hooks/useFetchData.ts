@@ -1,23 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import type { FetchData, FetchResultData } from '@/types';
 /**
  *
  * @description // TODO: add comment
  * @export
- * @param {(string | undefined | null)} url
- * @param {object} options
  * @return {*}  {FetchResultData}
  * @al-dev93
  */
-export function useFetchData(url: string | undefined | null, options: object): FetchResultData {
+export function useFetchData(): FetchResultData {
   const [data, setData] = useState<FetchData>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const hasFetched = useRef<boolean>(false);
 
-  useEffect(() => {
-    if (!url || hasFetched.current) return undefined;
+  const setFetchOptionsData = useCallback((url: string | undefined | null, options = {}) => {
+    if (!url || hasFetched.current) {
+      setError('No URL provided');
+      return undefined;
+    }
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -46,6 +47,6 @@ export function useFetchData(url: string | undefined | null, options: object): F
         },
       );
     return () => controller.abort();
-  }, [url, options]);
-  return { data, isLoaded, error };
+  }, []);
+  return { data, isLoaded, error, setFetchOptionsData };
 }

@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { DynamicElement } from '@components/DynamicElement';
 import { useFetchData } from '@hooks/useFetchData';
 
@@ -24,7 +26,12 @@ export function DynamicElementContainer({
   url,
   ...props
 }: DynamicElementContainerProps): JSX.Element {
-  const { data: fetchedData } = useFetchData(url || null, { method: 'GET' });
+  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData(url || null, { method: 'GET' });
+  }, [setFetchOptionsData, url]);
+
   const data = filterValue
     ? fetchedData?.filter((item) => item['display' as keyof typeof item] === filterValue)
     : fetchedData;

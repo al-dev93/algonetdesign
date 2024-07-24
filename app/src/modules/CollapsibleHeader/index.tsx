@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFetchData } from '@hooks/useFetchData';
@@ -20,7 +21,12 @@ import type { MenuType } from '@/types';
  * @al-dev93
  */
 export function CollapsibleHeader({ logo, visibleSections, scrollWithMenuItem }: CollapsibleHeaderProps): JSX.Element {
-  const { data } = useFetchData('http://localhost:5173/api/menuItems', { method: 'GET' });
+  const { data, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData('http://localhost:5173/api/menuItems', { method: 'GET' });
+  }, [setFetchOptionsData]);
+
   // COMMENT: uses the custom hook useCollapsibleHeader to get the
   //  display state based on the scroll direction
   const headerState = useCollapsibleHeader(scrollWithMenuItem);

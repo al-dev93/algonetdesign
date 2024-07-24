@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { ShowcaseSection } from '@components/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
 import { usePageSection } from '@hooks/usePageSection';
@@ -17,7 +19,11 @@ export function Index(): JSX.Element {
   // COMMENT: uses the custom hook usePageSection to retrieve the
   //  layout context
   const { viewSectionContext, setOpenContactFormDialog } = usePageSection();
-  const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
+  const { data, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
+  }, [setFetchOptionsData]);
 
   const handleClick = (): void => setOpenContactFormDialog((state) => !state);
 

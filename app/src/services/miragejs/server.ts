@@ -73,19 +73,10 @@ export function makeServer(encryptedEmail?: EncryptedMail, { environment = 'deve
       this.get('/contactFormModals', (schema) => {
         return schema.all('contactFormModal');
       });
-      this.get('/contactFormInputs/:id', (schema, request) => {
-        const inputId = request.params.id;
-        const contactFormInput = schema.find('contactFormInput', inputId);
-        return contactFormInput;
+      this.post('/contactMessages', (schema, request) => {
+        const attrs = JSON.parse(request.requestBody);
+        return schema.create('message', attrs);
       });
-
-      // this.get('/contactFormModals', (schema) => {
-      //   return schema.all('contactFormModal');
-      // });
-      // this.get('/projects/:id/deliverables', (schema, request) => {
-      //   const project = schema.projects.find(request.params.id);
-      //   return project.deliverables;
-      // });
     },
   });
 }

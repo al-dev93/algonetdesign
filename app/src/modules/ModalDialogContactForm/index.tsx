@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useReducer, useRef, useState } from 'react';
 
+import { addFetchData } from '@/utils/fetchDataHelpers';
 import { Modal } from '@components/Modal';
 import { useFetchData } from '@hooks/useFetchData';
 
@@ -44,7 +45,8 @@ export function ModalDialogContactForm({
   // COMMENT: determine if we should fetch data based on the presence of buttons
   const shouldFetch = !contactFormModal;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+
   // TODO: otherwise use buttons ... complete
   const {
     id: idForm,
@@ -54,15 +56,20 @@ export function ModalDialogContactForm({
     submitButtonName,
     alertOnSubmit,
   } = contactFormModal || (fetchedData?.at(0) as ContactFormModal) || EMPTY_MODAL_DIALOG_CONTACT_FORM;
-
-  const { data: fetchedInputData } = useFetchData(urlInput, { method: 'GET' });
+  const { data: fetchedInputData, setFetchOptionsData: setFetchInputsOptionsData } = useFetchData();
   const data = fetchedInputData as ContactFormInput[] | null;
+  const { setFetchOptionsData: setFetchPostOptions } = useFetchData();
 
   const [contactFormState, contactFormDispatch] = useReducer(
     modalDialogContactFormReducer,
     [],
     createContactFormInitialState,
   );
+
+  useEffect(() => {
+    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+    setFetchInputsOptionsData(urlInput, { method: 'GET' });
+  }, [setFetchInputsOptionsData, setFetchOptionsData, shouldFetch, url, urlInput]);
 
   useEffect(() => {
     const isInitializedState = isInitializedStateRef.current;
@@ -81,15 +88,12 @@ export function ModalDialogContactForm({
     if (open && openAlert) modalVisibility.current = false;
   }, [open, openAlert]);
 
-  console.log(contactFormState);
-  // console.log(alertOnSubmit);
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     event.stopPropagation();
     setOpenAlert(true);
     const validValues = getSubmitData(contactFormState);
-    if (validValues) console.log(validValues);
+    if (validValues) addFetchData('http://localhost:5173/api/contactMessages', validValues, setFetchPostOptions);
   };
 
   return (

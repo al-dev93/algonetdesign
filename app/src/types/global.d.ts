@@ -178,6 +178,15 @@ export type ContactFormInput = {
   tooltipContent?: string | TooltipContent | TooltipContent[];
 };
 
+export type ContactMessage = {
+  id: string;
+  name: string;
+  company?: string;
+  email: string;
+  tel?: string;
+  message: string;
+};
+
 // NOTE: data fetched via the useFetchData hook
 
 // TODO: add comment
@@ -202,4 +211,5 @@ export type FetchResultData = {
   data: FetchData;
   isLoaded: boolean;
   error: string | null;
+  setFetchOptionsData: (url: string | undefined | null, options?: object) => (() => void) | undefined;
 };

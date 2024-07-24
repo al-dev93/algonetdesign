@@ -27,7 +27,12 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
   // COMMENT: determine if we should fetch data based on the presence of buttons
   const shouldFetch = !slideshowData;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+  }, [setFetchOptionsData, shouldFetch, url]);
+
   // TODO: otherwise use buttons ... complete
   const data = useMemo(() => {
     return (slideshowData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
@@ -54,7 +59,6 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
   }, [slideshowState.slideTransition]);
 
   const activeSlide = data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new];
-  // console.log(activeSlide?.deliverables);
 
   return (
     activeSlide && (

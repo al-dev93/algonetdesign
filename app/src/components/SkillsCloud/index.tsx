@@ -1,6 +1,6 @@
 import { Text } from '@visx/text';
 import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { Skill } from '@/types';
 import { useFetchData } from '@hooks/useFetchData';
@@ -25,10 +25,14 @@ function MemoizedSkillsCloud({
   // COMMENT: determine if we should fetch data based on the presence of skills
   const shouldFetch = !skillsData;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+  }, [setFetchOptionsData, shouldFetch, url]);
+
   // TODO: otherwise use buttons ... complete
   const data = skillsData || (fetchedData as Skill[]);
-
   const values = (skillsData || data)?.map((skill) => skill.value);
   const maxValue = data && Math.max(...values);
   /**

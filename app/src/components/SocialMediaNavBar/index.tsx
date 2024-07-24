@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
@@ -38,7 +38,12 @@ function MemoizedSocialMediaNavBar({
   // COMMENT: determine if we should fetch data based on the presence of buttons
   const shouldFetch = !buttons;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+
+  useEffect(() => {
+    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+  }, [setFetchOptionsData, shouldFetch, url]);
+
   // COMMENT: otherwise use buttons
   const data =
     type === 'left-nav'
