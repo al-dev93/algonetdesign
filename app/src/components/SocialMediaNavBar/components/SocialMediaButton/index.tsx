@@ -1,5 +1,5 @@
 import IonIcon from '@reacticons/ionicons';
-import { MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { decryptData } from '@services/secure/mockedEncryption';
 
@@ -9,37 +9,42 @@ import type { SocialMediaButtonProps } from '../../types';
 
 /**
  *
- * @description navigation bar button component. For mail links,
- * the address is encrypted to avoid being displayed in plain text.
- * IonIcons are used for the button icons
- * @export
- * @param {SocialMediaButtonProps} { className, button, cryptoKey }
- * @return {*}  {JSX.Element}
+ * @description SocialMediaButton component for rendering a button with a social media link.
+ * For mail links, the address is encrypted to avoid being displayed in plain text.
+ * IonIcons are used for the button icons.
+ *
+ * @param {SocialMediaButtonProps} props - The properties for the SocialMediaButton component.
+ * @returns {React.JSX.Element} The rendered social media button component.
+ *
  * @al-dev93
  */
-export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaButtonProps): JSX.Element {
+export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaButtonProps): React.JSX.Element {
   const { icon, address, iv, service } = button;
+
   /**
+   * @description Handles the click event for the button. Encrypts the email address and
+   * opens the email client for composing a new message.
    *
-   * @description callback function triggered by the button's onClick event. When
-   * the send mail button is clicked, it encrypts the email address and opens the
-   * email client for composing a new message
-   * @callback
-   * @param {MouseEvent} e
-   * @return {*}  {(Promise<string | undefined>)}
-   * @al-dev93
+   * @param {MouseEvent} e - The mouse event
+   * @returns {Promise<string | undefined>} The mailto link or undefined.
    */
   async function handleClick(e: MouseEvent): Promise<string | undefined> {
     e.preventDefault();
-    const mailTo = `mailto:${await decryptData(address, iv, cryptoKey)}`;
-    window.location.href = mailTo;
-    return undefined;
+    try {
+      const mailTo = `mailto:${await decryptData(address, iv, cryptoKey)}`;
+      window.location.href = mailTo;
+      return undefined;
+    } catch (error) {
+      // TODO: sortir l'erreur
+      console.error('Error decrypting email address:', error);
+      return undefined;
+    }
   }
   // console.log('button');
 
   return (
     <a
-      className={style.buttonLink}
+      className={`${className} ${style.buttonLink}`}
       href={button.address}
       target='_blank'
       rel='noopener noreferrer'
@@ -47,7 +52,12 @@ export function SocialMediaButton({ className, button, cryptoKey }: SocialMediaB
       aria-label={`Link to ${service}`}
       onClick={button.service === 'gmail' ? handleClick : undefined}
     >
-      <IonIcon className={`${className} ${style.iconStyle}`} name={icon} role='img' aria-label={`Icon ${service}`} />
+      <IonIcon
+        className={`${className} ${style.buttonLink__icon}`}
+        name={icon}
+        role='img'
+        aria-label={`Icon ${service}`}
+      />
     </a>
   );
 }

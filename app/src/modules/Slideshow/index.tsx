@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useReducer } from 'react';
+import React, { memo, useEffect, useMemo, useReducer } from 'react';
 
 import { SkillsList } from '@components/SkillsList';
 import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
@@ -20,18 +20,18 @@ import type { AccountLink, ProjectData } from '@/types';
  *
  * @description // TODO: add comment
  * @param {SlideshowProps} { projectData, url }
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.Element {
+function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): React.JSX.Element {
   // COMMENT: determine if we should fetch data based on the presence of buttons
   const shouldFetch = !slideshowData;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
 
-  useEffect(() => {
-    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
-  }, [setFetchOptionsData, shouldFetch, url]);
+  // useEffect(() => {
+  //   setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+  // }, [setFetchOptionsData, shouldFetch, url]);
 
   // TODO: otherwise use buttons ... complete
   const data = useMemo(() => {
@@ -79,7 +79,7 @@ function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): JSX.El
             </header>
             <p className={style.description}>{activeSlide.description}</p>
             <footer className={style.footer}>
-              <SkillsList list={activeSlide.tags} />
+              <SkillsList list={activeSlide.tags} tagType='filled' />
               <SocialMediaNavBar
                 className={style.navButtons}
                 changeLinkColor={style.externalLinks}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
 import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
@@ -8,24 +8,24 @@ import { ModalDialogContactForm } from '@modules/ModalDialogContactForm';
 
 import style from './style.module.css';
 
-import type { OutletContextPage, PageProps, VisibleSections } from '@/types';
+import type { OutletContextPage, PageProps, MenuSectionsVisibility } from '@/types';
 
 /**
  *
  * @description layout page containing common elements
  * @export
  * @param {PageProps} {cryptoKey}
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-export function Page({ cryptoKey }: PageProps): JSX.Element {
+export function Page({ cryptoKey }: PageProps): React.JSX.Element {
   // TODO: add comments
   const { pathname, hash, key } = useLocation();
   // COMMENT: scroll level achieved after using the navigation menu
   const scrollWithNav = useRef<number>();
   // COMMENT: stores the result of the useOnScreen hook applied to the
   //  Index page to indicate the on screen section in the menu
-  const viewSectionContext = useRef<VisibleSections>({});
+  const viewSectionContext = useRef<MenuSectionsVisibility>({});
 
   const [openContactFormDialog, setOpenContactFormDialog] = useState<boolean>(false);
 
@@ -58,7 +58,7 @@ export function Page({ cryptoKey }: PageProps): JSX.Element {
     <div className={style.page}>
       <CollapsibleHeader
         logo={{ src: logo, alt: 'logo' }}
-        visibleSections={viewSectionContext}
+        MenuSectionsVisibility={viewSectionContext}
         scrollWithMenuItem={scrollWithNav}
       />
       <ModalDialogContactForm

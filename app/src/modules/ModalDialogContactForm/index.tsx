@@ -1,8 +1,8 @@
-import { FormEvent, useEffect, useReducer, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useReducer, useRef, useState } from 'react';
 
-import { addFetchData } from '@/utils/fetchDataHelpers';
 import { Modal } from '@components/Modal';
 import { useFetchData } from '@hooks/useFetchData';
+import { refetchWithArgs } from '@utils/fetchDataHelpers';
 
 import { Alert } from './components/Alert';
 import { DialogFormInput } from './components/DialogFormInput';
@@ -29,7 +29,7 @@ import type { ContactFormInput, ContactFormModal, TooltipContent } from '@/types
  *   data: contactFormModal,
  *   url,
  * }
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @exports
  * @al-dev93
  */
@@ -38,14 +38,14 @@ export function ModalDialogContactForm({
   setOpen,
   data: contactFormModal,
   url,
-}: ModalDialogContactFormProps): JSX.Element {
+}: ModalDialogContactFormProps): React.JSX.Element {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const modalVisibility = useRef<boolean>();
   const isInitializedStateRef = useRef<boolean>();
   // COMMENT: determine if we should fetch data based on the presence of buttons
   const shouldFetch = !contactFormModal;
   // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData, setFetchOptionsData } = useFetchData();
+  const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
 
   // TODO: otherwise use buttons ... complete
   const {
@@ -56,9 +56,9 @@ export function ModalDialogContactForm({
     submitButtonName,
     alertOnSubmit,
   } = contactFormModal || (fetchedData?.at(0) as ContactFormModal) || EMPTY_MODAL_DIALOG_CONTACT_FORM;
-  const { data: fetchedInputData, setFetchOptionsData: setFetchInputsOptionsData } = useFetchData();
+  const { data: fetchedInputData } = useFetchData(urlInput, { method: 'GET' });
   const data = fetchedInputData as ContactFormInput[] | null;
-  const { setFetchOptionsData: setFetchPostOptions } = useFetchData();
+  const { refetch } = useFetchData();
 
   const [contactFormState, contactFormDispatch] = useReducer(
     modalDialogContactFormReducer,
@@ -66,10 +66,10 @@ export function ModalDialogContactForm({
     createContactFormInitialState,
   );
 
-  useEffect(() => {
-    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
-    setFetchInputsOptionsData(urlInput, { method: 'GET' });
-  }, [setFetchInputsOptionsData, setFetchOptionsData, shouldFetch, url, urlInput]);
+  // useEffect(() => {
+  //   setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
+  //   setFetchInputsOptionsData(urlInput, { method: 'GET' });
+  // }, [setFetchInputsOptionsData, setFetchOptionsData, shouldFetch, url, urlInput]);
 
   useEffect(() => {
     const isInitializedState = isInitializedStateRef.current;
@@ -93,7 +93,7 @@ export function ModalDialogContactForm({
     event.stopPropagation();
     setOpenAlert(true);
     const validValues = getSubmitData(contactFormState);
-    if (validValues) addFetchData('http://localhost:5173/api/contactMessages', validValues, setFetchPostOptions);
+    if (validValues) refetchWithArgs('http://localhost:5173/api/contactMessages', refetch, 'POST', validValues);
   };
 
   return (
@@ -102,7 +102,7 @@ export function ModalDialogContactForm({
       className={modalVisibility.current ? style.hiddenVisibility : undefined}
       setOpen={setOpen}
       title={title}
-      subTitle={subtitle}
+      subtitle={subtitle}
       closeIcon
       button={{
         name: submitButtonName,

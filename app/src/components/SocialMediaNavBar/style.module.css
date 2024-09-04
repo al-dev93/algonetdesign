@@ -2,7 +2,7 @@
   width: max-content;
 }
 
-.VerticalNavBar {
+.socialMediaNavBar--vertical {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,21 +10,30 @@
   margin-bottom: 20px;
 }
 
-.lineWrapper {
+.socialMediaNavBar--vertical__line {
   display: flex;
   justify-content: center;
 }
 
-.horizontalNavBar {
+.socialMediaNavBar--horizontal {
   display: flex;
   align-items: center;
   column-gap: 6px;
 }
-/* COMMENT: style for the navigation bar button */
-.externalLink {
+
+/* Style for the navigation bar button */
+.socialMediaNavBar__externalLink {
   color: var(--decorative-light);
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.externalLink:hover {
+.socialMediaNavBar__externalLink:hover,
+.socialMediaNavBar__externalLink:focus {
   color: var(--decorative-dark);
+  outline: none;
+}
+
+.socialMediaNavBar__externalLink:focus-visible {
+  outline: 2px solid var(--decorative-dark);
 }

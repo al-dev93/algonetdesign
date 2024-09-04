@@ -2,7 +2,7 @@ import { Model, belongsTo, hasMany } from 'miragejs';
 
 import type {
   AccountLink,
-  MenuType,
+  MenuItemType,
   MockedBoldDetailsSection,
   MockedContactFormInput,
   MockedDeliverable,
@@ -20,7 +20,7 @@ import type {
 export const models = {
   message: Model.extend<Partial<ContactMessage>>({}),
   account: Model.extend<Partial<AccountLink>>({}),
-  menuItem: Model.extend<Partial<MenuType>>({}),
+  menuItem: Model.extend<Partial<MenuItemType>>({}),
   skill: Model.extend<Partial<Skill>>({}),
   contactFormModal: Model.extend<Partial<MockedContactFormModal>>({
     contactFormInputs: hasMany(),

@@ -1,11 +1,11 @@
-.skills-row {
+.skillsRow {
   width: auto;
   display: flex;
   gap: 14px;
   padding: 5px 10px;
 }
 
-.skills-row.wrapp-row {
+.skillsRow--wrapp {
   flex-wrap: wrap;
   gap: 0px;
   padding: 0;

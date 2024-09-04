@@ -1,18 +1,20 @@
-import { LegacyRef, forwardRef, memo } from 'react';
+import React, { LegacyRef, forwardRef, memo } from 'react';
 
 import style from './style.module.css';
 
 import type { FormButtonProps } from './types';
 
 /**
+ * @description ModalFormButton component that renders a button for open modal or for forms,
+ * with memoization and ref forwarding.
  *
- * @description // TODO: add comment
- * @param {FormButtonProps} props
- * @param {LegacyRef<HTMLButtonElement>} [ref]
- * @return {*}  {JSX.Element}
+ * @param {FormButtonProps} props - The properties for the ModalFormButton component.
+ * @param {LegacyRef<HTMLButtonElement>} [ref] - The ref to forward the button element.
+ * @returns {React.JSX.Element} The rendered button component.
+ *
  * @al-dev93
  */
-function MemoizedModalFormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTMLButtonElement>): JSX.Element {
+function MemoizedModalFormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTMLButtonElement>): React.JSX.Element {
   const { className, form, onClick, name, disabled } = props;
   return (
     <button
@@ -28,8 +30,4 @@ function MemoizedModalFormButtonRef(props: FormButtonProps, ref?: LegacyRef<HTML
   );
 }
 
-export const ModalFormButton = memo(
-  forwardRef(
-    MemoizedModalFormButtonRef as unknown as React.ForwardRefRenderFunction<HTMLButtonElement, FormButtonProps>,
-  ),
-);
+export const ModalFormButton = memo(forwardRef(MemoizedModalFormButtonRef));

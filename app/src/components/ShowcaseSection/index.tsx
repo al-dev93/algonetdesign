@@ -1,79 +1,94 @@
-import { memo, useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import React, { memo, useEffect, useRef } from 'react';
 
 import { ModalFormButton } from '@components/ModalFormButton';
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
-import { COMPONENT_MAP } from '@utils/constants';
 
 import style from './style.module.css';
 import { DynamicElement } from '../DynamicElement';
 import { DynamicElementContainer } from '../DynamicElementContainer';
 
 import type { ShowcaseSectionProps } from './types';
-import type { SectionsMenu } from '@/types';
+import type { ComponentType } from '../DynamicElement/types';
+import type { MenuSectionsVisibility } from '@/types';
 
 /**
+ * @description Returns the CSS class adapted to the node that is passed as a parameter.
+ * This allows you to adjust the style dynamically.
  *
- * @description // TODO: add comment
- * @param {ShowcaseSectionProps} { content, anchor, title, visibleSections, openModalFormDialog }
- * @return {*}  {JSX.Element}
+ * @param {string} [node] - The element to which the style is applied.
+ * @return {string} Returns the CSS class.
+ *
+ * @al-dev93
+ */
+function getElementClassName(node?: string): string {
+  return node ? node && style[`section__${node}`] : '';
+}
+
+/**
+ * @description ShowcaseSection component that displays a section with dynamic content and a modal form button.
+ *
+ * @param {ShowcaseSectionProps} props - The properties for the ShowcaseSection component.
+ * @returns {React.JSX.Element} The rendered Tag component.
+ *
  * @al-dev93
  */
 function MemoizedShowcaseSection({
   content,
   anchor,
   title,
-  visibleSections,
+  MenuSectionsVisibility,
   openModalFormDialog,
-}: ShowcaseSectionProps): JSX.Element {
+}: ShowcaseSectionProps): React.JSX.Element {
   /**
+   * @description Renders the title section with a decorative line.
    *
-   * @description // TODO: complete
-   * @param {string} titleSection
-   * @return {*}  {JSX.Element}
+   * @param {string} titleSection - The title text.
+   * @returns {JSX.Element} The rendered section title.
+   *
    * @al-dev93
    */
   const showcaseSectionTitle = (titleSection: string): JSX.Element => {
     return (
-      <div className={style.titleSection}>
+      <div className={style.section__titleSection}>
         <h2>{titleSection}</h2>
-        <img src={titleLine} alt='line' />
+        <img src={titleLine} alt='Decorative line' />
       </div>
     );
   };
 
   const sectionRef = useRef<HTMLElement>(null);
-  // TODO: add comment
   const isRefDisplayed = useOnScreen(sectionRef, '-100px');
 
   useEffect(() => {
-    const section = visibleSections;
+    const section = MenuSectionsVisibility;
     if (!anchor) return;
-    (section.current as SectionsMenu)[anchor as keyof SectionsMenu] = isRefDisplayed;
-  }, [anchor, isRefDisplayed, visibleSections]);
+    (section.current as MenuSectionsVisibility)[anchor as keyof MenuSectionsVisibility] = isRefDisplayed;
+  }, [anchor, isRefDisplayed, MenuSectionsVisibility]);
 
   // console.log(`section ${anchor}`);
   // console.log(content);
 
   return (
-    <section className={title ? style.section : style.hero} ref={sectionRef} id={anchor}>
-      <div className={style.bodySection}>
+    <section className={classNames(style.section, { [style['section--hero']]: !title })} ref={sectionRef} id={anchor}>
+      <div className={style.section__bodySection}>
         {title ? showcaseSectionTitle(title) : null}
-        {content.map((element) =>
-          !element.wrapped ? (
+        {content.map((renderNode) =>
+          !renderNode.wrapped ? (
             <DynamicElement // TODO: add comment
-              key={element.id}
-              tag={element.tag as keyof JSX.IntrinsicElements | keyof typeof COMPONENT_MAP}
-              url={element.urlContent}
-              className={element.name && style[element.name]}
+              key={renderNode.id}
+              tag={renderNode.tag as keyof React.JSX.IntrinsicElements | ComponentType}
+              url={renderNode.urlContent}
+              className={getElementClassName(renderNode.name)}
             >
-              {element.content}
-              {element.boldContent?.length
-                ? element.boldContent.map((item) => (
+              {renderNode.content}
+              {renderNode.boldContent?.length
+                ? renderNode.boldContent.map((item) => (
                     <DynamicElement
                       key={item.id}
-                      tag={item.tag as keyof JSX.IntrinsicElements | keyof typeof COMPONENT_MAP}
-                      className={item.name && style[item.name]}
+                      tag={item.tag as keyof React.JSX.IntrinsicElements | ComponentType}
+                      className={getElementClassName(item.name)}
                     >
                       {item.content}
                     </DynamicElement>
@@ -81,12 +96,12 @@ function MemoizedShowcaseSection({
                 : null}
             </DynamicElement>
           ) : (
-            <DynamicElementContainer // TODO: add comment
-              key={element.id}
-              tag={element.tag}
-              className={`${style[element.name ?? '']}`}
+            <DynamicElementContainer
+              key={renderNode.id}
+              tag={renderNode.tag as keyof React.JSX.IntrinsicElements | ComponentType}
+              className={getElementClassName(renderNode.name)}
               filterValue='card'
-              url='http://localhost:5173/api/projects'
+              url='http://localhost:5173/api/projects' // TODO: variable d'environnement
             />
           ),
         )}

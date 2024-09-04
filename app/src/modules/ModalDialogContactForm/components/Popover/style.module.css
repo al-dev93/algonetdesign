@@ -1,4 +1,4 @@
-.popoverWrapper {
+.popover {
   position: absolute;
   height: max-content;
   max-width: calc(100% - 10px);
@@ -14,41 +14,41 @@
   z-index: 100;
 }
 
-.errorMessage {
+.popover__message {
   white-space: pre-line;
   padding: 0px 12px;
 }
 
-.autocompleteWrapper {
+.popover__autocomplete {
   width: 100%;
 }
 
-.autocompleteWrapper.disable {
+.popover__autocomplete--disable {
   display: none;
 }
 
-.borderTopList {
+.popover__autocomplete__borderTop {
   display: inline-block;
   width: 70%;
   height: 4px;
   margin: 5px 0;
   border-bottom: solid 1px var(--dark-secondary);
 }
-.listPopoverItem {
+.popover__autocomplete__list {
   display: block;
 }
 
-.popoverItem {
+.popover__autocomplete__list__item {
   padding: 2px 12px;
 }
 
-.popoverItem:focus {
+.popover__autocomplete__list__item:focus {
   background-color: var(--hover-bg-menu);
   outline: none;
   color: var(--white);
 }
 
-.popoverItem:hover {
+.popover__autocomplete__list__item:hover {
   background-color: var(--hover-bg-menu);
   color: var(--white);
   cursor: pointer;

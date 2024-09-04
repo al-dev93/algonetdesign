@@ -1,12 +1,10 @@
 import { Text } from '@visx/text';
 import Wordcloud from '@visx/wordcloud/lib/Wordcloud';
-import { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 
-import { Skill } from '@/types';
 import { useFetchData } from '@hooks/useFetchData';
 
 import style from './style.module.css';
-import { SkillsCloudProps } from './types';
 import {
   skillsColours,
   skillsFixedValueGenerator,
@@ -15,30 +13,39 @@ import {
   skillsSpiralType,
 } from './utils/constants';
 
+import type { SkillsCloudProps } from './types';
+import type { Skill } from '@/types';
+
+/**
+ * @description SkillsCloud component that displays a word cloud of skills.
+ *
+ * @param {SkillsCloudProps} props - The properties for the SkillsCloud component.
+ * @returns {React.JSX.Element} The rendered skills cloud component.
+ *
+ * @al-dev93
+ */
 function MemoizedSkillsCloud({
   data: skillsData,
   url,
   width = 800,
   height = 400,
   rotate,
-}: SkillsCloudProps): JSX.Element {
-  // COMMENT: determine if we should fetch data based on the presence of skills
+}: SkillsCloudProps): React.JSX.Element {
+  // Determine if data should be fetched based on the presence of skills.
   const shouldFetch = !skillsData;
-  // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData, setFetchOptionsData } = useFetchData();
-
-  useEffect(() => {
-    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
-  }, [setFetchOptionsData, shouldFetch, url]);
-
-  // TODO: otherwise use buttons ... complete
+  // Use useFetchData hook if shouldFetch is true
+  const { data: fetchedData, error } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  // Use skillsData if provided, otherwise use fetched data.
   const data = skillsData || (fetchedData as Skill[]);
-  const values = (skillsData || data)?.map((skill) => skill.value);
+
+  const values = data?.map((skill) => skill.value);
   const maxValue = data && Math.max(...values);
+
   /**
+   * @description Returns a random rotation angle for the words in the word cloud.
    *
-   * @description // TODO: add comment
-   * @return {*}  {number}
+   * @returns {number} The rotation angle.
+   *
    * @al-dev93
    */
   function getRotationAngle(): number {
@@ -46,19 +53,26 @@ function MemoizedSkillsCloud({
     const degree = rand > 0.5 ? 60 : -60;
     return rand * degree;
   }
+
   /**
+   * @description Returns the font size for a given value based on the maximum value.
    *
-   * @description // TODO: add comment
-   * @param {number} value
-   * @return {*}  {number}
+   * @param {number} value - The value to calculate the font size for.
+   * @returns {number} The font size.
+   *
    * @al-dev93
    */
   function getFontSize(value: number): number {
     return Math.round((60 * value) / maxValue);
   }
 
+  // TODO: sortir l'erreur
+  if (error) {
+    console.error(`Failed to load skills data: ${error}`);
+  }
+
   return (
-    <div className={style.skillsCloudWrapper}>
+    <div className={style.skillsCloudWrapper} aria-live='polite'>
       {data && (
         <Wordcloud
           width={width}

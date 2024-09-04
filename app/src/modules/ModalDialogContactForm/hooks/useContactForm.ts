@@ -1,180 +1,88 @@
-import { Dispatch, RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, useCallback, useLayoutEffect, useRef, useState } from 'react';
 
-import { DialogFormInputElement } from '@/types';
-
+import { addToLocalStorage, getAutocompleteInput, saveToLocalStorage } from '../utils/autocompleteStorageUtils';
 import {
   AUTOCOMPLETE,
-  DELETE_ERROR_TAG_NAME,
   DELETE_INPUT_ERROR,
   HISTORY,
   RESET_AUTO_COMPLETE_OVERLAY,
   SET_AUTO_COMPLETE,
-  SET_ERROR_TAG_NAME,
-  SET_INPUT_BORDER_BOX,
   SET_INPUT_ERROR,
   SET_INPUT_FOCUS,
   SET_INPUT_VALUE,
   SET_OVERLAY_FIRST_ITEM_FOCUS,
 } from '../utils/constants';
-import { formatInputNumber, getAutocompleteInput, getInputValidityProperties } from '../utils/formHelpers';
+import { formatInputNumber } from '../utils/formHelpers';
+import { getInputValidityProperties, setInputBorderBox, setInputErrorTag } from '../utils/inputErrorHandler';
 
-import type { InputBorderBox, ModalDialogContactFormAction, OverlayType, Validity } from '../types';
+import type { ModalDialogContactFormAction, OverlayType } from '../types';
+import type { DialogFormInputElement } from '@/types';
+
 /**
+ * @description Custom hook that manages the state and behavior of a contact form input field.
+ * This includes validation, error handling, auto-complete, and storage management.
  *
- * custom hook useContactForm
- * @param {(RefObject<DialogFormInputElement>)} inputRef - // TODO: add comment
- * @param {Dispatch<ModalDialogContactFormAction>} dispatch - // TODO: add comment
- * @description // TODO: add comment
- * @exports useContactForm
- * @return {*}
+ * @param {(RefObject<DialogFormInputElement>)} inputRef - Reference to the input element.
+ * @param {Dispatch<ModalDialogContactFormAction>} dispatch - Dispatch function to update the form state.
+ * @returns {[(content: string) => void]} A function to set the input value from auto-complete.
  */
 export function useContactForm(
   inputRef: RefObject<DialogFormInputElement>,
   dispatch: Dispatch<ModalDialogContactFormAction>,
-) {
-  const storageRef = useRef<boolean>(false);
-  const overlayRef = useRef<OverlayType>();
+): [(content: string) => void] {
+  const stateRef = useRef<{ isStored: boolean; overlay: OverlayType | undefined }>({
+    isStored: false,
+    overlay: undefined as OverlayType | undefined,
+  });
   const [isInputFilled, setIsInputFilled] = useState<boolean>(false);
 
   /**
+   * @description Edits the form input, updating the border, error tag, and error state.
    *
-   * updates the validity state of the active input field.
-   * @param {DialogFormInputElement} input - // TODO: add comment
-   * @param {boolean} [isAutocompleted] - // TODO: add comment (optional)
-   * @description isAutocompleted allows for differentiated handling in the case
-   * of an auto-completed value.
-   * @return {*} {Validity}
-   * @al-dev93
-   */
-  const updateErrorState = useCallback(
-    (input: DialogFormInputElement, isAutocompleted?: boolean): Validity => {
-      const { name } = input;
-      const inputError = getInputValidityProperties(input, isAutocompleted);
-      if (inputError?.valid) dispatch({ type: DELETE_INPUT_ERROR, payload: { name } });
-      else
-        dispatch({
-          type: SET_INPUT_ERROR,
-          payload: { name, inputError },
-        });
-      return inputError;
-    },
-    [dispatch],
-  );
-  /**
+   * @param {DialogFormInputElement} input - The active input field to edit.
+   * @param {boolean} [isAutocompleted = false] - Allows for differentiated handling in the case of an auto-completed value.
+   * @returns {boolean} Whether the input is valid.
    *
-   * manages the display and update of a tag in the active required input field,
-   * indicating whether it needs to be filled or modified.
-   * @param {DialogFormInputElement} input
-   * @param {Validity} inputValidity
-   * @return {*} {void}
-   * @al-dev93
-   */
-  const setInputErrorTag = useCallback(
-    (input: DialogFormInputElement, inputValidity: Validity): void => {
-      const { name } = input;
-      const error = !inputValidity.valid;
-      const { valueMissing } = inputValidity;
-      if (error) {
-        const errorTagName = valueMissing ? 'remplir' : 'modifier';
-        dispatch({
-          type: SET_ERROR_TAG_NAME,
-          payload: {
-            name,
-            errorTagName,
-          },
-        });
-      } else dispatch({ type: DELETE_ERROR_TAG_NAME, payload: { name } });
-    },
-    [dispatch],
-  );
-  /**
-   *
-   * sets the border style of the active input field to distinguish between an incorrect
-   * input and a correctly edited input field.
-   * @param {DialogFormInputElement} input
-   * @param {Validity} inputValidity
-   * @return {*} {void}
-   * @al-dev93
-   */
-  const setInputBorderBox = useCallback(
-    (input: DialogFormInputElement, inputValidity: Validity): void => {
-      const { name, value } = input;
-      const error = !inputValidity.valid;
-      const borderStyle = (error ? 'isInError' : !!value && 'isEdited') as InputBorderBox;
-      dispatch({ type: SET_INPUT_BORDER_BOX, payload: { name, borderStyle } });
-    },
-    [dispatch],
-  );
-  /**
-   *
-   * edits the active form input field's by updating the border, error tag, and error state.
-   * @param {DialogFormInputElement} input
-   * @param {boolean} [isAutocompleted]
-   * @description this function ensures the update of the validity state, the display or
-   * removal of an error tag for a required field, and the application of a border style based
-   * on the error state or correct editing.
-   * isAutocompleted differentiates error handling between a manually entered value and a vakue
-   * injected via auto-completion.
-   * @return {*} {boolean}
    * @al-dev93
    */
   const editFormInput = useCallback(
-    (input: DialogFormInputElement, isAutocompleted?: boolean): boolean => {
-      const { required } = input;
-      const inputValidity = updateErrorState(input, isAutocompleted);
-      if (required) setInputErrorTag(input, inputValidity);
-      setInputBorderBox(input, inputValidity);
+    (input: DialogFormInputElement, isAutocompleted: boolean = false): boolean => {
+      const { required, name } = input;
+      // const inputValidity = updateErrorState(input, isAutocompleted);
+      const inputValidity = getInputValidityProperties(input, isAutocompleted);
+
+      dispatch({
+        type: inputValidity.valid ? DELETE_INPUT_ERROR : SET_INPUT_ERROR,
+        payload: { name, inputError: inputValidity },
+      });
+
+      if (required) dispatch(setInputErrorTag(input, inputValidity));
+      dispatch(setInputBorderBox(input, inputValidity));
+
       return inputValidity.valid;
     },
-    [setInputBorderBox, setInputErrorTag, updateErrorState],
+    [dispatch],
   );
+
   /**
+   * @description handles keyboard events such as 'ArrowDown' and 'ArrowUp'.
    *
-   * @description //TODO: add comment
+   * @param {(KeyboardEvent)} event - The keyboard event object.
+   *
    * @al-dev93
    */
-  useEffect(() => {
-    const input = inputRef.current;
-    if (input) {
-      const { name } = input;
-      editFormInput(input);
-      storageRef.current = !!localStorage.getItem(name);
-    }
-  }, [editFormInput, inputRef]);
-  /**
-   *
-   * @description //TODO: add comment
-   * @param {DialogFormInputElement} input
-   * @return {*} {void}
-   * @al-dev93
-   */
-  const onInputEvent = useCallback(
-    (input: DialogFormInputElement): void => {
-      const { name } = input;
-      editFormInput(input);
-      const autoComplete = getAutocompleteInput(input, storageRef.current, true);
-      overlayRef.current = AUTOCOMPLETE;
-      if (autoComplete) dispatch({ type: SET_AUTO_COMPLETE, payload: { name, autoComplete } });
-    },
-    [dispatch, editFormInput],
-  );
-  /**
-   *
-   * @description //TODO: add comment
-   * @param {(KeyboardEvent)} event
-   * @return {*} {void}
-   * @al-dev93
-   */
-  const onKeyboardEvent = useCallback(
+  const handleKeyboardEvent = useCallback(
     (event: KeyboardEvent): void => {
       const input = inputRef.current;
       if (!input) return;
+
       const { name } = input;
-      const autoComplete = getAutocompleteInput(input, storageRef.current);
-      if (event.code === 'ArrowDown' || event.code === 'ArrowUp') {
+      const autoComplete = getAutocompleteInput(input, stateRef.current.isStored);
+
+      if (['ArrowDown', 'ArrowUp'].includes(event.code)) {
         const overlayFirstItemFocus = event.code === 'ArrowDown';
-        if (overlayRef.current !== AUTOCOMPLETE) {
-          overlayRef.current = HISTORY;
+        if (stateRef.current.overlay !== AUTOCOMPLETE) {
+          stateRef.current.overlay = HISTORY;
           if (autoComplete) dispatch({ type: SET_AUTO_COMPLETE, payload: { name, autoComplete } });
         }
         dispatch({
@@ -185,54 +93,61 @@ export function useContactForm(
     },
     [dispatch, inputRef],
   );
+
   /**
+   * @description Handles input events such as 'input', 'change', 'keydown', and 'focus'.
    *
-   * @description //TODO: add comment
-   * @param {(Event)} event
-   * @return {*} {void}
+   * @param {(Event)} event - The event object.
+   *
    * @al-dev93
    */
   const handleInputEvent = useCallback(
     (event: Event): void => {
       const input = inputRef.current;
       if (!input) return;
+
       const { name, type, value: inputValue } = input;
       const error = !input.validity.valid;
-      if (event.type === 'input') {
-        if (type === 'tel') {
-          const formattedValue = formatInputNumber(inputValue);
-          input.value = formattedValue;
-        }
-        onInputEvent(input);
-        return;
-      }
-      if (event.type === 'change') {
-        if (!error) dispatch({ type: SET_INPUT_VALUE, payload: { name, inputValue } });
-        setIsInputFilled((current) => !current);
-        return;
-      }
-      if (event.type === 'keydown') {
-        onKeyboardEvent(event as KeyboardEvent);
-        return;
-      }
-      if (event.type === 'focus') {
-        dispatch({ type: RESET_AUTO_COMPLETE_OVERLAY, payload: { name } });
-        overlayRef.current = undefined;
+
+      switch (event.type) {
+        case 'input':
+          {
+            if (type === 'tel') input.value = formatInputNumber(inputValue);
+            editFormInput(input);
+            const autoComplete = getAutocompleteInput(input, stateRef.current.isStored, true);
+            stateRef.current.overlay = AUTOCOMPLETE;
+            if (autoComplete) dispatch({ type: SET_AUTO_COMPLETE, payload: { name, autoComplete } });
+          }
+          break;
+        case 'change':
+          if (!error) dispatch({ type: SET_INPUT_VALUE, payload: { name, inputValue } });
+          setIsInputFilled((current) => !current);
+          break;
+        case 'keydown':
+          if (event instanceof KeyboardEvent) handleKeyboardEvent(event);
+          break;
+        case 'focus':
+          dispatch({ type: RESET_AUTO_COMPLETE_OVERLAY, payload: { name } });
+          stateRef.current.overlay = undefined;
+          break;
+        default:
+          break;
       }
     },
-    [dispatch, inputRef, onInputEvent, onKeyboardEvent],
+    [dispatch, editFormInput, handleKeyboardEvent, inputRef],
   );
+
   /**
+   * @description Handles parent input events such as 'click', 'focusin' and 'focusout'.
+   * @param {(Event)} event - The parent input event object.
    *
-   * @description //TODO: add comment
-   * @param {(Event)} event
-   * @return {*} {void}
    * @al-dev93
    */
   const handleParentInputEvent = useCallback(
     (event: Event): void => {
       const input = inputRef.current;
       if (!input) return;
+
       const { name } = input;
       if (event.type === 'click') {
         input.focus();
@@ -246,12 +161,28 @@ export function useContactForm(
     },
     [dispatch, inputRef],
   );
+
   /**
+   * @description Initializes the input state on mount and checks if the value is stored in localStorage.
    *
-   * @description //TODO: add comment
    * @al-dev93
    */
-  useEffect((): (() => void) | void => {
+  useLayoutEffect(() => {
+    const input = inputRef.current;
+    if (input) {
+      const { name } = input;
+      editFormInput(input);
+      stateRef.current.isStored = !!localStorage.getItem(name); // Check if the value is already stored.
+    }
+  }, [editFormInput, inputRef]);
+
+  /**
+   * @description Adds event listeners to the input and its parent element.
+   * Cleans up event listeners on component unmount.
+   *
+   * @al-dev93
+   */
+  useLayoutEffect((): (() => void) | void => {
     const input = inputRef.current;
     if (input) {
       ['change', 'focus', 'keydown', 'input'].forEach((eventType) =>
@@ -271,58 +202,44 @@ export function useContactForm(
     }
     return undefined;
   }, [handleInputEvent, handleParentInputEvent, inputRef]);
+
   /**
+   * @description Monitors input changes and updates localStorage accordingly.
    *
-   * @description //TODO: add comment
-   * @return {*} {void}
    * @al-dev93
    */
-  const saveToLocalStorage = useCallback((value: string, name: string): void => {
-    localStorage.setItem(name, JSON.stringify([value]));
-    storageRef.current = true;
-  }, []);
-  /**
-   *
-   * @description //TODO: add comment
-   * @return {*} {void}
-   * @al-dev93
-   */
-  const addToLocalStorage = useCallback((value: string, name: string): void => {
-    const storageSet = new Set(JSON.parse(localStorage.getItem(name) ?? '[]')).add(value);
-    localStorage.setItem(name, JSON.stringify([...storageSet].sort()));
-  }, []);
-  /**
-   *
-   * @description //TODO: add comment
-   * @al-dev93
-   */
-  useEffect((): void => {
+  useLayoutEffect((): void => {
     const input = inputRef.current;
-    const isStored = storageRef.current;
+    const { isStored } = stateRef.current;
+
     if (input) {
       const { name, validity, value } = input;
-      const error = !validity.valid;
-      if (!value || error || name === 'message') return;
+      if (!value || !validity.valid || name === 'message') return;
+
       if (isStored) addToLocalStorage(value, name);
-      else saveToLocalStorage(value, name);
+      else saveToLocalStorage(value, name, stateRef);
     }
-  }, [addToLocalStorage, inputRef, isInputFilled, saveToLocalStorage]);
+  }, [inputRef, isInputFilled]);
+
   /**
+   * @description Sets the input value from auto-complete selection and updates its state.
    *
-   * @description // TODO: add comment
-   * @param {string} content
-   * @return {*} {void}
+   * @param {string} content - The value to set in the input.
+   *
    * @al-dev93
    */
-  function putAutoCompleteInInput(content: string): void {
-    const input = inputRef.current;
-    if (!input) return;
-    const { name } = input;
-    if (content) {
+  const putAutoCompleteInInput = useCallback(
+    (content: string): void => {
+      const input = inputRef.current;
+      if (!input) return;
+
+      const { name } = input;
       input.value = content;
       input.focus();
       if (editFormInput(input, !!content)) dispatch({ type: SET_INPUT_VALUE, payload: { name, inputValue: content } });
-    }
-  }
+    },
+    [dispatch, editFormInput, inputRef],
+  );
+
   return [putAutoCompleteInInput];
 }

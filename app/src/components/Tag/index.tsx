@@ -1,18 +1,27 @@
+import classNames from 'classnames';
+import React from 'react';
+
 import style from './style.module.css';
 
 import type { TagProps } from './types';
 
 /**
- * @description
- * @param param0
- * @returns
+ * @description Tag component that displays a tag with various style.
+ *
+ * @param {TagProps} props - The properties for the Tag component.
+ * @returns {React.JSX.Element} The rendered Tag component.
+ *
+ * @al-dev93
  */
-export function Tag({ className, tag, type, position }: TagProps): JSX.Element {
+export function Tag({ className, tag, type, position }: TagProps): React.JSX.Element {
   return (
     <span
-      className={`${className} ${style.tag} ${type === 'row' && style.filled}
-      ${type === 'error' && `${style.thinned} ${style.error}`}`}
+      className={classNames(className, style.tag, {
+        [style[`tag--${type}`]]: type,
+        [style[`tag--thinned`]]: type === 'alerted',
+      })}
       style={position}
+      aria-live={type === 'alerted' ? 'assertive' : 'polite'}
     >
       {tag}
     </span>

@@ -5,52 +5,66 @@ import type { IconType } from '.';
 export type StringObject = {
   readonly [key: string]: string;
 };
+
 /**
+ * @description A function that updates the state of boolean value.
+ * This is used specifically to control boolean state, such as opening/closing dialogs.
  *
+ * @type {Dispatch<SetStateAction<boolean>>} SetStateBoolean
  */
 export type SetStateBoolean = Dispatch<SetStateAction<boolean>>;
+
 /**
- *
+ * @description Type used to handle mouse events on an HTML button element
+ * (HTMLButtonElement)
  */
 export type MouseEventButton = MouseEventHandler<HTMLButtonElement>;
+
 /**
- *
+ * @description Type used for an event object representing a keyboard event bound
+ * to an HTML button element and contains details about the keyboard interaction.
  */
 export type KeyboardEventButton = KeyboardEvent<HTMLButtonElement>;
+
 /**
- *
+ * @description Type used for an event object representing a keyboard event bound
+ * to an HTML div element and contains details about the keyboard interaction.
  */
 export type KeyboardEventDiv = KeyboardEvent<HTMLDivElement>;
+
 /**
- *
+ * @description
  */
 export type DialogFormElement = HTMLElement | HTMLInputElement | HTMLTextAreaElement;
+
 /**
- *
+ * @description
  */
 export type DialogFormInputElement = HTMLInputElement | HTMLTextAreaElement;
+
 /**
  * @description on the main page as the layout
  */
 
-// TODO: add comments
-
-export type SectionsMenu = {
-  home: boolean;
-  work: boolean;
-  about: boolean;
-  services: boolean;
-};
 /**
- * @description type of menu items
+ * @description Represents the basic structure of a menu item.
+ *
+ * @type {object} MenuItemType
+ * @property {string} id - The unique identifier for the menu item.
+ * @property {string} label - The label or text displayed for the menu item.
+ * @property {SectionsRef} anchor - A string reference to the section the menu item links to.
+ *
+ * @al-dev93
  */
-export type MenuType = {
+export type MenuItemType = {
   id: string;
   label: string;
   anchor: SectionsRef;
 };
 
-// TODO: add comments
+/**
+ * @description Type use to represent a link to a user account on an external service.
+ */
 export type AccountLink = {
   id: string;
   service: string;
@@ -60,26 +74,53 @@ export type AccountLink = {
   iv?: string;
 };
 
-// COMMENT: type of the layout context transmitted to the inserted pages
+// NOTE: on the index page
+/**
+ * @description The type of tag to determine its style.
+ */
+export type TagType = 'alerted' | 'filled' | 'thinned';
+
+/**
+ * @description
+ */
+export type SectionsRef = 'home' | 'work' | 'about' | 'services';
+
+/**
+ * @description
+ *
+ * @type {object} IndexPageSection
+ * @extends {Omit<MenuItemType, 'label'>}
+ * @property {string} [title] -
+ * @property {DetailSection[]} content -
+ *
+ * @al-dev93
+ */
+export type IndexPageSection = Omit<MenuItemType, 'label'> & { title?: string; content: DetailSection[] };
+
+/**
+ * @description Represents the context passed to the page sections from a React Router outlet.
+ *
+ * @type {object} OutletContextPage
+ * @property {MutableRefObject<MenuSectionsVisibility>} viewSectionContext - A mutable reference to the current
+ * visible sections of the page.
+ * @property {SetStateBoolean} setOpenContactFormDialog - A function to toggle the state of the contact form dialog.
+ *
+ * @al-dev93
+ */
 export type OutletContextPage = {
-  viewSectionContext: MutableRefObject<VisibleSections>;
+  viewSectionContext: MutableRefObject<MenuSectionsVisibility>;
   setOpenContactFormDialog: SetStateBoolean;
 };
 
-// NOTE: on the index page
-
-export type TagType = 'row' | 'wrapp' | 'table' | 'error';
-
-export type SectionsRef = 'home' | 'work' | 'about' | 'services';
-
-export type IndexPageSection = {
-  id: string;
-  anchor?: SectionsRef;
-  title?: string;
-  content: DetailSection[];
-};
-
-export type VisibleSections = SectionsMenu | object;
+/**
+ * @description Represents the visibility state of multiple sections on the page and the active menu item(s)
+ * because linked to the section(s).
+ * The keys are  section names (strings) and the values are booleans indicating
+ * whether each section is visible (`true`) or hidden (`false`).
+ *
+ * @type {Record<string, boolean>} MenuSectionsVisibility
+ */
+export type MenuSectionsVisibility = Record<string, boolean>;
 
 export type DetailSection = {
   id: string;
@@ -147,6 +188,10 @@ export type ContactFormModal = {
 type InputType = 'text' | 'email' | 'tel';
 type InputTag = 'input' | 'textarea';
 
+/**
+ * @description Type of content to displayed in the tooltip including
+ * text and line spacing size.
+ */
 export type TooltipContent = {
   id: string;
   line: string;
@@ -198,7 +243,7 @@ export type ContactMessage = {
  */
 export type FetchData =
   | AccountLink[]
-  | MenuType[]
+  | MenuItemType[]
   | IndexPageSection[]
   | ProjectData[]
   | Skill[]
@@ -211,5 +256,11 @@ export type FetchResultData = {
   data: FetchData;
   isLoaded: boolean;
   error: string | null;
-  setFetchOptionsData: (url: string | undefined | null, options?: object) => (() => void) | undefined;
+  refetch: (url: string | undefined | null, options: FetchOptions) => Promise<void>;
+  // setFetchOptionsData: (url: string | undefined | null, options?: object) => (() => void) | undefined;
 };
+
+/**
+ * Options for the fetch request.
+ */
+export type FetchOptions = RequestInit;

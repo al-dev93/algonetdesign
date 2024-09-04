@@ -1,8 +1,8 @@
-.inputFormWrapper {
+.dialogFormComponent {
   position: relative;
 }
 
-.inputContainer {
+.dialogFormInput {
   position: relative;
   width: fit-content;
   padding-top: 12px;
@@ -11,41 +11,46 @@
   border: 1px solid var(--dark-secondary);
   border-radius: var(--br-xxs);
   cursor: text;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
-.inputContainer.isEdited {
+.dialogFormInput--edited {
   margin: 0 -2px -2px 0;
   border: 2px solid var(--tertiary-color);
   color: var(--tertiary-color);
 }
 
-.inputContainer:hover:not(.isEdited, :focus-within) {
-  border: 1px solid var(--decorative-dark);
+.dialogFormInput:hover:not(.dialogFormInput--edited, .dialogFormInput--error:hover, :focus-within) {
+  border-color: var(--decorative-dark);
   color: var(--decorative-dark);
   font-weight: 500;
 }
 
-.inputContainer:focus-within {
+.dialogFormInput:focus-within {
   margin: 0 -2px -2px 0;
-  border: 2px solid var(--secondary-color);
+  border-width: 2px;
+  border-color: var(--secondary-color);
   color: var(--secondary-color);
   font-weight: 500;
 }
 
-.inputContainer:hover.isInError,
-.inputContainer:focus-within.isInError {
+.dialogFormInput--error:hover,
+.dialogFormInput--error:focus-within {
   color: var(--primary-alert-color);
 }
 
-.inputContainer:hover.isInError {
-  border: 1px solid var(--primary-alert-color);
+.dialogFormInput--error:hover {
+  border-color: var(--primary-alert-color);
 }
 
-.inputContainer:focus-within.isInError {
-  border: 2px solid var(--primary-alert-color);
+.dialogFormInput--error:focus-within {
+  border-width: 2px;
+  border-color: var(--primary-alert-color);
 }
 
-.labelContainer {
+.dialogFormInput__label {
   position: absolute;
   display: flex;
   top: -12px;
@@ -53,18 +58,12 @@
   background-color: white;
 }
 
-.label {
+.dialogFormInput__label__content {
   display: block;
   padding: 0 4px 0 2px;
 }
 
-.markInfo {
-  vertical-align: top;
-  font-size: 11px;
-  padding-right: 4px;
-}
-
-.inputBox {
+.dialogFormInput__inputBox {
   width: 366px;
   height: 32px;
   padding: 0px 8px 8px 8px;
@@ -76,7 +75,7 @@
   background: none;
 }
 
-.inputBox.textArea {
+.dialogFormInput__inputBox--textArea {
   margin: 0 0 -2.5px;
   min-width: 366px;
   width: 476px;
@@ -85,8 +84,18 @@
   max-height: 100vh;
 }
 
-.inputBox::placeholder {
+.dialogFormInput__inputBox::placeholder {
   align-self: flex-start;
   font-size: var(--fs-xxs);
   color: var(--decorative-dark);
+}
+
+.dialogFormInput__alertTag {
+  bottom: 0;
+  right: 10px;
+}
+
+.dialogFormInput__alertTag--message {
+  bottom: 0;
+  left: 10px;
 }

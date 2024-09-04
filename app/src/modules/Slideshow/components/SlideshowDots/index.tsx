@@ -1,3 +1,5 @@
+import React from 'react';
+
 import style from './style.module.css';
 import { CHANGE_SCROLLING_DOT, START } from '../../utils/constants';
 
@@ -8,10 +10,14 @@ import type { SlideshowDotsProps } from '../../types';
  * @description // TODO: add comment
  * @export
  * @param {SlideshowDotsProps} { slidesIndex, slideshowDispatch, slideshowState }
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-export function SlideshowDots({ slidesIndex, slideshowDispatch, slideshowState }: SlideshowDotsProps): JSX.Element {
+export function SlideshowDots({
+  slidesIndex,
+  slideshowDispatch,
+  slideshowState,
+}: SlideshowDotsProps): React.JSX.Element {
   /**
    * @description // TODO: add comment
    * @callback

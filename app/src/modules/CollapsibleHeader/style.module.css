@@ -6,9 +6,29 @@
   top: 0;
   display: flex;
   justify-content: space-between;
+  background-color: var(--ligth-bg-menu);
+  z-index: 100;
+  transition:
+    top 0.4s ease-out,
+    background-color 0.4s ease-out;
 }
 
-.logo {
+/* Class to display header in hover mode when user scroll-up */
+.header--isHover {
+  top: 0;
+  backdrop-filter: blur(7px);
+  box-shadow: var(--bsh-collapsible-header);
+}
+/* Class to hide the header when user scroll-down */
+.header--isHidden {
+  top: -143px;
+}
+/* Class to display the header at the top of the screen, in regular mode */
+.header--isRegular {
+  background-color: var(--white);
+}
+
+.header__logo {
   width: 200px;
   height: auto;
 }
@@ -17,34 +37,35 @@ nav {
   align-self: flex-end;
 }
 
-ul {
-  width: max-content;
+.menuList {
   display: flex;
   column-gap: 20px;
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-nav ul a {
-  font-variant: small-caps;
-  text-decoration: none;
-  color: white;
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .header__logo {
+    width: 150px;
+  }
+
+  .menuList {
+    column-gap: 10px;
+  }
 }
-/* COMMENT: class to display the header in scroll-up mode */
-.visible {
-  top: 0;
-  transition: top 0.4s ease-out;
-  background-color: var(--ligth-bg-menu);
-  backdrop-filter: blur(7px);
-  box-shadow: var(--bsh-collapsible-header);
-  z-index: 100;
-}
-/* COMMENT: class to hide the header in scroll-down mode */
-.hidden {
-  top: -143px;
-  transition: top 0.4s ease-out;
-}
-/* COMMENT: class to display the header at the top of the screen */
-.topOfPage {
-  transition: all 0.4s ease-out;
-  background-color: var(--white);
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    align-self: center;
+  }
 }

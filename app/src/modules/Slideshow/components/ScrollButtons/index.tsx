@@ -1,5 +1,5 @@
 import IonIcon from '@reacticons/ionicons';
-import { MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import style from './style.module.css';
 import { CHANGE_SLIDE, START } from '../../utils/constants';
@@ -11,10 +11,10 @@ import type { ScrollButtonsProps, SlideDirection } from '../../types';
  * @description //TODO: add comment
  * @export
  * @param {ScrollButtonsProps} { slideshowDispatch }
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-export function ScrollButtons({ slideshowDispatch }: ScrollButtonsProps): JSX.Element {
+export function ScrollButtons({ slideshowDispatch }: ScrollButtonsProps): React.JSX.Element {
   /**
    *
    * @description // TODO: add comment

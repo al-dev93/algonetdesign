@@ -3,67 +3,80 @@
   width: max-content;
   top: 50%;
   bottom: 50%;
+  transform: translate(0, 0);
   padding: 0;
   border: none;
+  background-color: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition:
+    opacity var(--modal-transition-duration) ease,
+    transform var(--modal-transition-duration) ease;
 }
 
 .modal::backdrop {
-  background: rgba(0, 53, 84, 0.7);
+  background: var(--modal-backdrop-color);
 }
 
-.modalWrapper {
+.modal--hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.modal__wrapper {
   width: 100%;
   overflow-x: hidden;
-  background-color: var(--white);
 }
 
-.modalWrapper.alert {
+.modal__wrapper--alert {
   background-color: var(--quaternary-color);
 }
 
-.modalHeader {
-  padding: 20px 20px 0px 20px;
+.modal__header {
+  padding: var(--modal-padding) var(--modal-padding) 0 var(--modal-padding);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--modal-header-gap);
 }
 
-.modalCloseButton {
+.modal__closeButton {
   align-self: flex-end;
   font-size: var(--fs-lg);
   cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
 }
 
-.modalCloseButton.alert {
-  font-size: var(--fs-md);
+.modal__closeButton--alert {
   color: var(--primary-color);
 }
 
-.modalTitleWrapper {
+.modal__titleWrapper {
   width: max-content;
   padding: 5px 0;
   align-self: center;
 }
 
-.modalTitle {
+.modal__title {
   margin-bottom: 8px;
   font-size: var(--fs-lg);
   color: var(--quaternary-color);
 }
 
-.modalSlogan {
+.modal__slogan {
   margin-left: 12px;
   font-size: var(--fs-sm);
   color: var(--secondary-color);
   font-weight: 600;
 }
 
-.modalInnerWrapper {
+.modal__innerWrapper {
   width: max-content;
+  padding: var(--modal-padding);
 }
 
-.modalFooter {
-  padding-bottom: 30px;
+.modal__footer {
+  padding-bottom: var(--modal-footer-padding-bottom);
 }
 
 .buttonForm {

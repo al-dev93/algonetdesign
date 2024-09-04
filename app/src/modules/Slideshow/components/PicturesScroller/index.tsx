@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import style from './style.module.css';
 import { STOP } from '../../utils/constants';
@@ -10,10 +10,14 @@ import type { ProjectData } from '@/types';
  * @description // TODO: add comment
  * @export
  * @param {PicturesScrollerProps} { slideContent, slideshowState, duration = 600 }
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-export function PicturesScroller({ slideContent, slideshowState, duration = 600 }: PicturesScrollerProps): JSX.Element {
+export function PicturesScroller({
+  slideContent,
+  slideshowState,
+  duration = 600,
+}: PicturesScrollerProps): React.JSX.Element {
   const intitialSlideStyle: SlideStyle = {
     transform: `translateX(-100%)`,
     transition: `none`,

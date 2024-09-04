@@ -14,10 +14,15 @@ import {
 
 import type { ProjectData } from '@/types';
 
-export type SlideshowProps = {
-  data?: ProjectData[];
-  url?: string;
-};
+export type SlideshowProps =
+  | {
+      data?: ProjectData[];
+      url?: never;
+    }
+  | {
+      data?: never;
+      url?: string;
+    };
 
 export type SlideshowDotsProps = {
   slidesIndex: number[];

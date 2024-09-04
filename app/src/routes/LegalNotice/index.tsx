@@ -1,9 +1,11 @@
+import React from 'react';
+
 /**
  *
  * @description //TODO: À compléter
  * @export
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  */
-export function LegalNotice(): JSX.Element {
+export function LegalNotice(): React.JSX.Element {
   return <div>Mentions légales</div>;
 }

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useId, useRef, useState } from 'react';
 
 import { TooltipContent } from '@/types';
 
@@ -6,65 +6,66 @@ import style from './style.module.css';
 import { TooltipProps } from './types';
 
 /**
+ * @description Tooltip component that displays a tooltip on hover or focus.
  *
- * @description // TODO: add comment
- * @export
- * @param {TooltipProps} { content, lineHeight = 0, delay = 400, direction = 'top' }
- * @return {*}  {JSX.Element}
+ * @param {TooltipProps} props - the properties for the Tooltip component.
+ * @returns {React.JSX.Element} The rendered tag component.
+ *
  * @al-dev93
  */
-export function Tooltip({ children, content, delay = 400, direction = 'top' }: TooltipProps): JSX.Element {
-  let timeout: NodeJS.Timeout;
+export function Tooltip({
+  children,
+  content,
+  delay = 400,
+  direction = 'top',
+  forceActive,
+}: TooltipProps): React.JSX.Element {
   const [active, setActive] = useState(false);
+  const tooltipId = useId();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isActive = forceActive !== undefined ? forceActive : active;
+
   /**
-   * @description // TODO: add comment
-   * @callback
-   * @return {*} {void}
-   * @al-dev93
+   * @description Show the tooltip after a delay.
    */
-  const showTip = (): void => {
-    timeout = setTimeout(() => {
+  const showTip = useCallback((): void => {
+    timeoutRef.current = setTimeout(() => {
       setActive(true);
     }, delay);
-  };
+  }, [delay]);
+
   /**
-   * @description // TODO: add comment
-   * @callback
-   * @return {*} {void}
-   * @al-dev93
+   * @description Hide the tooltip
    */
-  const hideTip = (): void => {
-    clearInterval(timeout);
+  const hideTip = useCallback((): void => {
+    if (timeoutRef.current) clearInterval(timeoutRef.current);
     setActive(false);
-  };
+  }, []);
+
   /**
-   * @description // TODO: add comment
-   * @param {number} lineCount
-   * @return {*} {JSX.Element[]}
-   * @al-dev93
+   * @description Create line breaks based on the given line count.
+   *
+   * @param {number} lineCount - The number of the line breaks to create.
+   * @returns {React.JSX.Element[]} An array of line breaks elements.
    */
-  function setLineHeight(lineCount: number): JSX.Element[] {
-    const lineHeight = [];
-    // eslint-disable-next-line no-plusplus
-    for (let count = lineCount; count >= 0; count--) {
-      lineHeight.push(<br key={`lh-${count}`} />);
-    }
-    return lineHeight;
+  function createLineBreaks(lineCount: number): React.JSX.Element[] {
+    return Array.from({ length: lineCount }, (_, index) => <br key={`lh-${index}`} />);
   }
+
   /**
-   * @description // TODO: add comment
-   * @param {TooltipContent | TooltipContent[]} text
-   * @return {*} {JSX.Element | null}
-   * @al-dev93
+   * @description Display the tooltip content.
+   *
+   * @param {TooltipContent | TooltipContent[]} text - The content to display in the tooltip.
+   * @returns {React.JSX.Element | null} The rendered tooltip content.
    */
-  function displayTooltipContent(text: TooltipContent | TooltipContent[]): JSX.Element | null {
+  function renderTooltipContent(text: TooltipContent | TooltipContent[]): React.JSX.Element | null {
     if (Array.isArray(text))
       return text.length > 0 ? (
         <p>
           {text.map((line) => (
             <Fragment key={line.id}>
               {line.line}
-              {line.lineHeight ? setLineHeight(line.lineHeight) : null}
+              {line.lineHeight ? createLineBreaks(line.lineHeight) : null}
             </Fragment>
           ))}
         </p>
@@ -73,13 +74,22 @@ export function Tooltip({ children, content, delay = 400, direction = 'top' }: T
   }
 
   return (
-    <div className={style.tooltipWrapper} onMouseEnter={showTip} onMouseLeave={hideTip}>
+    <div
+      className={style.tooltip}
+      onMouseEnter={showTip}
+      onMouseLeave={hideTip}
+      onFocus={showTip}
+      onBlur={hideTip}
+      aria-describedby={tooltipId}
+      role='tooltip'
+      aria-hidden={!isActive} // Hide tooltip content from screen readers if not active
+    >
       {children}
-      {active ? (
-        <div className={`${style.tooltipTip} ${style[direction]}`}>
-          {typeof content === 'string' ? <p>{content}</p> : displayTooltipContent(content)}
+      {isActive && (
+        <div id={tooltipId} className={`${style.tooltip__tip} ${style[`tooltip__tip--${direction}`]}`}>
+          {typeof content === 'string' ? <p>{content}</p> : renderTooltipContent(content)}
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

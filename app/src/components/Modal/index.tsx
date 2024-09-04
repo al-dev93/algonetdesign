@@ -1,30 +1,34 @@
 import IonIcon from '@reacticons/ionicons';
-import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import React, { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef } from 'react';
 
 import { KeyboardEventButton, KeyboardEventDiv } from '@/types';
 import { ModalFormButton } from '@components/ModalFormButton';
 
 import style from './style.module.css';
-import { setFocusToElement } from './utils/setFocusToElement';
 
 import type { ModalProps } from './types';
+
 /**
+ * @description Stops the propagation of the triggering keyboard event and transferring focus.
  *
- * @description // TODO: add comment
- * @export
- * @param {ModalProps} {
- *   children,
- *   className,
- *   open,
- *   setOpen,
- *   button,
- *   closeIcon,
- *   title,
- *   subTitle,
- *   closeParentModal,
- *   customStyle,
- * }
- * @return {*}  {JSX.Element}
+ * @param {KeyboardEventDiv} event - The keyboard event whose propagation is stopped.
+ * @param {(HTMLElement | SVGSVGElement | null)} element - The element that takes focus.
+ *
+ * @al-dev93
+ */
+function setFocusToElement(event: KeyboardEventDiv, element: HTMLElement | SVGSVGElement | null): void {
+  event.preventDefault();
+  event.stopPropagation();
+  element?.focus();
+}
+
+/**
+ * @description Modal component that display a modal dialog.
+ *
+ * @param {ModalProps} props - The properties for the Modal component.
+ * @returns {React.JSX.Element} The rendered modal component.
+ *
  * @al-dev93
  */
 export function Modal({
@@ -35,106 +39,81 @@ export function Modal({
   button,
   closeIcon,
   title,
-  subTitle,
+  subtitle,
   closeParentModal,
   customStyle,
-}: ModalProps): JSX.Element {
+}: ModalProps): React.JSX.Element {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const childrenRef = useRef<HTMLDivElement>(null);
   const lastFormChildRef = useRef<HTMLTextAreaElement>();
-  const shiftKeyRef = useRef<boolean>(false);
 
   /**
-   * @description // TODO: add comment
-   * @al-dev93
+   * @description Closes the modal and prevents the event from propagating.
+   *
+   * @param {KeyboardEvent | MouseEvent | Event} event - The trigger event.
    */
   const setOpenFalse = useCallback(
-    (event: KeyboardEvent | MouseEvent | Event) => {
+    (event: KeyboardEvent | MouseEvent | Event): void => {
       event.preventDefault();
       event.stopPropagation();
       setOpen(false);
     },
     [setOpen],
   );
-  // NOTE: Event handlers
+
   /**
+   * @description Handles the click event on the close button.
    *
-   * @description // TODO: add comment
-   * @param {MouseEvent<HTMLButtonElement, globalThis.MouseEvent>} e
-   * @return {*}  {void}
-   * @al-dev93
+   * @param {MouseEvent<HTMLButtonElement>} e - The mouse event.
    */
-  const handleCloseClick = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>): void => setOpenFalse(e);
+  const handleCloseClick = (e: MouseEvent<HTMLButtonElement>): void => setOpenFalse(e);
+
   /**
+   * @description Handles the key down event on the close button.
    *
-   * @description // TODO: add comment
-   * @param {KeyboardEventButton} e
-   * @return {*}  {void}
-   * @al-dev93
+   * @param {KeyboardEventButton} e - The keyboard event.
    */
   const handleCloseKeyDown = (e: KeyboardEventButton): void => {
     if (e.code === 'Enter') setOpenFalse(e);
   };
-  /**
-   *
-   * @description // TODO: add comment
-   * @param {KeyboardEventDiv} e
-   * @return {*}  {void}
-   * @al-dev93
-   */
-  const handleShiftKey = (e: KeyboardEventDiv): void => {
-    const shiftKeyPress = shiftKeyRef.current;
 
-    shiftKeyRef.current = (e.code === 'ShiftLeft' || e.code === 'ShiftLeft') && shiftKeyPress ? false : shiftKeyPress;
-  };
   /**
+   * @description Handles the tab navigation in the modal.
    *
-   * @description // TODO: add comment
-   * @param {KeyboardEventDiv} e
-   * @return {*}  {void}
-   * @al-dev93
+   * @param {KeyboardEventDiv} e - The keyboard event.
    */
   const handleTabIndex = (e: KeyboardEventDiv): void => {
     const focusElement = {
       first: closeRef.current,
       last: buttonRef.current?.disabled ? lastFormChildRef.current ?? null : buttonRef.current,
     };
-    const shiftKeyPress = shiftKeyRef.current;
 
-    if (focusElement.last) {
-      shiftKeyRef.current = e.code === 'ShiftLeft' || e.code === 'ShiftLeft' ? true : shiftKeyPress;
-      if (document.activeElement === focusElement[shiftKeyPress ? 'first' : 'last'] && e.code === 'Tab')
-        setFocusToElement(e, focusElement[shiftKeyPress ? 'last' : 'first']);
-      return;
+    if (document.activeElement === (e.shiftKey ? focusElement.first : focusElement.last) && e.code === 'Tab') {
+      setFocusToElement(e, e.shiftKey ? focusElement.last : focusElement.first);
     }
-    if (e.code === 'Tab') setFocusToElement(e, focusElement.first);
   };
 
-  // NOTE: hooks useEffect
   /**
-   * @description // TODO: add comment
-   * @al-dev93
+   * @description Handles the closing of the modal when a click is made outside of it.
    */
   useEffect(() => {
     /**
+     * @description Handles the click outside Modal.
      *
-     * @description // TODO: add comment
-     * @param {globalThis.MouseEvent} e
-     * @return {*}  {void}
-     * @al-dev93
+     * @param {Event} e - The trigger event.
      */
-    const handleOutsideClick = (e: globalThis.MouseEvent): void => {
+    const handleOutsideClick = (e: Event): void => {
       if (e.target === dialogRef.current) setOpenFalse(e);
     };
+
     document.addEventListener('click', handleOutsideClick);
     return () => document.removeEventListener('click', handleOutsideClick);
   }, [setOpenFalse]);
 
   /**
-   * @description // TODO: add comment
-   * @al-dev93
+   * @description Handles the opening and closing of the modal.
    */
   useEffect(() => {
     const dialogNode = dialogRef.current;
@@ -142,70 +121,90 @@ export function Modal({
     if (open) {
       lastFormChildRef.current = childrenRef.current?.getElementsByTagName('textarea').item(0) || undefined;
       dialogNode?.showModal();
-      return;
+    } else {
+      dialogNode?.close();
+      if (closeParentModal) closeParentModal((state) => !state);
     }
-    dialogNode?.close();
-    if (closeParentModal) closeParentModal((state) => !state);
   }, [closeParentModal, open]);
 
   /**
-   * @description // TODO: add comment
-   * @al-dev93
+   * @description Handles cancellation of the modal (possible 'esc' or other native cancellation).
    */
   useEffect(() => {
     const dialogNode = dialogRef.current;
 
     /**
+     * @description Handles the cancel event.
      *
-     * @description // TODO: add comment
-     * @param {Event} e
-     * @return {*}  {void}
-     * @al-dev93
+     * @param {Event} e - The cancel event.
      */
     const handleCancel = (e: Event): void => setOpenFalse(e);
+
     dialogNode?.addEventListener('cancel', handleCancel);
     return () => dialogNode?.removeEventListener('cancel', handleCancel);
   }, [setOpenFalse]);
 
+  // Combine the custom style and className using classNames library
+  const modalClassName = classNames(style.modal, className, {
+    [style['modal--hidden']]: !open,
+  });
+  const wrapperClassName = classNames(style.modal__wrapper, customStyle && style[`modal__wrapper--${customStyle}`]);
+  const closeButtonClassName = classNames(
+    style.modal__closeButton,
+    customStyle && style[`modal__closeButton--${customStyle}`],
+  );
+
   return (
-    <dialog className={`${style.modal} ${className}`} ref={dialogRef}>
+    <dialog
+      className={modalClassName}
+      ref={dialogRef}
+      aria-labelledby={title ? 'modal-title' : undefined}
+      aria-describedby={subtitle ? 'modal-description' : undefined}
+    >
       <div
-        className={`${style.modalWrapper} ${customStyle && style[customStyle]}`}
+        className={wrapperClassName}
         role='presentation'
         onKeyDown={closeIcon || button ? handleTabIndex : undefined}
-        onKeyUp={closeIcon && button ? handleShiftKey : undefined}
       >
-        {(closeIcon || title || subTitle) && (
-          <header className={style.modalHeader}>
+        {(closeIcon || title || subtitle) && (
+          <header className={style.modal__header}>
             {closeIcon && (
               <button
-                className={`${style.modalCloseButton} ${customStyle && style[customStyle]}`}
+                className={closeButtonClassName}
                 type='button'
                 ref={closeRef}
                 name='closeButton'
                 onClick={handleCloseClick}
                 onKeyDown={handleCloseKeyDown}
                 tabIndex={0}
-                aria-label='close modale'
+                aria-label='close modal'
               >
                 <IonIcon name='close' />
               </button>
             )}
-            {(title || subTitle) && (
-              <div className={style.modalTitleWrapper}>
-                {title && <h3 className={style.modalTitle}>{title}</h3>}
-                {subTitle && <p className={style.modalSlogan}>{subTitle}</p>}
+            {(title || subtitle) && (
+              <div className={style.modal__titleWrapper}>
+                {title && (
+                  <h3 id='modal-title' className={style.modal__title}>
+                    {title}
+                  </h3>
+                )}
+                {subtitle && (
+                  <p id='modal-description' className={style.modal__slogan}>
+                    {subtitle}
+                  </p>
+                )}
               </div>
             )}
           </header>
         )}
         {open && (
-          <div className={style.modalInnerWrapper} ref={childrenRef}>
+          <div className={style.modal__innerWrapper} ref={childrenRef}>
             {children}
           </div>
         )}
         {button && (
-          <footer className={style.modalFooter}>
+          <footer className={style.modal__footer}>
             <ModalFormButton
               className={style.buttonForm}
               name={button.name}

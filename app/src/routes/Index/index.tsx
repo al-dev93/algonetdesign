@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 
 import { ShowcaseSection } from '@components/ShowcaseSection';
 import { useFetchData } from '@hooks/useFetchData';
@@ -12,18 +12,18 @@ import type { IndexPageSection } from '@/types';
  *
  * @description home page content inserted into the layout
  * @export
- * @return {*}  {JSX.Element}
+ * @return {React.JSX.Element}
  * @al-dev93
  */
-export function Index(): JSX.Element {
+export function Index(): React.JSX.Element {
   // COMMENT: uses the custom hook usePageSection to retrieve the
   //  layout context
   const { viewSectionContext, setOpenContactFormDialog } = usePageSection();
-  const { data, setFetchOptionsData } = useFetchData();
+  const { data } = useFetchData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
 
-  useEffect(() => {
-    setFetchOptionsData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
-  }, [setFetchOptionsData]);
+  // useEffect(() => {
+  //   setFetchOptionsData('http://localhost:5173/api/showcaseSections', { method: 'GET' });
+  // }, [setFetchOptionsData]);
 
   const handleClick = (): void => setOpenContactFormDialog((state) => !state);
 
@@ -35,7 +35,7 @@ export function Index(): JSX.Element {
           content={content}
           anchor={anchor}
           title={title}
-          visibleSections={viewSectionContext}
+          MenuSectionsVisibility={viewSectionContext}
           openModalFormDialog={handleClick}
         />
       ))}

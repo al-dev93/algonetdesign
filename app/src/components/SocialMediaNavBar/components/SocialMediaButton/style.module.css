@@ -5,9 +5,30 @@
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  color: var(--decorative-light);
+  transition:
+    color 0.3s,
+    background-color 0.3s,
+    transform 0.3s;
 }
 
-.iconStyle {
+.buttonLink:hover,
+.buttonLink:focus {
+  color: var(--decorative-dark);
+  outline: none;
+  transform: scale(1.1); /* Slightly enlarge the button on hover/focus */
+}
+
+.buttonLink:focus-visible {
+  outline: 2px solid var(--decorative-dark);
+}
+
+.buttonLink__icon {
   font-size: var(--fs-md);
   height: var(--fs-md);
+}
+
+.buttonLink:hover .buttonLink__icon,
+.buttonLink:focus .buttonLink__icon {
+  transform: rotate(10deg); /* Slight rotation on hover/focus */
 }

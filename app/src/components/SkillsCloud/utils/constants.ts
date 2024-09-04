@@ -1,4 +1,4 @@
-import { SkillsSpiralType } from '../types';
+import type { SkillsSpiralType } from '../types';
 
 const skillsColours: string[] = ['#61dbfb', '#0582ca', '#006494', '#003554'];
 const skillsFont = 'impact';

@@ -9,14 +9,15 @@
   border-radius: var(--br-sm);
 }
 
-.card:hover {
+.card:hover,
+.card:focus-within {
   background-color: var(--decorative-dark);
   box-shadow: 5px 5px 8px -1px var(--dark-bg-menu);
   transform: translate3d(8px, -9px, 0);
   transition: ease-in-out 450ms;
 }
 
-.cardHeader {
+.card__header {
   margin: 0;
   padding: 0 10px;
   display: flex;
@@ -24,47 +25,53 @@
   justify-content: space-between;
 }
 
-.folderIcon {
+.card__folderIcon {
   font-size: 32px;
   color: var(--decorative-dark);
 }
-.card:hover .cardAdditionalNav {
+.card:hover .card__additionalNav,
+.card:focus-within .card__additionalNav {
   color: var(--dark-primary);
 }
 
-.card:hover .cardAdditionalNav:hover {
+.card:hover .card__additionalNav:hover,
+.card:focus-within .card__additionalNav:focus {
   color: var(--white);
 }
 
-.cardMain {
+.card__main {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.cardDescription {
+.card__description {
   flex: 1 0 130px;
   overflow: hidden;
   font-size: var(--fs-xs);
   color: var(--tertiary-color);
 }
 
-.cardSkillsList,
-.cardAdditionalNav {
+.card__skillsList,
+.card__additionalNav {
   color: var(--decorative-dark);
 }
 
-.card:hover .folderIcon,
-.card:hover .cardSkillsList {
+.card:hover .card__folderIcon,
+.card:focus-within .card__folderIcon,
+.card:hover .card__skillsList,
+.card:focus-within .card__skillsList {
   color: var(--dark-primary);
 }
 
-.card:hover .cardDescription,
-.card:hover h3 {
+.card:hover .card__description,
+.card:focus-within .card__description,
+.card:hover h3,
+.card:focus-within h3 {
   color: var(--white);
 }
 
-.cardFooter {
+.card__footer {
   margin: 0;
   padding: 0;
 }

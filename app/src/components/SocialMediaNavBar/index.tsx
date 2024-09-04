@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 
 import { useFetchData } from '@hooks/useFetchData';
 import verticalLine from '@images/decorations/vertical_line_decorative_light_mode.svg';
@@ -11,19 +11,11 @@ import type { AccountLink } from '@/types';
 
 /**
  *
- * @description additional navigation bar component. Includes
- * buttons that link to social network, websites, and documents
- * // TODO: add comment memoized
- * @export
- * @param {SocialMediaNavBarProps} {
- *   className,
- *   changeLinkColor,
- *   type,
- *   buttons,
- *   url,
- *   cryptoKey,
- * }
- * @return {*}  {JSX.Element}
+ * @description socialMediaNavBar component that displays a navigation bar with socia media buttons.
+ *
+ * @param {SocialMediaNavBarProps} props -The properties for the SocialMediaNavBar component.
+ * @returns {React.JSX.Element} The rendered SocialMediaNavBar component.
+ *
  * @al-dev93
  */
 function MemoizedSocialMediaNavBar({
@@ -33,30 +25,30 @@ function MemoizedSocialMediaNavBar({
   buttons,
   url,
   cryptoKey,
-}: SocialMediaNavBarProps): JSX.Element {
+}: SocialMediaNavBarProps): React.JSX.Element {
   const isVerticalNav = type === 'left-nav' || type === 'right-nav';
-  // COMMENT: determine if we should fetch data based on the presence of buttons
+  // Determine if we should fetch data based on the presence of buttons
   const shouldFetch = !buttons;
-  // COMMENT: only use useFetch if shouldFetch is true
-  const { data: fetchedData, setFetchOptionsData } = useFetchData();
-
-  useEffect(() => {
-    setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
-  }, [setFetchOptionsData, shouldFetch, url]);
-
-  // COMMENT: otherwise use buttons
+  // Use useFetchData hook if shouldFetch is true
+  const { data: fetchedData, error } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
+  // Use buttons if provided, otherwise use fetched data
   const data =
     type === 'left-nav'
       ? (buttons || (fetchedData as AccountLink[]))?.filter((item) => item.onPage)
       : buttons || (fetchedData as AccountLink[]);
 
+  // TODO: sortir l'erreur
+  if (error) {
+    console.error(`Failed to load social media links: ${error}`);
+  }
+
   return (
-    <nav className={`${className} ${style.socialMediaNavBar}`}>
-      <ul className={isVerticalNav ? style.VerticalNavBar : style.horizontalNavBar}>
+    <nav className={`${className} ${style.socialMediaNavBar}`} aria-label='Social Media Navigation'>
+      <ul className={style[`socialMediaNavBar--${isVerticalNav ? `vertical` : `horizontal`}`]}>
         {data?.map((element) => (
           <li key={`${element.service}`}>
             <SocialMediaButton
-              className={`${style.externalLink} ${changeLinkColor}`}
+              className={`${style.socialMediaNavBar__externalLink} ${changeLinkColor}`}
               button={element}
               cryptoKey={cryptoKey}
             />
@@ -64,8 +56,8 @@ function MemoizedSocialMediaNavBar({
         ))}
       </ul>
       {isVerticalNav && (
-        <div className={style.lineWrapper}>
-          <img className={style.verticalLine} src={verticalLine} alt='' />
+        <div className={style['socialMediaNavBar--vertical__line']}>
+          <img src={verticalLine} alt='decorative line' />
         </div>
       )}
     </nav>

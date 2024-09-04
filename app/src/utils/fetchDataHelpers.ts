@@ -8,17 +8,31 @@
  * @returns {*} {void}
  * @al-dev93
  */
-export function addFetchData(
+export function refetchWithArgs(
   url: string | null,
-  data: object,
-  setFetchOptionsData: (url: string | null, { ...options }: { [x: string]: unknown }) => (() => void) | undefined,
-) {
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  };
-  setFetchOptionsData(url, options);
+  refetch: (url: string | null, { ...options }: { [x: string]: unknown }) => Promise<void>,
+  method: 'GET' | 'POST',
+  data?: object,
+  // setFetchOptionsData: (url: string | null, { ...options }: { [x: string]: unknown }) => (() => void) | undefined,
+): void {
+  let options = {};
+  switch (method) {
+    case 'GET':
+      options = { method };
+      break;
+    case 'POST':
+      options = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      break;
+
+    default:
+      break;
+  }
+  if (url) refetch(url, options);
+  // setFetchOptionsData(url, options);
 }

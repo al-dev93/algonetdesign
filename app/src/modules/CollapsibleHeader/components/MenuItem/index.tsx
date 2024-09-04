@@ -1,4 +1,5 @@
-import { memo } from 'react';
+import classNames from 'classnames';
+import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import style from './style.module.css';
@@ -12,13 +13,17 @@ import type { MenuItemProps } from '../../types';
  * //TODO: add comment memoized
  * @export
  * @param {MenuItemProps} { isVisible, label, anchor }
- * @return {*}  {JSX.Element}
+ * @returns {React.JSX.Element}
+ *
  * @al-dev93
  */
-function MemoizedMenuItem({ isVisible, label, anchor }: MenuItemProps): JSX.Element {
+function MemoizedMenuItem({ isSectionVisible, label, anchor }: MenuItemProps): React.JSX.Element {
   return (
     <li>
-      <NavLink className={isVisible ? style.onScrollView : style.regularItem} to={`/#${anchor}`}>
+      <NavLink
+        className={classNames(style.itemMenu, { [style['itemMenu--isSectionVisible']]: isSectionVisible })}
+        to={`/#${anchor}`}
+      >
         {label}
       </NavLink>
     </li>

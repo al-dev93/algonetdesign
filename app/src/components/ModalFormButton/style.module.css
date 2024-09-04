@@ -3,7 +3,7 @@
   width: 150px;
   padding: 12px;
   border: 1px solid;
-  border-color: var(--tertiary-color);
+  border-color: var(--quaternary-color);
   border-radius: var(--br-md);
   line-height: var(--lh-regular);
   font-weight: bold;
@@ -12,4 +12,11 @@
   font-family: var(--font-accessories);
   font-size: var(--fs-xs);
   cursor: pointer;
+}
+
+.appButton:enabled:hover,
+.appButton:enabled:focus {
+  background-color: var(--element-bg-hovered);
+  border-color: var(--secondary-color);
+  outline: none;
 }

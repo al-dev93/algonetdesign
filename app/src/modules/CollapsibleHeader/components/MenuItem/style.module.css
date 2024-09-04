@@ -1,10 +1,10 @@
-/* COMMENT: section not visible on screen */
-.regularItem {
+/* Linked section not visible on screen */
+.itemMenu {
   color: var(--rich-black);
   text-decoration: none;
 }
-/* COMMENT: section visible on screen */
-.onScrollView {
+/* Linked section visible on screen */
+.itemMenu--isSectionVisible {
   color: var(--secondary-color);
   font-weight: 700;
   text-decoration-line: underline;
