@@ -7,12 +7,18 @@ import { isHtmlTag } from '@utils/htmlElementHelpers';
 import type { ComponentType, DynamicElementProps } from './types';
 
 /**
- * @description Renders a dynamic element based on the provided tag. If the tag corresponds to a custom component,
+ * Renders a dynamic element based on the provided tag. If the tag corresponds to a custom component,
  * it renders that component with the provided props; otherwise, it renders a standard HTML element.
  *
+ * @component
  * @param {DynamicElementProps} props - The properties for the element, including the tag and children.
+ * @property {ComponentType | keyof React.JSX.IntrinsicElements} tag - The tag representing either a custom component
+ * or an HTML element.
+ * @property {React.ReactNode} [children] - Optional child nodes to be rendered inside the element or component.
+ * @property {Object} [props] - Any additinal props or attributes specific to the chosen tag.
+ *
  * @param {LegacyRef<DialogFormElement>} [ref] - The ref to forward the element.
- * @return {React.JSX.Element} The rendered element or component.
+ * @returns {React.JSX.Element} The rendered element or component.
  *
  * @al-dev93
  */

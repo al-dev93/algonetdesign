@@ -6,10 +6,17 @@ import style from './style.module.css';
 import type { PopoverProps } from '../../types';
 /**
  *
- * @description Popover component that displays a list of autocomplete suggestions and error messages.
+ * Popover component that displays a list of autocomplete suggestions and error messages.
  *
+ * @component
  * @param {PopoverProps} props - The properties for the Popover component.
- * @returns {React.JSX.Element | null} The rendered Popover component or null if no suggestions or errors.
+ * @property {string[]} [autocompleteList] - List of autocomplete suggestions to display.
+ * @property {ErrorMessage} [errorMessage] - Error messages associated with input validation.
+ * @property {Validity} [errorState] - State representing input validity errors.
+ * @property {boolean} [firstItemFocused] - Determines whether the first item in the list should be focused.
+ * @property {(content: string) => void} inputAutocomplete - Callback function to handle input autocomplete.
+ * @property {(DialogFormInputElement | null)} [prevFocusNode] - The previous input element to focus back to when necessary.
+ * @returns {(React.JSX.Element | null)} The rendered Popover component or null if no suggestions or errors.
  *
  * @al-dev93
  */
@@ -29,12 +36,12 @@ export function Popover({
   const ulRef = useRef<HTMLUListElement>(null);
 
   /**
-   * @description Sets the active item in the autocomplete list based on the given count.
+   * Sets the active item in the autocomplete list based on the given count.
    *
+   * @function
    * @param {HTMLUListElement} ulNode - The list element.
    * @param {boolean} count - Whether to increment or decrement the active item index.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const setActiveItem = useCallback(
     (ulNode: HTMLUListElement, count: boolean): void => {
@@ -54,11 +61,11 @@ export function Popover({
   );
 
   /**
-   * @description Handles key down events for navigating and selecting autocomplete items.
+   * Handles key down events for navigating and selecting autocomplete items.
    *
+   * @function
    * @param {KeyboardEvent<HTMLLIElement>} event - The keyboard event.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLLIElement>): void => {
@@ -88,11 +95,11 @@ export function Popover({
   );
 
   /**
-   * @description Handles click events for selecting autocomplete items.
+   * Handles click events for selecting autocomplete items.
    *
+   * @function
    * @param {MouseEvent<HTMLLIElement>} event - The mouse event.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const handleClick = useCallback(
     (event: MouseEvent<HTMLLIElement>): void => {
@@ -104,8 +111,9 @@ export function Popover({
   );
 
   /**
-   * @description Renders the message at at the top of the Popover component.
+   * Renders the message at at the top of the Popover component.
    *
+   * @function
    * @returns {(React.JSX.Element | null)} The rendered message in Popover component or null if not applicable.
    */
   const renderMessage = (): React.JSX.Element | null => {
@@ -117,7 +125,7 @@ export function Popover({
   };
 
   /**
-   * @description Sets focus to the first or last item in the autocomplete list when it is updated.
+   * Sets focus to the first or last item in the autocomplete list when it is updated.
    */
   useEffect(() => {
     const ulNode = ulRef.current;

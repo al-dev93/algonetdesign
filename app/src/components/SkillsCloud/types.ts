@@ -1,7 +1,7 @@
 import type { Skill } from '@/types';
 
 /**
- * @description Props for the SkillsCloud component.
+ * Props for the SkillsCloud component.
  *
  * @type {object} SkillsCloudProps
  * @property {Skill[]} [data] - Data needed to create the word cloud.
@@ -28,9 +28,9 @@ export type SkillsCloudProps = {
 );
 
 /**
- * @description Sets the current type of spiral used for positioning words.
+ * Sets the current type of spiral used for positioning words.
  *
- * @type {'archimedean' | 'rectangular'} SkillsSpiralType
+ * @type {('archimedean' | 'rectangular')} SkillsSpiralType
  *
  * @al-dev93
  */

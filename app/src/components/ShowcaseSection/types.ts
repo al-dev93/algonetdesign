@@ -3,7 +3,7 @@ import { MutableRefObject } from 'react';
 import type { DetailSection, SectionsRef, MenuSectionsVisibility } from '@/types';
 
 /**
- * @description Props for the ShowcaseSection component.
+ * Props for the ShowcaseSection component.
  *
  * @type {object} ShowcaseSectionProps
  * @property {DetailSection[]} content - Data to produce the content of the section.

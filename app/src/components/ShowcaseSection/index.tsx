@@ -14,11 +14,12 @@ import type { ComponentType } from '../DynamicElement/types';
 import type { MenuSectionsVisibility } from '@/types';
 
 /**
- * @description Returns the CSS class adapted to the node that is passed as a parameter.
- * This allows you to adjust the style dynamically.
+ * Retrieves a CSS class name based on the provided node string.
+ * If the node is provided, it returns a formatted class name using a predefined style.
+ * If no node is provided, it returns an empty string.
  *
- * @param {string} [node] - The element to which the style is applied.
- * @return {string} Returns the CSS class.
+ * @param {string} [node] - The optional string representing a section or element identifier.
+ * @returns {string} The corresponding class name or an empty string if no node is provided.
  *
  * @al-dev93
  */
@@ -27,9 +28,15 @@ function getElementClassName(node?: string): string {
 }
 
 /**
- * @description ShowcaseSection component that displays a section with dynamic content and a modal form button.
+ * ShowcaseSection component that displays a section with dynamic content and a modal form button.
  *
+ * @component
  * @param {ShowcaseSectionProps} props - The properties for the ShowcaseSection component.
+ * @property {DetailSection[]} content - Data to produce the content of the section.
+ * @property {SectionsRef} [anchor] - Name of the Id assigned to the section.
+ * @property {string} [title] - Section title.
+ * @property {MutableRefObject<MenuSectionsVisibility>} MenuSectionsVisibility - Indicates the name of the visible displayed.
+ * @property {() => void} [openModalFormDialog] - Trigger for opening the contact modal to use button in the section.
  * @returns {React.JSX.Element} The rendered Tag component.
  *
  * @al-dev93
@@ -42,7 +49,7 @@ function MemoizedShowcaseSection({
   openModalFormDialog,
 }: ShowcaseSectionProps): React.JSX.Element {
   /**
-   * @description Renders the title section with a decorative line.
+   * Renders the title section with a decorative line.
    *
    * @param {string} titleSection - The title text.
    * @returns {JSX.Element} The rendered section title.
@@ -66,9 +73,6 @@ function MemoizedShowcaseSection({
     if (!anchor) return;
     (section.current as MenuSectionsVisibility)[anchor as keyof MenuSectionsVisibility] = isRefDisplayed;
   }, [anchor, isRefDisplayed, MenuSectionsVisibility]);
-
-  // console.log(`section ${anchor}`);
-  // console.log(content);
 
   return (
     <section className={classNames(style.section, { [style['section--hero']]: !title })} ref={sectionRef} id={anchor}>

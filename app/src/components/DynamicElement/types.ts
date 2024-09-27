@@ -3,7 +3,7 @@ import React, { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 import { COMPONENT_MAP } from '@utils/constants';
 
 /**
- * @description Repesents the type of component that can be rendered.
+ * Repesents the type of component that can be rendered.
  *
  * @type {keyof typeof COMPONENT_MAP} ComponentType
  *
@@ -12,7 +12,7 @@ import { COMPONENT_MAP } from '@utils/constants';
 export type ComponentType = keyof typeof COMPONENT_MAP;
 
 /**
- * @description Properties of custom components (like Card, SkillsCloud, Slideshow).
+ * Properties of custom components (like Card, SkillsCloud, Slideshow).
  *
  * @type {object} CustomComponentProps
  * @property {ComponentType} tag - The custom component type to render, based on the `COMPONENT_MAP`.
@@ -27,7 +27,7 @@ type CustomComponentProps = {
 } & ComponentProps<(typeof COMPONENT_MAP)[ComponentType]>;
 
 /**
- * @description Props for an HTML element.
+ * Props for an HTML element.
  *
  * @type {object} HtmlElementProps
  * @property {keyof React.JSX.IntrinsicElements} tag - The HTML tag to render (e.g., 'div', 'span', etc.).
@@ -42,7 +42,7 @@ type HtmlElementProps = {
 } & HTMLAttributes<HTMLElement>;
 
 /**
- * @description Props for the DynamicElement component, which can render either a custom component
+ * Props for the DynamicElement component, which can render either a custom component
  * or a native HTML element.
  *
  * @type {CustomComponentProps | HtmlElementProps} DynamicElementProps

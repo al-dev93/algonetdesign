@@ -1,4 +1,9 @@
-// Constants indicating the state of the collapsible header
+/**
+ * Constants indicating the state of the collapsible header
+ *
+ * @constant
+ * @type {number}
+ */
 const SCROLL_UP = 1;
 const SCROLL_DOWN = -1;
 const TOP_OF_SCREEN = 0;

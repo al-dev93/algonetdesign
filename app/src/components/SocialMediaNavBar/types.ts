@@ -1,7 +1,7 @@
 import type { AccountLink } from '@/types';
 
 /**
- * @description Props for the SocialMediaNavBar component.
+ * Props for the SocialMediaNavBar component.
  *
  * @type {object} SocialMediaNavBarProps
  * @property {string} [className] - Additional class names for the SocialMediaNavBar
@@ -31,7 +31,7 @@ export type SocialMediaNavBarProps = {
 );
 
 /**
- * @description Props for the SocialMediaButton component.
+ * Props for the SocialMediaButton component.
  *
  * @type {object} SocialMediaButtonProps
  * @property {string} [className] - Additional class names to apply to the button.

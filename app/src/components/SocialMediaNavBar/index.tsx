@@ -11,9 +11,17 @@ import type { AccountLink } from '@/types';
 
 /**
  *
- * @description socialMediaNavBar component that displays a navigation bar with socia media buttons.
+ * socialMediaNavBar component that displays a navigation bar with socia media buttons.
  *
+ * @component
  * @param {SocialMediaNavBarProps} props -The properties for the SocialMediaNavBar component.
+ * @property {string} [className] - Additional class names for the SocialMediaNavBar
+ * @property {string} [changeLinkColor] -
+ * @property {('left-nav' | 'right-nav' | 'card')} [type] - Type of SocialMediaNavBar placed
+ * on the page or in Card component.
+ * @property {CryptoKey} [cryptoKey] - Encryption data to hide email address.
+ * @property {AccountLink[]} [buttons] - SocialMediaNavBar button definition data.
+ * @property {string} [url] - The URL to fetch the data needed by the SocialMediaNavBar component.
  * @returns {React.JSX.Element} The rendered SocialMediaNavBar component.
  *
  * @al-dev93

@@ -8,9 +8,11 @@ import { SocialMediaNavBar } from '../SocialMediaNavBar';
 import type { CardProps } from './types';
 
 /**
- * @description Card component that displays project data including title, description, skills, and social media links.
+ * Card component that displays project data including title, description, skills, and social media links.
  *
+ * @component
  * @param {CardProps} props - The properties for the Card component.
+ * @property {ProjectData} data - The data for the project to be displayed in the card.
  * @returns {React.JSX.Element} The rendered card component.
  *
  * @al-dev93

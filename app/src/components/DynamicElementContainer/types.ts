@@ -3,7 +3,7 @@ import React from 'react';
 import { ComponentType } from '../DynamicElement/types';
 
 /**
- * @description The props for the DynamicElementContainer component.
+ * The props for the DynamicElementContainer component.
  *
  * @type {object} DynamicElementContainerProps
  * @property {ComponentType | keyof React.JSX.IntrinsicElements} tag - The tag or component to render for each DynamicElement.

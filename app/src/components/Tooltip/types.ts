@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { TooltipContent } from '@/types';
 
 /**
- * @description Props for the Tooltip component
+ * Props for the Tooltip component
  *
  * @type {object} TooltipProps
  * @property {ReactNode} children - The children elements to wrap with the tooltip.

@@ -15,10 +15,17 @@ import type { MenuItemType } from '@/types';
 
 /**
  *
- * @description Header component including a logo and a menu. It collapses when
+ * Header component including a logo and a menu. It collapses when
  * the user scrolls down and expands with hover effect when the user scrolls up.
  *
+ * @component
  * @param {CollapsibleHeaderProps} props - The properties for the CollapsibleHeader component.
+ * @property {ImageType} [logo] - The logo to be displayed in the header.
+ * @property {MenuItemType[]} [menu] - The menu items to be displayed in the header.
+ * @property {MutableRefObject<MenuSectionsVisibility>} [MenuSectionsVisibility] - Reference to the visible sections
+ * for tracking visibility.
+ * @property {MutableRefObject<number | undefined>} scrollWithMenuItem - Reference to the scroll position with the menu item.
+
  * @returns {React.JSX.Element} The rendered header component
  *
  * @al-dev93
@@ -37,7 +44,7 @@ export function CollapsibleHeader({
   const { src, alt } = logo || { src: undefined, alt: undefined };
 
   /**
-   * @description Memoized function to selects and returns the appropriates CSS class based on the state of the header.
+   * Memoized function to selects and returns the appropriates CSS class based on the state of the header.
    * If the headerState is unknown, it logs an error in the console.
    * This function will only re-select and return a new CSS class when `headerState` changes.
    *

@@ -8,12 +8,15 @@ import style from './style.module.css';
 import type { SocialMediaButtonProps } from '../../types';
 
 /**
- *
- * @description SocialMediaButton component for rendering a button with a social media link.
+ * SocialMediaButton component for rendering a button with a social media link.
  * For mail links, the address is encrypted to avoid being displayed in plain text.
  * IonIcons are used for the button icons.
  *
+ * @component
  * @param {SocialMediaButtonProps} props - The properties for the SocialMediaButton component.
+ * @property {string} [className] - Additional class names to apply to the button.
+ * @property {AccountLink} button - The button data.
+ * @property {CryptoKey} [cryptoKey] - Crypto key for encryption.
  * @returns {React.JSX.Element} The rendered social media button component.
  *
  * @al-dev93

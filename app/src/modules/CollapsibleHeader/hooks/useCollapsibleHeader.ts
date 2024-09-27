@@ -5,7 +5,7 @@ import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from '../utils/constants';
 import type { CollapsibleHeaderState, ScrollRef } from '../types';
 
 /**
- * @description custom hook that manages a collapsible header state based on scroll position.
+ * custom hook that manages a collapsible header state based on scroll position.
  * It returns 3 states corresponding to the top of screen, scroll-up and scroll-down
  *
  * @param {ScrollRef} scrollWithMenuItem - A reference to track scroll events triggered by a menu.

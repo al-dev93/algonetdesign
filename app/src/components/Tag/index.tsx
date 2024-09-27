@@ -6,9 +6,17 @@ import style from './style.module.css';
 import type { TagProps } from './types';
 
 /**
- * @description Tag component that displays a tag with various style.
+ * Tag component that displays a tag with various style.
  *
+ * @component
  * @param {TagProps} props - The properties for the Tag component.
+ * @property {string} [className] - Additional class names for the tag.
+ * @property {string} [tag] - Text content of the tag.
+ * @property {('alerted' | 'filled' | 'thinned')} [type] - Type of the tag wich determines its style.
+ * - 'alerted': indicates an error type tag.
+ * - 'filled': indicates a filled type tag.
+ * - 'thinned': indicates a thinned type tag.
+ * @property {React.CSSProperties} [position] - Inline styles for positioning.
  * @returns {React.JSX.Element} The rendered Tag component.
  *
  * @al-dev93

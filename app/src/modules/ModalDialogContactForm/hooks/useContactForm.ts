@@ -19,12 +19,15 @@ import type { ModalDialogContactFormAction, OverlayType } from '../types';
 import type { DialogFormInputElement } from '@/types';
 
 /**
- * @description Custom hook that manages the state and behavior of a contact form input field.
- * This includes validation, error handling, auto-complete, and storage management.
+ * Custom hook that manages the state and behavior of a contact form input field.
+ * This includes validation, error handling, auto-completion, and localStorage management.
  *
- * @param {(RefObject<DialogFormInputElement>)} inputRef - Reference to the input element.
+ * @function
+ * @param {(RefObject<DialogFormInputElement>)} inputRef - Reference to the input element in the form.
  * @param {Dispatch<ModalDialogContactFormAction>} dispatch - Dispatch function to update the form state.
- * @returns {[(content: string) => void]} A function to set the input value from auto-complete.
+ * @returns {[(content: string) => void]} A function to set the input value from the auto-completion suggestions.
+ *
+ * @al-dev93
  */
 export function useContactForm(
   inputRef: RefObject<DialogFormInputElement>,
@@ -37,13 +40,12 @@ export function useContactForm(
   const [isInputFilled, setIsInputFilled] = useState<boolean>(false);
 
   /**
-   * @description Edits the form input, updating the border, error tag, and error state.
+   * Edits the form input, updating its border, error tag, and validation state.
    *
-   * @param {DialogFormInputElement} input - The active input field to edit.
-   * @param {boolean} [isAutocompleted = false] - Allows for differentiated handling in the case of an auto-completed value.
-   * @returns {boolean} Whether the input is valid.
-   *
-   * @al-dev93
+   * @function
+   * @param {DialogFormInputElement} input - The active input field to be edited.
+   * @param {boolean} [isAutocompleted = false] - Indicates whether the input value was set via auto-completion.
+   * @returns {boolean} Returns 'true' if the input is valid, otherwise 'false'.
    */
   const editFormInput = useCallback(
     (input: DialogFormInputElement, isAutocompleted: boolean = false): boolean => {
@@ -65,11 +67,11 @@ export function useContactForm(
   );
 
   /**
-   * @description handles keyboard events such as 'ArrowDown' and 'ArrowUp'.
+   * handles keyboard events such as 'ArrowDown' and 'ArrowUp'.
    *
+   * @function
    * @param {(KeyboardEvent)} event - The keyboard event object.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const handleKeyboardEvent = useCallback(
     (event: KeyboardEvent): void => {
@@ -95,11 +97,11 @@ export function useContactForm(
   );
 
   /**
-   * @description Handles input events such as 'input', 'change', 'keydown', and 'focus'.
+   * Handles input events such as 'input', 'change', 'keydown', and 'focus'.
    *
+   * @function
    * @param {(Event)} event - The event object.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const handleInputEvent = useCallback(
     (event: Event): void => {
@@ -138,10 +140,11 @@ export function useContactForm(
   );
 
   /**
-   * @description Handles parent input events such as 'click', 'focusin' and 'focusout'.
-   * @param {(Event)} event - The parent input event object.
+   * Handles parent input events such as 'click', 'focusin' and 'focusout'.
    *
-   * @al-dev93
+   * @function
+   * @param {(Event)} event - The parent input event object.
+   * @returns {void}
    */
   const handleParentInputEvent = useCallback(
     (event: Event): void => {
@@ -163,11 +166,11 @@ export function useContactForm(
   );
 
   /**
-   * @description Initializes the input state on mount and checks if the value is stored in localStorage.
+   * Initializes the input state on mount and checks if the value is stored in localStorage.
    *
-   * @al-dev93
+   * @returns {void}
    */
-  useLayoutEffect(() => {
+  useLayoutEffect((): void => {
     const input = inputRef.current;
     if (input) {
       const { name } = input;
@@ -177,10 +180,12 @@ export function useContactForm(
   }, [editFormInput, inputRef]);
 
   /**
-   * @description Adds event listeners to the input and its parent element.
-   * Cleans up event listeners on component unmount.
+   * Registers event listeners on the input field and its parent to track changes, focus, and input events.
+   * Cleans up the event listeners when the component unmounts.
    *
-   * @al-dev93
+   * Events tracked include 'change', 'focus', 'keydown', 'input', 'click', 'focusin' and 'focusout'.
+   *
+   * @returns {void | (() => void)}
    */
   useLayoutEffect((): (() => void) | void => {
     const input = inputRef.current;
@@ -204,9 +209,9 @@ export function useContactForm(
   }, [handleInputEvent, handleParentInputEvent, inputRef]);
 
   /**
-   * @description Monitors input changes and updates localStorage accordingly.
+   * Monitors input changes and updates localStorage accordingly.
    *
-   * @al-dev93
+   * @returns {void}
    */
   useLayoutEffect((): void => {
     const input = inputRef.current;
@@ -222,11 +227,11 @@ export function useContactForm(
   }, [inputRef, isInputFilled]);
 
   /**
-   * @description Sets the input value from auto-complete selection and updates its state.
+   * Sets the input value from auto-complete selection and updates its state.
    *
+   * @function
    * @param {string} content - The value to set in the input.
-   *
-   * @al-dev93
+   * @returns {void}
    */
   const putAutoCompleteInInput = useCallback(
     (content: string): void => {

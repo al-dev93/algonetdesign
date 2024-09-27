@@ -6,9 +6,16 @@ import style from './style.module.css';
 import { TooltipProps } from './types';
 
 /**
- * @description Tooltip component that displays a tooltip on hover or focus.
+ * Tooltip component that displays a tooltip on hover or focus.
  *
+ * @component
  * @param {TooltipProps} props - the properties for the Tooltip component.
+ * @property {ReactNode} children - The children elements to wrap with the tooltip.
+ * @property {(string | TooltipContent | TooltipContent[])} content - The content to display in the tooltip
+ * Can be a string, a TooltipContent object, or an array of TooltipContent objects.
+ * @property {number} [delay=400] - The defay in milliseconds before showing the tooltip.
+ * @property {('bottom' | 'left' | 'right' | 'top')} [direction='top'] - The direction of the tooltip.
+ * @property {boolean} forceActive - Force the parent to control the tooltip state.
  * @returns {React.JSX.Element} The rendered tag component.
  *
  * @al-dev93

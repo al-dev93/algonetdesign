@@ -7,12 +7,15 @@ import style from './style.module.css';
 import type { MenuItemProps } from '../../types';
 
 /**
- *
- * @description Menu item component. Contains the anchor to the section
+ * Menu item component. Contains the anchor to the section
  * and changes style when the section is displayed
  * //TODO: add comment memoized
- * @export
+ *
+ * @component
  * @param {MenuItemProps} { isVisible, label, anchor }
+ * @property {boolean} [isSectionVisible] - Indicates whether the linked section is currently visible on the screen.
+ * @property {string} label - The label or text displayed for the menu item.
+ * @property {SectionsRef} anchor - A string reference to the section the menu item links to.
  * @returns {React.JSX.Element}
  *
  * @al-dev93

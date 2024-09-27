@@ -6,11 +6,15 @@ import { useFetchData } from '@hooks/useFetchData';
 import type { DynamicElementContainerProps } from './types';
 
 /**
- *
- * @description DynamicElementContainer component that fetches data from given URL,
+ * DynamicElementContainer component that fetches data from given URL,
  * filters it based on a filter value, and renders the DynamicElements.
  *
+ * @component
  * @param {DynamicElementContainerProps} props - The properties for the DynamicElementContainer component.
+ * @property {ComponentType | keyof React.JSX.IntrinsicElements} tag - The tag or component to render for each DynamicElement.
+ * @property {string} [className] - The CSS class name for the container element.
+ * @property {string} [filterValue] - The value used to filter the fetched data by the 'display' property.
+ * @property {string} [url] - The URL to fetch data from.
  * @returns {React.JSX.Element} The rendered container with DynamicElements.
  *
  * @al-dev93

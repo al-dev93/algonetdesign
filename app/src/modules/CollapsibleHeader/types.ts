@@ -5,7 +5,7 @@ import { SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN } from './utils/constants';
 import type { MenuItemType, MenuSectionsVisibility } from '@/types';
 
 /**
- * @description A mutable reference object that helds the current scroll position as
+ * A mutable reference object that helds the current scroll position as
  * a number or undefined.
  * The value can be updated dynamically as the user scrolls through the page.
  *
@@ -16,7 +16,7 @@ import type { MenuItemType, MenuSectionsVisibility } from '@/types';
 export type ScrollRef = MutableRefObject<number | undefined>;
 
 /**
- * @description Represents an image with a source URL and alternative text for accessibility.
+ * Represents an image with a source URL and alternative text for accessibility.
  *
  * @type {object} ImageType
  * @property {string} src - The URL of the image.
@@ -30,7 +30,7 @@ type ImageType = {
 };
 
 /**
- * @description A tuple containing the constants SCROLL_DOWN, TOP_OF_SCREEN, SCROLL_UP.
+ * A tuple containing the constants SCROLL_DOWN, TOP_OF_SCREEN, SCROLL_UP.
  * These constants are treated as literal types using 'as const'.
  *
  * @constant
@@ -41,7 +41,7 @@ type ImageType = {
 const headerState = [SCROLL_DOWN, TOP_OF_SCREEN, SCROLL_UP] as const;
 
 /**
- * @description Type representing the union of the types of the constants in the `headerState` tuple.
+ * Type representing the union of the types of the constants in the `headerState` tuple.
  * This type is extracted using index access (`typeof headerState[number]`), meaning it will be either
  * the type of SCROLL_DOWN, TOP_OF_SCREEN or SCROLL_UP.
  *
@@ -52,7 +52,7 @@ const headerState = [SCROLL_DOWN, TOP_OF_SCREEN, SCROLL_UP] as const;
 export type CollapsibleHeaderState = (typeof headerState)[number];
 
 /**
- * @description Extends 'MenuItemType' (excluding 'id') with additionnal properties to represent the props of
+ * Extends 'MenuItemType' (excluding 'id') with additionnal properties to represent the props of
  * a menu item component.
  *
  * @type {object} MenuItemProps
@@ -64,7 +64,7 @@ export type CollapsibleHeaderState = (typeof headerState)[number];
 export type MenuItemProps = Omit<MenuItemType, 'id'> & { isSectionVisible?: boolean };
 
 /**
- * @description Represents the properties for collapsible header component.
+ * Represents the properties for collapsible header component.
  *
  * @type {object} CollapsibleHeaderProps
  * @property {ImageType} [logo] - The logo to be displayed in the header.

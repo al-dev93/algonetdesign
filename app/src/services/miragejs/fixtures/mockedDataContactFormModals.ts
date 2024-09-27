@@ -1,7 +1,8 @@
 export const contactFormModals = [
   {
     id: 'contact',
-    url: 'http://localhost:5173/api/contactFormInputs',
+    urlFormContent: 'http://localhost:5173/api/contactFormInputs',
+    urlApi: 'http://localhost:5173/api/contactMessages',
     submitButtonName: 'Envoyer',
     title: 'Prenez Contact !',
     subtitle: 'une demande, un projet...',

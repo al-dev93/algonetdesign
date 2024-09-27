@@ -5,10 +5,17 @@ import style from './style.module.css';
 import type { FormButtonProps } from './types';
 
 /**
- * @description ModalFormButton component that renders a button for open modal or for forms,
+ * ModalFormButton component that renders a button for open modal or for forms,
  * with memoization and ref forwarding.
  *
+ * @component
  * @param {FormButtonProps} props - The properties for the ModalFormButton component.
+ * @property {string} [className] - Additional class names to apply to the button.
+ * @property {string} [form] - The ID of the form the button is associated with.
+ * @property {MouseEventButton} [onClick] - Click event handler for the button.
+ * @property {string} name - The text content of the button.
+ * @property {boolean} [disabled] - Indicates whether the button is disabled.
+ *
  * @param {LegacyRef<HTMLButtonElement>} [ref] - The ref to forward the button element.
  * @returns {React.JSX.Element} The rendered button component.
  *

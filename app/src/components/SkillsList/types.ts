@@ -1,7 +1,7 @@
 import { TagType } from '@/types';
 
 /**
- * @description Props for the Skills component.
+ * Props for the Skills component.
  *
  * @type {object} SkillsListPRops
  * @property {string} [tagColor] - The color color class for the tags.

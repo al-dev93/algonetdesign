@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { MouseEventButton, SetStateBoolean } from '@/types';
 
 /**
- * @description Type for the button used in the Modal component.
+ * Type for the button used in the Modal component.
  *
  * @type {object} ModalButton
  * @property {string} name - The name of the button.
@@ -21,7 +21,7 @@ export type ModalButton = {
 };
 
 /**
- * @description Props for the Modal component.
+ * Props for the Modal component.
  *
  * @type {object} ModalProps
  * @property {ReactNode} children - The children elements to display inside the modal.
@@ -32,6 +32,7 @@ export type ModalButton = {
  * @property {boolean} [closeIcon] - Indicates if there is a modal close button.
  * @property {string} [title] - The title of the modal.
  * @property {string} [subtitle] - The subtitle of the modal.
+ * @property {boolean} [onRenderComplete] - A flag to warm if a child component is rendered.
  * @property {SetStateBoolean} [closeParentModal] - Function to close the parent modal.
  * @property {'alert'} [customStyle] - Custom style for the modal.
  *
@@ -48,12 +49,14 @@ export type ModalProps = {
   | {
       title?: string;
       subtitle?: string;
+      onRenderComplete?: boolean;
       closeParentModal?: never;
       customStyle?: never;
     }
   | {
       title?: never;
       subtitle?: never;
+      onRenderComplete?: never;
       closeParentModal?: SetStateBoolean;
       customStyle: 'alert';
     }

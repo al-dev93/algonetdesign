@@ -10,10 +10,13 @@ import style from './style.module.css';
 import type { ModalProps } from './types';
 
 /**
- * @description Stops the propagation of the triggering keyboard event and transferring focus.
+ * Set focus to the specified HTML or SVG element and prevents the default event behavior.
+ * Useful in keyboard navigation and accessibility scenarios where focus management is required.
  *
- * @param {KeyboardEventDiv} event - The keyboard event whose propagation is stopped.
- * @param {(HTMLElement | SVGSVGElement | null)} element - The element that takes focus.
+ * @param {KeyboardEventDiv} event - The keyboard event that triggers the focus change.
+ * @param {(HTMLElement | SVGSVGElement | null)} element - The target element to focus on.
+ * Can be an HTML element, an SVG element, or null.
+ * @returns {void}
  *
  * @al-dev93
  */
@@ -24,9 +27,21 @@ function setFocusToElement(event: KeyboardEventDiv, element: HTMLElement | SVGSV
 }
 
 /**
- * @description Modal component that display a modal dialog.
+ * Modal component that display a modal dialog.
  *
+ * @component
  * @param {ModalProps} props - The properties for the Modal component.
+ * @property {ReactNode} children - The children elements to display inside the modal.
+ * @property {string} [className] - Additonal class names to apply to the modal.
+ * @property {boolean} open - Indicates whether the modal is open.
+ * @property {SetStateBoolean} setOpen - Function to set the open state of the modal.
+ * @property {ModalButton} [button] - The button configuration for the modal.
+ * @property {boolean} [closeIcon] - Indicates if there is a modal close button.
+ * @property {string} [title] - The title of the modal.
+ * @property {string} [subtitle] - The subtitle of the modal.
+ * @property {boolean} [onRenderComplete] - A flag to warm if a child component is rendered.
+ * @property {SetStateBoolean} [closeParentModal] - Function to close the parent modal.
+ * @property {'alert'} [customStyle] - Custom style for the modal.
  * @returns {React.JSX.Element} The rendered modal component.
  *
  * @al-dev93
@@ -40,6 +55,7 @@ export function Modal({
   closeIcon,
   title,
   subtitle,
+  onRenderComplete,
   closeParentModal,
   customStyle,
 }: ModalProps): React.JSX.Element {
@@ -50,7 +66,7 @@ export function Modal({
   const lastFormChildRef = useRef<HTMLTextAreaElement>();
 
   /**
-   * @description Closes the modal and prevents the event from propagating.
+   * Closes the modal and prevents the event from propagating.
    *
    * @param {KeyboardEvent | MouseEvent | Event} event - The trigger event.
    */
@@ -64,14 +80,14 @@ export function Modal({
   );
 
   /**
-   * @description Handles the click event on the close button.
+   * Handles the click event on the close button.
    *
    * @param {MouseEvent<HTMLButtonElement>} e - The mouse event.
    */
   const handleCloseClick = (e: MouseEvent<HTMLButtonElement>): void => setOpenFalse(e);
 
   /**
-   * @description Handles the key down event on the close button.
+   * Handles the key down event on the close button.
    *
    * @param {KeyboardEventButton} e - The keyboard event.
    */
@@ -80,7 +96,7 @@ export function Modal({
   };
 
   /**
-   * @description Handles the tab navigation in the modal.
+   * Handles the tab navigation in the modal.
    *
    * @param {KeyboardEventDiv} e - The keyboard event.
    */
@@ -96,11 +112,11 @@ export function Modal({
   };
 
   /**
-   * @description Handles the closing of the modal when a click is made outside of it.
+   * Handles the closing of the modal when a click is made outside of it.
    */
   useEffect(() => {
     /**
-     * @description Handles the click outside Modal.
+     * Handles the click outside Modal.
      *
      * @param {Event} e - The trigger event.
      */
@@ -113,28 +129,28 @@ export function Modal({
   }, [setOpenFalse]);
 
   /**
-   * @description Handles the opening and closing of the modal.
+   * Handles the opening and closing of the modal.
    */
   useEffect(() => {
     const dialogNode = dialogRef.current;
 
     if (open) {
       lastFormChildRef.current = childrenRef.current?.getElementsByTagName('textarea').item(0) || undefined;
-      dialogNode?.showModal();
+      if (onRenderComplete === true || onRenderComplete === undefined) dialogNode?.showModal();
     } else {
       dialogNode?.close();
       if (closeParentModal) closeParentModal((state) => !state);
     }
-  }, [closeParentModal, open]);
+  }, [closeParentModal, onRenderComplete, open]);
 
   /**
-   * @description Handles cancellation of the modal (possible 'esc' or other native cancellation).
+   * Handles cancellation of the modal (possible 'esc' or other native cancellation).
    */
   useEffect(() => {
     const dialogNode = dialogRef.current;
 
     /**
-     * @description Handles the cancel event.
+     * Handles the cancel event.
      *
      * @param {Event} e - The cancel event.
      */

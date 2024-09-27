@@ -17,9 +17,15 @@ import type { SkillsCloudProps } from './types';
 import type { Skill } from '@/types';
 
 /**
- * @description SkillsCloud component that displays a word cloud of skills.
+ * SkillsCloud component that displays a word cloud of skills.
  *
+ * @component
  * @param {SkillsCloudProps} props - The properties for the SkillsCloud component.
+ * @property {Skill[]} [data] - Data needed to create the word cloud (optional).
+ * @property {string} [url] - URL to download the data needed to create the word cloud (optional).
+ * @property {number} [width=800] - Total width of the word cloud. 800px by default.
+ * @property {number} [height=400] - Total height of the word cloud. 400px by default.
+ * @property {boolean} [rotate] - Word cloud rotation angle (optional).
  * @returns {React.JSX.Element} The rendered skills cloud component.
  *
  * @al-dev93

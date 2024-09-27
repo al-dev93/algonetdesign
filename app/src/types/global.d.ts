@@ -178,7 +178,8 @@ export type Skill = {
 // NOTE: data for the contact form
 export type ContactFormModal = {
   id: string;
-  url: string;
+  urlFormContent: string;
+  urlApi: string;
   submitButtonName: string;
   title: string;
   subtitle: string;
@@ -253,7 +254,7 @@ export type FetchData =
   | null;
 
 export type FetchResultData = {
-  data: FetchData;
+  data: FetchData | FetchData[];
   isLoaded: boolean;
   error: string | null;
   refetch: (url: string | undefined | null, options: FetchOptions) => Promise<void>;

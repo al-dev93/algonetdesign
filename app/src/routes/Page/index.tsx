@@ -64,7 +64,7 @@ export function Page({ cryptoKey }: PageProps): React.JSX.Element {
       <ModalDialogContactForm
         open={openContactFormDialog}
         setOpen={setOpenContactFormDialog}
-        url='http://localhost:5173/api/contactFormModals'
+        url={['http://localhost:5173/api/contactFormModals', 'http://localhost:5173/api/contactFormInputs']}
       />
       <SocialMediaNavBar
         className={style.socialMediaNavBar}

@@ -3,7 +3,7 @@ import { CSSProperties } from 'react';
 import { TagType } from '@/types';
 
 /**
- * @description Props for the Tag component.
+ * Props for the Tag component.
  *
  * @type {object} TagProps
  * @property {string} [className] - Additional class names for the tag.
