@@ -50,8 +50,6 @@ export function CollapsibleHeader({
    *
    * @returns {string} The corresponding CSS class for the header state.
    * @throws {Error} if the `state` is not a valid header state, an exception is thrown // NOTE (optional)
-   *
-   * @al-dev93
    */
   const getHeaderClass = useMemo(() => {
     if (![SCROLL_DOWN, SCROLL_UP, TOP_OF_SCREEN].includes(headerState)) {

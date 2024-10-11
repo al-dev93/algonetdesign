@@ -1,6 +1,6 @@
 import React, { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 
-import { COMPONENT_MAP } from '@utils/constants';
+import { COMPONENT_MAP } from '@/utils/dynamicElementsconstants';
 
 /**
  * Repesents the type of component that can be rendered.

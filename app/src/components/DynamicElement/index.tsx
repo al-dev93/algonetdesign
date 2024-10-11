@@ -1,10 +1,10 @@
 import React, { LegacyRef, createElement, forwardRef } from 'react';
 
-import { DialogFormElement } from '@/types';
-import { COMPONENT_MAP } from '@utils/constants';
+import { COMPONENT_MAP } from '@utils/dynamicElementsconstants';
 import { isHtmlTag } from '@utils/htmlElementHelpers';
 
 import type { ComponentType, DynamicElementProps } from './types';
+import type { DialogFormElement } from '@/types';
 
 /**
  * Renders a dynamic element based on the provided tag. If the tag corresponds to a custom component,

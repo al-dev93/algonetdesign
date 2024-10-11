@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-// import { storeFetchValue } from '@/utils/fetchDataHelpers';
-
 import type { FetchData, FetchOptions, FetchResultData } from '@/types';
 
 /**

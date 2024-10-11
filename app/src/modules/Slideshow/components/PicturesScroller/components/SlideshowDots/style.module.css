@@ -1,0 +1,46 @@
+/* Container for the pagination dots */
+.slideshowDots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* Individual dot styling */
+.slideshowDots__dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 0.4s ease,
+    transform 0.4s ease;
+  outline: none;
+}
+
+/* Active dot styling */
+.slideshowDots__dot--active {
+  background-color: var(--secondary-color);
+  transform: scale(1.3);
+}
+
+/* Inactive dot styling */
+.slideshowDots__dot--notActive {
+  background-color: var(--dark-primary);
+}
+
+/* Hover and focus effect for dots */
+.slideshowDots__dot:hover,
+.slideshowDots__dot:focus {
+  background-color: var(--secondary-color);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Transition effects for dots */
+.slideshowDots__dot--transition {
+  transition:
+    transform 0.4s ease,
+    background-color 0.4s ease;
+}

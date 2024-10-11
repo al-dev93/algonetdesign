@@ -1,25 +1,29 @@
+/* Main container for the PicturesScroller component */
 .picturesScroller {
-  margin: 0 auto;
-  width: 800px;
-  overflow: hidden;
-}
-
-.picturesToScroll {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  padding: 0 80px;
   align-items: center;
 }
 
-.slide {
-  flex: 1 0 800px;
-  height: 504px;
+/* Body container for scrolling the images */
+.picturesScroller__body {
+  overflow: hidden;
+  will-change: scroll-position;
 }
 
-.slide.loopSlide {
-  opacity: 0;
+/* Flexbox for images, handling the scroll transition */
+.picturesScroller__body__main {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  transition: transform 0.6s ease-in-out;
 }
 
-.picture {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .picturesScroller__body__main {
+    transition: none;
+  }
 }

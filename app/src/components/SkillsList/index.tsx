@@ -1,8 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { Tag } from '@components/Tag';
+
 import style from './style.module.css';
-import { Tag } from '../Tag';
 
 import type { SkillsListProps } from './types';
 

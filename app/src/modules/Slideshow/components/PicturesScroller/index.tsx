@@ -1,113 +1,117 @@
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useMemo } from 'react';
 
+import { ScrollButtons } from './components/ScrollButtons';
+import { SlidePicture } from './components/SlidePicture';
+import { SlideshowDots } from './components/SlideshowDots';
 import style from './style.module.css';
-import { STOP } from '../../utils/constants';
+import { usePicturesScroller } from '../../hooks/usePicturesScroller';
+import { useSlideClassModifiers } from '../../hooks/useSlideClassModifiers';
+import { useSlideNavigation } from '../../hooks/useSlideNavigation';
+import {
+  ANIMATION_DURATION,
+  ARIA_LABEL_SCROLL_BUTTONS,
+  ARIA_LABEL_SLIDE,
+  FIRST_SLIDE_INDEX,
+  LAST_SLIDE_INDEX,
+} from '../../utils/constants';
 
-import type { PicturesScrollerProps, PicturesScrollerSlide, SlideStyle } from '../../types';
-import type { ProjectData } from '@/types';
+import type { PicturesScrollerProps } from '../../types';
+
 /**
+ * Component to scroll through pictures in a slideshow with buttons and pagination dots.
  *
- * @description // TODO: add comment
- * @export
- * @param {PicturesScrollerProps} { slideContent, slideshowState, duration = 600 }
- * @return {React.JSX.Element}
+ * @component
+ * @param {PicturesScrollerProps} props - The props for the scroller component.
+ * @property {ProjectData[]} slideContent - The content of the slides to be displayed.
+ * @property {SlideshowState} slideshowState - The current state of the slideshow.
+ * @property {number} [duration=600] - The duration of the transition between slides.
+ * @returns {React.JSX.Element} A JSX element representing the picture scroller.
+ *
  * @al-dev93
  */
-export function PicturesScroller({
+function MemoizedPicturesScroller({
   slideContent,
   slideshowState,
-  duration = 600,
+  slideshowDispatch,
+  duration = ANIMATION_DURATION,
 }: PicturesScrollerProps): React.JSX.Element {
-  const intitialSlideStyle: SlideStyle = {
-    transform: `translateX(-100%)`,
-    transition: `none`,
-  };
-  const startSlide = slideContent[slideContent.length - 1];
-  const endSlide = slideContent[0];
-  const slideEffectStyle = useRef<SlideStyle>(intitialSlideStyle);
+  // props validation
+  if (!slideContent || !slideshowState) {
+    // TODO: sortir l'erreur
+    console.error("Missing 'slideContent' or 'slideshowState' props in PicturesScroller component");
+  }
 
   /**
-   * @description // TODO: add comment
+   * usePicturesScroller is a custom hook used to manage the scroll behavior of the slideshow.
+   * It handles actions such as scrolling left or right and updates the slideshow state accordingly.
    */
-  useEffect(() => {
-    if (slideshowState.loopSlide && slideshowState.slideTransition === STOP)
-      slideEffectStyle.current = {
-        transform: `translateX(${-(slideshowState.new + 1) * 100}%)`,
-        transition: 'none',
-      };
-  }, [slideshowState.loopSlide, slideshowState.new, slideshowState.slideTransition]);
-  /**
-   * @description // TODO: add comment
-   */
-  useEffect(() => {
-    /**
-     *
-     * @description // TODO: add comment
-     * @return {*}  {number}
-     * @al-dev93
-     */
-    const offsetSlide = (): number => {
-      if (slideshowState.new === 0 && slideshowState.loopSlide) return -(slideshowState.maxIndexSlide + 2);
-      if (slideshowState.new === slideshowState.maxIndexSlide && slideshowState.loopSlide)
-        return slideshowState.maxIndexSlide;
-      return -1;
-    };
-
-    slideEffectStyle.current = {
-      transform: `translateX(${(-slideshowState.new + offsetSlide()) * 100}%)`,
-      transition: `ease ${duration}ms`,
-    };
-  }, [duration, slideshowState.loopSlide, slideshowState.maxIndexSlide, slideshowState.new]);
+  const { getClassModifier, isAdjacent } = useSlideClassModifiers(slideshowState, slideContent);
+  const { slideshowRef } = useSlideNavigation(slideshowDispatch);
+  const { slideEffectStyle } = usePicturesScroller(slideshowState, duration);
 
   /**
+   * Extracts the slides befor the first and after the last used to createthe illusion of an infinite slideshow
    *
-   * @description // TODO: add comment
-   * @param {ProjectData} project
-   * @return {*}  {PicturesScrollerSlide}
-   * @al-dev93
+   * @type {ProjectData}
    */
-  const getSlide = (project: ProjectData): PicturesScrollerSlide => {
-    const { address } = project.deliverables.find((item) => item.service === 'external') as {
-      address: string | undefined;
-    };
-    const { title, picture } = project;
-    return { address, picture, title };
-  };
+  const prependSlide = useMemo(() => slideContent[LAST_SLIDE_INDEX(slideContent)], [slideContent]);
+  const appendSlide = useMemo(() => slideContent[FIRST_SLIDE_INDEX], [slideContent]);
 
   return (
-    <div className={style.picturesScroller}>
-      <div className={style.picturesToScroll} style={slideEffectStyle.current}>
-        <a
-          href={getSlide(startSlide).address}
-          target='_blank'
-          rel='noopener noreferrer'
-          className={style.slide}
-          aria-label={`Link to ${getSlide(startSlide).title} website`}
-        >
-          <img className={style.picture} src={getSlide(startSlide).picture} alt='' />
-        </a>
-        {slideContent.map((value) => (
-          <a
-            href={getSlide(value).address}
-            key={value.id}
-            target='_blank'
-            rel='noopener noreferrer'
-            className={style.slide}
-            aria-label={`Link to ${value.title} website`}
-          >
-            <img className={style.picture} src={value.picture} alt='' />
-          </a>
-        ))}
-        <a
-          href={getSlide(endSlide).address}
-          target='_blank'
-          rel='noopener noreferrer'
-          className={style.slide}
-          aria-label={`Link to ${getSlide(endSlide).title} website`}
-        >
-          <img className={style.picture} src={getSlide(endSlide).picture} alt='' />
-        </a>
+    <div
+      id='picturesScroller'
+      className={style.picturesScroller}
+      role='region'
+      ref={slideshowRef}
+      aria-label='Image slideshow'
+    >
+      <ScrollButtons
+        slideshowState={slideshowState}
+        slideshowDispatch={slideshowDispatch}
+        ariaLabels={ARIA_LABEL_SCROLL_BUTTONS}
+      />
+      <div className={style.picturesScroller__body}>
+        <div className={style.picturesScroller__body__main} style={slideEffectStyle.current}>
+          <SlidePicture
+            slide={prependSlide}
+            index={slideContent.length - 1}
+            totalSlides={slideContent.length}
+            getClassModifier={getClassModifier}
+            isAdjacent={false}
+            ariaHidden
+            ariaLabel={prependSlide.title}
+          />
+          {slideContent.map((slide, index, array) => (
+            <SlidePicture
+              key={slide.id}
+              slide={slide}
+              index={index}
+              totalSlides={array.length}
+              getClassModifier={getClassModifier}
+              isAdjacent={isAdjacent(index)}
+              isCurrent={index === slideshowState.new}
+              ariaHidden={index !== slideshowState.new}
+              ariaLabel={ARIA_LABEL_SLIDE(slide.title)}
+            />
+          ))}
+          <SlidePicture
+            slide={appendSlide}
+            index={0}
+            totalSlides={slideContent.length}
+            getClassModifier={getClassModifier}
+            isAdjacent={false}
+            ariaHidden
+            ariaLabel={appendSlide.title}
+          />
+        </div>
       </div>
+      <SlideshowDots
+        slidesIndex={[...slideContent.keys()]}
+        slideshowState={slideshowState}
+        slideshowDispatch={slideshowDispatch}
+      />
     </div>
   );
 }
+
+export const PicturesScroller = memo(MemoizedPicturesScroller);

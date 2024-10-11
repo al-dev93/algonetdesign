@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 
+import { FetchData } from '@/types';
 import { DynamicElement } from '@components/DynamicElement';
 import { useFetchData } from '@hooks/useFetchData';
 
@@ -30,9 +31,10 @@ export function DynamicElementContainer({
   const { data: fetchedData, error } = useFetchData(url || null, { method: 'GET' });
 
   const filteredData = useMemo(() => {
+    const simpleFetchedData = fetchedData as FetchData;
     return filterValue
-      ? fetchedData?.filter((item) => item['display' as keyof typeof item] === filterValue)
-      : fetchedData;
+      ? simpleFetchedData?.filter((item) => item?.['display' as keyof typeof item] === filterValue)
+      : simpleFetchedData;
   }, [fetchedData, filterValue]);
   // TODO: sortir l'erreur
   // Render error state if an error occured during data fetching.

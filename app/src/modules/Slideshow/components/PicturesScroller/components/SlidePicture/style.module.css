@@ -1,0 +1,97 @@
+/* Container for each individual picture */
+.picturesToScroll {
+  flex: 1 0 100%;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-in-out;
+  will-change: transform, opacity;
+}
+
+/* Visible picture styling */
+.picturesToScroll--visible {
+  /* height: 100%; */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover effect for visible pictures */
+.picturesToScroll--visible:hover {
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+
+/* Hidden picture styling */
+.picturesToScroll--hidden {
+  opacity: 0;
+  transform: translateY(0);
+}
+
+/* Adjacent picture with reduced opacity */
+.picturesToScroll.picturesToScroll--adjacent {
+  opacity: 0.6;
+  transition:
+    opacity 0.3s ease-in-out 0.05s,
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Parallax effect for pictures */
+.picturesToScroll--parallaxOn {
+  transform: translateY(-30px);
+  transition: transform 0.5s ease-in-out;
+}
+
+.picturesToScroll--parallaxOff {
+  transform: translateY(0);
+}
+
+/* Link styling */
+.picturesToScroll__link {
+  width: 100%;
+  height: 510px;
+  padding: 0 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hover effect for link */
+.picturesToScroll__link:hover,
+.picturesToScroll__link:focus {
+  transform: scale(1.03);
+}
+
+/* Image styling wrapped in a link */
+.picturesToScroll__link__picture {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--br-sm);
+}
+
+/* Hover effect for image wrapped in link */
+.picturesToScroll__link_picture:hover,
+.picturesToScroll__link__picture:focus {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Smartphones */
+@media (max-width: 768px) {
+  .picturesToScroll__link__picture {
+    width: 100%;
+    height: auto;
+    transform: translateY(0);
+  }
+
+  .picturesToScroll--parallaxOn {
+    transform: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .picturesToScroll__link__picture {
+    width: 50%;
+  }
+}

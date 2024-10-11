@@ -27,8 +27,6 @@ export function useCollapsibleHeader(scrollWithMenuItem: ScrollRef): Collapsible
      *
      * @param {number} currentPosition - The current position.
      * @returns {CollapsibleHeaderState} The new scroll state (SCROLL_UP, SCROLL_DOWN or TOP_OF_SCREEN).
-     *
-     * @al-dev93
      */
     const determineScrollState = (currentPosition: number): CollapsibleHeaderState => {
       if (scrollRef.current === currentPosition) {

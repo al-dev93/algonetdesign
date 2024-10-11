@@ -1,13 +1,12 @@
-import React, { memo, useEffect, useMemo, useReducer } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useReducer } from 'react';
 
 import { SkillsList } from '@components/SkillsList';
 import { SocialMediaNavBar } from '@components/SocialMediaNavBar';
 import { useFetchData } from '@hooks/useFetchData';
+import { FILLED_STYLE } from '@utils/constants';
 
 import { Fade } from './components/Fade';
 import { PicturesScroller } from './components/PicturesScroller';
-import { ScrollButtons } from './components/ScrollButtons';
-import { SlideshowDots } from './components/SlideshowDots';
 import { slideshowInitialState } from './reducer/slideshowInitialState';
 import { slideshowReducer } from './reducer/slideshowReducer';
 import style from './style.module.css';
@@ -17,69 +16,84 @@ import type { SlideshowProps } from './types';
 import type { AccountLink, ProjectData } from '@/types';
 
 /**
+ * This component displays a slideshow of projects using either provided data or fetched data.
  *
- * @description // TODO: add comment
- * @param {SlideshowProps} { projectData, url }
- * @return {React.JSX.Element}
+ * @component
+ * @param {SlideshowProps} props - The props for the slideshow.
+ * @property {ProjectData[] | undefined} [data] - The project data to display.
+ * @property {string | undefined} [url] - The URL to fetch the slideshow data if not provided.
+ * @returns {React.JSX.Element | null} A JSX element representing the slideshow.
+ *
  * @al-dev93
  */
-function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): React.JSX.Element {
-  // COMMENT: determine if we should fetch data based on the presence of buttons
+function MemoizedSlideshow({ data: slideshowData, url }: SlideshowProps): React.JSX.Element | null {
+  // Determine if needs to be fetched based on presence of data in props.
   const shouldFetch = !slideshowData;
-  // COMMENT: only use useFetch if shouldFetch is true
+
+  // Fetch data only if necessary (when no slideshowData is provided)
   const { data: fetchedData } = useFetchData(shouldFetch ? url : null, { method: 'GET' });
 
-  // useEffect(() => {
-  //   setFetchOptionsData(shouldFetch ? url : null, { method: 'GET' });
-  // }, [setFetchOptionsData, shouldFetch, url]);
-
-  // TODO: otherwise use buttons ... complete
+  /**
+   * Memoize the slideshow data by filtering out projects that are set to display in the slideshow.
+   *
+   * @type {ProjectData[]}
+   */
   const data = useMemo(() => {
     return (slideshowData || (fetchedData as ProjectData[]))?.filter((item) => item.display === 'slideshow');
   }, [fetchedData, slideshowData]);
 
+  // useReducer to manage the slideshow's state.
   const [slideshowState, slideshowDispatch] = useReducer(slideshowReducer, slideshowInitialState);
 
-  useEffect(() => {
+  /**
+   * Initialize the slideshow by setting the maximum index of slides based on the data length.
+   */
+  const initializeSlideshow = useCallback(() => {
     if (data) slideshowDispatch({ type: INIT_MAX_INDEX_SLIDE, payload: { maxIndexSlide: data.length - 1 } });
   }, [data]);
 
+  // Run initialization when the data is available.
+  useEffect(() => {
+    initializeSlideshow();
+  }, [initializeSlideshow]);
+
   /**
-   * @description // TODO: add comment
+   * useEffect to handle slide transition based on the current transition state.
+   * Updates the slideshow stage (pending, stop) based on time intervals.
    */
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (slideshowState.slideTransition === START) {
-      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: PENDING }), 300);
+      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: PENDING }), 50);
     }
     if (slideshowState.slideTransition === PENDING) {
-      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: STOP }), 300);
+      timer = setTimeout(() => slideshowDispatch({ type: SLIDE_TRANSITION, payload: STOP }), 550);
     }
     return () => clearTimeout(timer);
   }, [slideshowState.slideTransition]);
 
-  const activeSlide = data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new];
+  /**
+   * Determines the active slide based on the current transition state.
+   *
+   * @type {ProjectData}
+   */
+  const activeSlide = useMemo(
+    () => data?.[slideshowState.slideTransition === START ? slideshowState.current : slideshowState.new],
+    [data, slideshowState],
+  );
+
+  // Return null if no active slide available
+  if (!activeSlide) return null;
 
   return (
     activeSlide && (
-      <article className={style.slideshow}>
-        <div className={style.picturesScrollerWrapper}>
-          <ScrollButtons slideshowDispatch={slideshowDispatch} />
-          <PicturesScroller slideContent={data} slideshowState={slideshowState} />
-          <SlideshowDots
-            slidesIndex={[...data.keys()]}
-            slideshowDispatch={slideshowDispatch}
-            slideshowState={slideshowState}
-          />
-        </div>
+      <article className={style.slideshow} aria-roledescription='carousel'>
+        <PicturesScroller slideContent={data} slideshowState={slideshowState} slideshowDispatch={slideshowDispatch} />
         <Fade state={slideshowState}>
           <div className={style.slideshowWrapper}>
-            <header className={style.header}>
-              <h3>{activeSlide.title}</h3>
-            </header>
             <p className={style.description}>{activeSlide.description}</p>
             <footer className={style.footer}>
-              <SkillsList list={activeSlide.tags} tagType='filled' />
+              <SkillsList list={activeSlide.tags} tagType={FILLED_STYLE} />
               <SocialMediaNavBar
                 className={style.navButtons}
                 changeLinkColor={style.externalLinks}

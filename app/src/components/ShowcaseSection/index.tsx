@@ -4,6 +4,7 @@ import React, { memo, useEffect, useRef } from 'react';
 import { ModalFormButton } from '@components/ModalFormButton';
 import { useOnScreen } from '@hooks/useOnScreen';
 import titleLine from '@images/decorations/title_line.svg';
+import { INTERSECTION_OPTIONS_ROOTMARGIN } from '@utils/constants';
 
 import style from './style.module.css';
 import { DynamicElement } from '../DynamicElement';
@@ -66,7 +67,7 @@ function MemoizedShowcaseSection({
   };
 
   const sectionRef = useRef<HTMLElement>(null);
-  const isRefDisplayed = useOnScreen(sectionRef, '-100px');
+  const isRefDisplayed = useOnScreen(sectionRef, INTERSECTION_OPTIONS_ROOTMARGIN);
 
   useEffect(() => {
     const section = MenuSectionsVisibility;

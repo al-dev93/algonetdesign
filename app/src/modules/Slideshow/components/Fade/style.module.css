@@ -1,14 +1,25 @@
+/* The main fade animation effect */
 .fade {
-  animation-timing-function: ease;
+  animation-timing-function: ease-in-out;
   animation-name: fadeEffect;
+  animation-duration: 600ms;
+  will-change: opacity;
 }
 
+/* Reduced motion fade effect */
+@media (prefers-reduced-motion: reduce) {
+  .fade {
+    animation-duration: 0ms;
+  }
+}
+
+/* Keyframes for the fade effect */
 @keyframes fadeEffect {
   from {
     opacity: 1;
   }
   50% {
-    opacity: 0;
+    opacity: 0.15;
   }
   to {
     opacity: 1;

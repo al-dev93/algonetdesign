@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   background-color: var(--ligth-bg-menu);
-  z-index: 100;
+  z-index: 500;
   transition:
     top 0.4s ease-out,
     background-color 0.4s ease-out;
@@ -45,6 +45,7 @@ nav {
   padding: 0;
 }
 
+/* Smartphone */
 @media (max-width: 768px) {
   .header {
     padding: 10px 20px;
@@ -59,6 +60,7 @@ nav {
   }
 }
 
+/* Smartphone with small screen */
 @media (max-width: 480px) {
   .header {
     flex-direction: column;

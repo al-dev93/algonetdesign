@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { ALERTED_STYLE, THINNED_STYLE } from '@utils/constants';
+
 import style from './style.module.css';
 
 import type { TagProps } from './types';
@@ -26,10 +28,10 @@ export function Tag({ className, tag, type, position }: TagProps): React.JSX.Ele
     <span
       className={classNames(className, style.tag, {
         [style[`tag--${type}`]]: type,
-        [style[`tag--thinned`]]: type === 'alerted',
+        [style[`tag--${THINNED_STYLE}`]]: type === ALERTED_STYLE,
       })}
       style={position}
-      aria-live={type === 'alerted' ? 'assertive' : 'polite'}
+      aria-live={type === ALERTED_STYLE ? 'assertive' : 'polite'}
     >
       {tag}
     </span>

@@ -58,8 +58,8 @@ const SET_INPUT_VALUE = 'SET_INPUT_VALUE';
  *
  * @type {string}
  */
-const HIDDEN_MODAL = 'hidden';
-const SOFT_MODAL = 'soft';
+// const HIDDEN_MODAL = 'hidden';
+// const SOFT_MODAL = 'soft';
 
 export {
   AUTOCOMPLETE,
@@ -67,7 +67,7 @@ export {
   DELETE_INPUT_ERROR,
   DELETE_INPUT_VALUE,
   EMPTY_MODAL_DIALOG_CONTACT_FORM,
-  HIDDEN_MODAL,
+  // HIDDEN_MODAL,
   HISTORY,
   INIT_DIALOG_CONTACT_FORM_STATE,
   RESET_AUTO_COMPLETE_OVERLAY,
@@ -78,5 +78,5 @@ export {
   SET_INPUT_FOCUS,
   SET_INPUT_VALUE,
   SET_OVERLAY_FIRST_ITEM_FOCUS,
-  SOFT_MODAL,
+  // SOFT_MODAL,
 };

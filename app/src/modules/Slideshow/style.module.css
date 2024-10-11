@@ -1,46 +1,42 @@
+/* Main container for the slideshow component */
 .slideshow {
   position: relative;
-  /* margin: 0 0; */
-  background-color: var(--panel-bg);
-  border-radius: var(--br-md);
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.picturesScrollerWrapper {
-  position: absolute;
-  width: 100%;
-  top: 71.4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
+/* Wrapper for the slideshow content, with flexbox for layout */
 .slideshowWrapper {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--br-sm);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-.header {
-  margin: 0 0 543px;
-  padding: 15px 20px;
-  background-color: var(--quaternary-color);
+/* On hover, the box shadow increases to give a lift effect */
+.slideshowWrapper:hover {
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
 }
 
-.header h3 {
-  color: var(--white);
-}
-
+/* Text style for the description below the slideshow */
 .description {
   padding: 8px 20px 5px;
   font-size: var(--fs-xs);
   color: var(--tertiary-color);
 }
 
+/* Styles for navigation buttons */
 .navButtons {
   margin-right: 24px;
 }
 
+/* External links styling, with hover effect */
 .externalLinks {
   color: var(--primary-color);
 }
@@ -49,10 +45,10 @@
   color: var(--white);
 }
 
+/* Footer section with flex layout for alignment */
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* padding-bottom: 10px; */
   background-color: var(--quaternary-color);
 }
