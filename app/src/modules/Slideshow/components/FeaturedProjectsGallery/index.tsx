@@ -74,7 +74,7 @@ export function FeaturedProjectsGallery({ projects }: FeaturedProjectsProps): Re
             <SocialMediaNavBar
               className={style.gallery__actions}
               classNameButton={style.gallery__socialMediaNavBar__buttons}
-              type='slideshow'
+              variant='slideshow'
               buttons={deliverables}
             />
           </div>

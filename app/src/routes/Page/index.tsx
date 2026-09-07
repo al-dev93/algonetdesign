@@ -10,6 +10,7 @@ import ModalDialogContactForm from '@modules/ModalDialogContactForm/ModalDialogC
 
 import style from './style.module.css';
 import { Footer } from '@/components/Footer';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 /**
  * Page
@@ -35,6 +36,7 @@ import { Footer } from '@/components/Footer';
  */
 export function Page(): React.JSX.Element {
   const csrfToken = useCsrfToken();
+  const isMobile = useMediaQuery('(max-width: 32rem)');
   // Current routing state (used to derive anchor targets and issue router updates).
   const { pathname, hash, key, search } = useLocation();
   const navigate = useNavigate();
@@ -371,7 +373,7 @@ export function Page(): React.JSX.Element {
       <div className={style.pageContent}>
         <div className={style.socialMediaNavBarLayer}>
           {/* Left-side social links (external navigation) */}
-          <SocialMediaNavBar className={style.socialMediaNavBar} type='left-nav' />
+          <SocialMediaNavBar className={style.socialMediaNavBar} variant={isMobile ? 'page-mobile' : 'page-desktop'} />
         </div>
 
         {/* Main content; observed to detect when anchor targets become available */}

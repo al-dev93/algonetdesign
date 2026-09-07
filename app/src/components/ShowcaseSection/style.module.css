@@ -275,7 +275,7 @@ strong {
 
   inline-size: 100%;
   max-inline-size: var(--cards-wrapper-max-width);
-  margin-inline: auto;
+  margin-inline-end: auto;
 }
 
 .section[data-variant='more'] .section__header p {

@@ -9,6 +9,13 @@
   border-block-start: 1px solid var(--semantic-border);
 }
 
+/* 512px */
+@media (max-width: 32rem) {
+  .footer {
+    margin-block-start: 0;
+  }
+}
+
 .footer__container {
   width: 100%;
   max-width: var(--footer-container);

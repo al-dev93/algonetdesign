@@ -1,23 +1,23 @@
 import type { AccountLink, Deliverable } from '@/types';
 import type { FetchErrorContext } from '@modules/Error/types';
 
+type SocialMediaNavBarVariant = 'page-desktop' | 'page-mobile' | 'card' | 'slideshow';
 /**
  * Props for the SocialMediaNavBar component.
  *
  * @type {object} SocialMediaNavBarProps
  * @property {string} [className] - Additional class names for the SocialMediaNavBar
  * @property {string} [changeLinkColor] -
- * @property {('left-nav' | 'right-nav' | 'card')} [type] - Type of SocialMediaNavBar placed
+ * @property {SocialMediaNavBarVariant} [variant] - Type of SocialMediaNavBar placed
  * on the page or in Card component.
  * @property {CryptoKey} [cryptoKey] - Encryption data to hide email address.
  * @property {AccountLink[]} [buttons] - SocialMediaNavBar button definition data.
  *
- * @al-dev93
  */
 export interface SocialMediaNavBarProps {
   className?: string;
   classNameButton?: string;
-  type?: 'left-nav' | 'right-nav' | 'card' | 'slideshow' | 'footer';
+  variant?: SocialMediaNavBarVariant;
   buttons?: AccountLink[] | Deliverable[];
 }
 
