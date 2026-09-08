@@ -166,6 +166,7 @@ strong {
   pointer-events: none;
 }
 
+/* 582px */
 @media (max-width: 36.375rem) {
   .section[data-variant='home'] {
     --hero-signature-width: clamp(9rem, 42vw, 12rem);

@@ -7,10 +7,8 @@ type SocialMediaNavBarVariant = 'page-desktop' | 'page-mobile' | 'card' | 'slide
  *
  * @type {object} SocialMediaNavBarProps
  * @property {string} [className] - Additional class names for the SocialMediaNavBar
- * @property {string} [changeLinkColor] -
  * @property {SocialMediaNavBarVariant} [variant] - Type of SocialMediaNavBar placed
  * on the page or in Card component.
- * @property {CryptoKey} [cryptoKey] - Encryption data to hide email address.
  * @property {AccountLink[]} [buttons] - SocialMediaNavBar button definition data.
  *
  */
@@ -19,6 +17,7 @@ export interface SocialMediaNavBarProps {
   classNameButton?: string;
   variant?: SocialMediaNavBarVariant;
   buttons?: AccountLink[] | Deliverable[];
+  onAnchorNavigation?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 /**
@@ -51,4 +50,4 @@ export interface SocialMediaButtonErrorContext extends FetchErrorContext {
   address: string | undefined;
 }
 
-export type ServiceType = 'gmail' | 'linkedin' | 'github' | 'npm' | 'external' | 'document' | 'figma';
+export type ServiceType = 'gmail' | 'linkedin' | 'github' | 'npm' | 'external' | 'document' | 'figma' | 'code_github';

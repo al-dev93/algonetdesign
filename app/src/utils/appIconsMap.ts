@@ -3,7 +3,6 @@ import githubIcon from '@iconify-icons/simple-icons/github';
 import linkedinIcon from '@iconify-icons/simple-icons/linkedin';
 import npmIcon from '@iconify-icons/simple-icons/npm';
 import reactIcon from '@iconify-icons/simple-icons/react';
-// import typescriptIcon from '@iconify-icons/simple-icons/typescript';
 import {
   ArrowSquareOutIcon,
   CaretDoubleDownIcon,
@@ -86,6 +85,7 @@ export const ICONIFY_ICONS = {
   npm: npmIcon,
   react: reactIcon,
   typescript: 'vscode-icons:file-type-typescript',
+  code_github: 'octicon:file-code-24',
 } as const;
 
 export const APP_ICONS = { ...ICONIFY_ICONS, ...PHOSPHOR_ICONS };

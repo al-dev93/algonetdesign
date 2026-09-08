@@ -85,28 +85,30 @@
   background: var(--social-nav-hover-bg);
 }
 
-.socialMediaNavBar__quickLink {
+.socialMediaNavBar__quickLinkButton {
   --buttonLink-focus-ring: var(--semantic-ring);
   --buttonLink-icon-size: 0.92rem;
   --buttonLink-size: 48px;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: var(--buttonLink-size);
   height: var(--buttonLink-size);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
+
   color: var(--semantic-text);
+  text-decoration: none;
 }
 
 /* Color of Button icon when focus with tab keyboard */
-.socialMediaNavBar__quickLink:focus-visible {
+.socialMediaNavBar__quickLinkButton:focus-visible {
   outline: 3px solid var(--buttonLink-focus-ring);
   outline-offset: 3px;
   border-radius: 8px;
 }
 
-.socialMediaNavBar__quickLinkFrame {
+.socialMediaNavBar__quickLink {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -117,13 +119,13 @@
   border: 1px solid currentColor;
   border-radius: 999px;
 
-  transition:
-    background-color calc(160ms * var(--motion-ok)) ease,
-    transform calc(160ms * var(--motion-ok)) ease;
+  transition: background-color calc(160ms * var(--motion-ok)) ease;
 }
 
 .socialMediaNavBar__quickLinkIcon {
   font-size: var(--buttonLink-icon-size);
+
+  transition: transform calc(160ms * var(--motion-ok)) ease;
 }
 
 .socialMediaNavBar__externalLink--primary:is(a) {
@@ -134,32 +136,48 @@
 
 /* Mouse only */
 @media (hover: hover) and (pointer: fine) {
-  .socialMediaNavBar[data-variant] .socialMediaNavBar__pageLink:hover {
+  .socialMediaNavBar__pageLink:hover {
     color: var(--social-nav-active-color);
     background: var(--social-nav-hover-bg);
     transform: translateY(calc(-1px * var(--motion-ok)));
   }
 
-  .socialMediaNavBar__externalLink:hover {
-    color: var(--decorative-dark);
-  }
   a.socialMediaNavBar__externalLink--primary:hover {
     border-color: var(--semantic-ring);
     transform: translateY(calc(-2px * var(--motion-ok))) scale(calc(1 + 0.04 * var(--motion-ok)));
   }
 
-  .socialMediaNavBar__quickLinkFrame:hover {
+  .socialMediaNavBar__quickLinkButton:hover .socialMediaNavBar__quickLink {
     background: var(--social-nav-hover-bg);
   }
 
-  .socialMediaNavBar__quickLink:hover .socialMediaNavBar__quickLinkIcon {
+  .socialMediaNavBar__quickLinkButton:hover .socialMediaNavBar__quickLinkIcon {
     transform: translateY(calc(+1.5px * var(--motion-ok)));
   }
 }
 
+/* Mouse + touch */
+.socialMediaNavBar__pageLink:active {
+  color: var(--social-nav-active-color);
+  background: var(--social-nav-hover-bg);
+  transform: scale(calc(1 - 0.04 * var(--motion-ok)));
+}
+
+.socialMediaNavBar__quickLinkButton:active .socialMediaNavBar__quickLink {
+  background: var(--social-nav-hover-bg);
+}
+
+.socialMediaNavBar__quickLinkButton:active .socialMediaNavBar__quickLinkIcon {
+  transform: translateY(calc(2.5px * var(--motion-ok)));
+}
+
 @media (forced-colors: active) {
-  .socialMediaNavBar__quickLink:focus-visible {
-    outline: 2px solid HighLight;
+  .socialMediaNavBar__quickLink {
+    border-color: ButtonText;
+  }
+
+  .socialMediaNavBar__quickLinkButton:focus-visible {
+    outline: 2px solid Highlight;
     outline-offset: 2px;
   }
 }

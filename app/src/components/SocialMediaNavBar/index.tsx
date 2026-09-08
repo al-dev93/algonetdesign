@@ -10,6 +10,7 @@ import { SocialMediaButton } from './components/SocialMediaButton';
 import style from './style.module.css';
 import type { SocialMediaNavBarProps } from './types';
 import { AppIcon } from '../AppIcon';
+
 /**
  *
  * socialMediaNavBar component that displays a navigation bar with social media buttons.
@@ -17,11 +18,9 @@ import { AppIcon } from '../AppIcon';
  * @component
  * @param {SocialMediaNavBarProps} props -The properties for the SocialMediaNavBar component.
  * @property {string} [className] - Additional class names for the SocialMediaNavBar
- * @property {string} [changeLinkColor] -
  * @property {SocialMediaNavBarVariant} [variant] - Type of SocialMediaNavBar placed
  * on the page or in Card component.
  * @property {AccountLink[]} [buttons] - SocialMediaNavBar button definition data.
- * @property {string} [url] - The URL to fetch the data needed by the SocialMediaNavBar component.
  * @returns {React.JSX.Element} The rendered SocialMediaNavBar component.
  *
  * @al-dev93
@@ -31,6 +30,7 @@ export const SocialMediaNavBar = memo(function SocialMediaNavBar({
   classNameButton,
   variant,
   buttons,
+  onAnchorNavigation,
 }: SocialMediaNavBarProps): React.JSX.Element | null {
   const isPageNav = variant === 'page-desktop' || variant === 'page-mobile';
   const isMobilePageNav = variant === 'page-mobile';
@@ -146,12 +146,12 @@ export const SocialMediaNavBar = memo(function SocialMediaNavBar({
           <li>
             <a
               href='#footer'
-              // className={`${style.socialMediaNavBar__pageLink} ${style.socialMediaNavBar__pageLink__quickLink}`}
-              className={style.socialMediaNavBar__quickLink}
+              className={style.socialMediaNavBar__quickLinkButton}
               aria-label='Aller au pied de page'
               title='Aller au pied de page'
+              onClick={onAnchorNavigation}
             >
-              <span className={style.socialMediaNavBar__quickLinkFrame}>
+              <span className={style.socialMediaNavBar__quickLink}>
                 <AppIcon className={style.socialMediaNavBar__quickLinkIcon} weight='bold' iconName='quickLinkFooter' />
               </span>
             </a>

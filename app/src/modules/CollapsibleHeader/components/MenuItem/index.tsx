@@ -58,7 +58,7 @@ function MemoizedMenuItem({
         aria-label={label}
         to={`/#${anchor}`}
         tabIndex={isCollapsedMenu ? -1 : 0}
-        onClick={(event) => onNavigate(event, anchor)}
+        onClick={onNavigate}
       >
         {label}
       </NavLink>
