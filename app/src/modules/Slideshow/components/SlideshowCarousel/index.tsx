@@ -90,7 +90,7 @@ export function SlideshowCarousel({ projects }: FeaturedProjectsProps): React.JS
             <SkillsList primaryTag={activeSlide.primaryTag} list={activeSlide.tags} layoutType='slideshow' />
             <SocialMediaNavBar
               classNameButton={style.externalLinks}
-              type='slideshow'
+              variant='slideshow'
               buttons={activeSlide.deliverables as AccountLink[]}
             />
           </footer>

@@ -17,7 +17,7 @@ export function Footer({ onOpenContactForm, isContactFormOpen, contactFormId }: 
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={style.footer}>
+    <footer id='footer' className={style.footer}>
       <div className={style.footer__container}>
         <div className={style.footer__main}>
           <div className={style.footer__brand}>

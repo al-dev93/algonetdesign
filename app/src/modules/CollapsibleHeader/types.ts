@@ -1,4 +1,4 @@
-import type { MouseEvent, MutableRefObject } from 'react';
+import type { MutableRefObject } from 'react';
 
 import type { MenuItemType, SectionsRef } from '@/types';
 
@@ -35,8 +35,6 @@ export type ScrollRef = MutableRefObject<number | undefined>;
  */
 export type CollapsibleHeaderState = typeof SCROLL_DOWN | typeof TOP_OF_SCREEN | typeof SCROLL_UP;
 
-export type MenuNavigationHandler = (event: MouseEvent<HTMLAnchorElement>, targetId: SectionsRef) => void;
-
 /**
  * Extends 'MenuItemType' (excluding 'id') with additionnal properties to represent the props of
  * a menu item component.
@@ -49,7 +47,7 @@ export type MenuNavigationHandler = (event: MouseEvent<HTMLAnchorElement>, targe
 export interface MenuItemProps extends Omit<MenuItemType, 'id'> {
   isSectionActive?: boolean;
   isCollapsedMenu?: boolean;
-  onNavigate: MenuNavigationHandler;
+  onNavigate: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 /**
@@ -64,5 +62,5 @@ export interface CollapsibleHeaderProps {
   logo?: ImageType;
   activeSection?: SectionsRef;
   scrollWithMenuItem: MutableRefObject<number | undefined>;
-  onMenuNavigation: MenuNavigationHandler;
+  onMenuNavigation: React.MouseEventHandler<HTMLAnchorElement>;
 }

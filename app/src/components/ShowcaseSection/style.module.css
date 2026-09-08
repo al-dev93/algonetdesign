@@ -166,6 +166,7 @@ strong {
   pointer-events: none;
 }
 
+/* 582px */
 @media (max-width: 36.375rem) {
   .section[data-variant='home'] {
     --hero-signature-width: clamp(9rem, 42vw, 12rem);
@@ -275,7 +276,7 @@ strong {
 
   inline-size: 100%;
   max-inline-size: var(--cards-wrapper-max-width);
-  margin-inline: auto;
+  margin-inline-end: auto;
 }
 
 .section[data-variant='more'] .section__header p {

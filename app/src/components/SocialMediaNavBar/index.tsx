@@ -9,6 +9,8 @@ import { handleFetchError } from '@utils/fetchDataHelpers';
 import { SocialMediaButton } from './components/SocialMediaButton';
 import style from './style.module.css';
 import type { SocialMediaNavBarProps } from './types';
+import { AppIcon } from '../AppIcon';
+
 /**
  *
  * socialMediaNavBar component that displays a navigation bar with social media buttons.
@@ -16,11 +18,9 @@ import type { SocialMediaNavBarProps } from './types';
  * @component
  * @param {SocialMediaNavBarProps} props -The properties for the SocialMediaNavBar component.
  * @property {string} [className] - Additional class names for the SocialMediaNavBar
- * @property {string} [changeLinkColor] -
- * @property {('left-nav' | 'right-nav' | 'card')} [type] - Type of SocialMediaNavBar placed
+ * @property {SocialMediaNavBarVariant} [variant] - Type of SocialMediaNavBar placed
  * on the page or in Card component.
  * @property {AccountLink[]} [buttons] - SocialMediaNavBar button definition data.
- * @property {string} [url] - The URL to fetch the data needed by the SocialMediaNavBar component.
  * @returns {React.JSX.Element} The rendered SocialMediaNavBar component.
  *
  * @al-dev93
@@ -28,10 +28,12 @@ import type { SocialMediaNavBarProps } from './types';
 export const SocialMediaNavBar = memo(function SocialMediaNavBar({
   className,
   classNameButton,
-  type,
+  variant,
   buttons,
+  onAnchorNavigation,
 }: SocialMediaNavBarProps): React.JSX.Element | null {
-  const isVerticalNav = type === 'left-nav' || type === 'right-nav';
+  const isPageNav = variant === 'page-desktop' || variant === 'page-mobile';
+  const isMobilePageNav = variant === 'page-mobile';
   const handleError = useErrorHandler();
   // Determine if we should fetch data based on the presence of buttons
   const shouldFetch = !buttons;
@@ -91,10 +93,10 @@ export const SocialMediaNavBar = memo(function SocialMediaNavBar({
    * @type {AccountLink[] | Deliverable[]}
    */
   const data = useMemo<AccountLink[] | Deliverable[]>(() => {
-    return type === 'left-nav' || type === 'footer'
+    return isPageNav
       ? ((buttons || fetchedData) as AccountLink[])?.filter((item) => item.onPage)
       : buttons || (fetchedData as Deliverable[]);
-  }, [buttons, fetchedData, type]);
+  }, [buttons, fetchedData, isPageNav]);
 
   /**
    *
@@ -105,13 +107,13 @@ export const SocialMediaNavBar = memo(function SocialMediaNavBar({
   const getButtonClassName = (service: string): string => {
     const classNames: string[] = [];
 
-    if (isVerticalNav) {
-      classNames.push(style.socialMediaNavBar__verticalLink);
+    if (isPageNav) {
+      classNames.push(style.socialMediaNavBar__pageLink);
     } else if (classNameButton) {
       classNames.push(classNameButton);
     }
 
-    if (service === 'external' && (type === 'slideshow' || type === 'card')) {
+    if (service === 'external' && (variant === 'slideshow' || variant === 'card')) {
       classNames.push(style['socialMediaNavBar__externalLink--primary']);
     }
 
@@ -126,15 +128,36 @@ export const SocialMediaNavBar = memo(function SocialMediaNavBar({
     }
   }, [endpoint, buttons, data, handleSocialMediaData]);
 
-  return !fetchError ? (
-    <nav className={`${style.socialMediaNavBar} ${className ?? ''}`} aria-label='Navigation réseaux sociaux et médias'>
-      <ul className={style[`socialMediaNavBar--${isVerticalNav ? `vertical` : `horizontal`}`]}>
+  if (fetchError) return null;
+
+  return (
+    <nav
+      className={`${style.socialMediaNavBar} ${className ?? ''}`}
+      data-variant={variant}
+      aria-label={isMobilePageNav ? 'Navigation rapide' : 'Navigation réseaux sociaux et médias'}
+    >
+      <ul className={style.socialMediaNavBar__list}>
         {data?.map((element) => (
           <li key={`${element.service}`}>
             <SocialMediaButton className={getButtonClassName(element.service)} button={element} />
           </li>
         ))}
+        {isMobilePageNav ? (
+          <li>
+            <a
+              href='#footer'
+              className={style.socialMediaNavBar__quickLinkButton}
+              aria-label='Aller au pied de page'
+              title='Aller au pied de page'
+              onClick={onAnchorNavigation}
+            >
+              <span className={style.socialMediaNavBar__quickLink}>
+                <AppIcon className={style.socialMediaNavBar__quickLinkIcon} weight='bold' iconName='quickLinkFooter' />
+              </span>
+            </a>
+          </li>
+        ) : null}
       </ul>
     </nav>
-  ) : null;
+  );
 });

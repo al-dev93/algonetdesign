@@ -1,5 +1,3 @@
-// const ENABLED_STATUS = 'enabled';
-// const DISABLED_STATUS = 'disabled';
 const HIDDEN_STATUS = 'hidden';
 const VISIBLE_STATUS = 'visible';
 const ON_STATUS = 'On';
@@ -17,11 +15,12 @@ const INTERSECTION_OPTIONS_ROOTMARGIN = { rootMargin: '-100px' };
 const SERVICE_LABEL = {
   gmail: 'Envoyer un mail à StackFlex',
   linkedin: 'Voir mon profil Linkedin',
-  github: 'Code source',
+  github: 'Ouvrir mon profil GitHub',
   npm: 'Package npm',
   external: 'Démo en ligne',
   document: 'Analyse de performance',
   figma: 'Maquette Figma',
+  code_github: 'Voir le dépôt GitHub du projet',
 } as const;
 
 /**
@@ -38,29 +37,10 @@ const MAX_MESSAGE_LENGTH: number = 1000;
 const MIN_NAME_LENGTH: number = 2;
 const MAX_NAME_LENGTH: number = 100;
 
-// const ICON_VALUES = [
-//   'paper-plane-outline',
-//   'logo-linkedin',
-//   'logo-github',
-//   'logo-npm',
-//   'logo-figma',
-//   'open-outline',
-//   'document-outline',
-//   'chevron-back-outline',
-//   'chevron-forward-outline',
-//   'moon-outline',
-//   'moon',
-//   'sync-outline',
-//   'swap-horizontal-outline',
-// ] as const;
-
 export {
   ACTIVE_STATUS,
-  // DISABLED_STATUS,
   EAGER_STATUS,
-  // ENABLED_STATUS,
   HIDDEN_STATUS,
-  // ICON_VALUES,
   INTERSECTION_OPTIONS_ROOTMARGIN,
   LAZY_STATUS,
   MAX_COMPANY_LENGTH,

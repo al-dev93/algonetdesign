@@ -10,6 +10,7 @@ import ModalDialogContactForm from '@modules/ModalDialogContactForm/ModalDialogC
 
 import style from './style.module.css';
 import { Footer } from '@/components/Footer';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 /**
  * Page
@@ -35,6 +36,7 @@ import { Footer } from '@/components/Footer';
  */
 export function Page(): React.JSX.Element {
   const csrfToken = useCsrfToken();
+  const isMobile = useMediaQuery('(max-width: 32rem)');
   // Current routing state (used to derive anchor targets and issue router updates).
   const { pathname, hash, key, search } = useLocation();
   const navigate = useNavigate();
@@ -319,26 +321,39 @@ export function Page(): React.JSX.Element {
    * Prepares scrolling behavior for a header menu navigation.
    *
    * @param event Activation event emitted by the menu link.
-   * @param targetId Id of the section targeted by the navigation.
    * @returns Nothing.
    */
-  const handleMenuNavigation = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement>, targetId: SectionsRef): void => {
+  const handleAnchorNavigation = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>): void => {
+      const targetHash = event.currentTarget.hash;
+      const targetId = idFromHash(targetHash);
+
+      if (!targetId) return;
       const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
       const behavior: ScrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
 
-      const targetHash = `#${targetId}`;
+      const targetUrl = new URL(event.currentTarget.href, window.location.href);
 
-      if (window.location.hash === targetHash) {
-        event.preventDefault();
+      event.preventDefault();
+      if (
+        targetUrl.pathname === window.location.pathname &&
+        targetUrl.search === window.location.search &&
+        window.location.hash === targetHash
+      ) {
         scrollAndFocusById(targetId, behavior);
         return;
       }
 
       nextAnchorScrollBehaviorRef.current = behavior;
+
+      navigate({
+        pathname: targetUrl.pathname,
+        search: targetUrl.search,
+        hash: targetHash,
+      });
     },
-    [scrollAndFocusById],
+    [navigate, scrollAndFocusById],
   );
 
   const handleOpenContactForm = (): void => {
@@ -359,7 +374,7 @@ export function Page(): React.JSX.Element {
         logo={{ src: logo, alt: 'logo' }}
         activeSection={activeSection}
         scrollWithMenuItem={scrollWithNav}
-        onMenuNavigation={handleMenuNavigation}
+        onMenuNavigation={handleAnchorNavigation}
       />
       {/* Contact form dialog */}
       <ModalDialogContactForm
@@ -371,7 +386,11 @@ export function Page(): React.JSX.Element {
       <div className={style.pageContent}>
         <div className={style.socialMediaNavBarLayer}>
           {/* Left-side social links (external navigation) */}
-          <SocialMediaNavBar className={style.socialMediaNavBar} type='left-nav' />
+          <SocialMediaNavBar
+            className={style.socialMediaNavBar}
+            variant={isMobile ? 'page-mobile' : 'page-desktop'}
+            onAnchorNavigation={handleAnchorNavigation}
+          />
         </div>
 
         {/* Main content; observed to detect when anchor targets become available */}
